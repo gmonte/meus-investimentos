@@ -1,0 +1,32 @@
+{
+  "name": "meus-investimentos",
+  "private": true,
+  "workspaces": {
+    "nohoist": [
+      "**/tailwindcss",
+      "**/tailwindcss/**",
+      "**/tailwindcss-*",
+      "**/tailwindcss-*/**"
+    ],
+    "packages": [
+      "configs/*",
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "commitizen": "^4.2.5",
+    "cz-lerna-changelog": "^2.0.3",
+    "husky": "^8.0.2",
+    "lerna": "^6.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-lerna-changelog"
+    }
+  }
+}

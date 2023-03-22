@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "meus-investimentos-4d675"
+  },
+  "targets": {
+    "meus-investimentos-4d675": {
+      "hosting": {
+        "app": [
+          "meus-investimentos"
+        ]
+      }
+    }
+  }
+}
