@@ -13,13 +13,13 @@ import useSWR, {
   Key
 } from 'swr'
 
-export function useFetch<Data = unknown, Error = unknown> (
+export function useFetch<Data = unknown, Error = unknown>(
   axiosInstance: AxiosInstance,
   url: Key = '',
   swrConfiguration?: SWRConfiguration<Data, Error>
 ) {
   const fetcher = useCallback<Fetcher<Data>>(
-    async (path: string) => {
+    async(path: string) => {
       const response = await axiosInstance.get<Data>(path)
       return response.data
     },
@@ -36,7 +36,7 @@ export function useFetch<Data = unknown, Error = unknown> (
   const [loading, setLoading] = useState(false)
 
   const refresh = useCallback<KeyedMutator<Data>>(
-    async (...mutateOptions) => {
+    async(...mutateOptions) => {
       setLoading(true)
       return await mutate(...mutateOptions)
     },

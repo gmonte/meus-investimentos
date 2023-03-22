@@ -24,7 +24,7 @@ const schema = yup.object().shape<Record<keyof ForgotPasswordData, yup.AnySchema
   )(yup.string())
 })
 
-export function ForgotPasswordModal ({ open, close }: ModalProps) {
+export function ForgotPasswordModal({ open, close }: ModalProps) {
   const dispatch = useAppDispatch()
   const { createToast } = useToast()
 
@@ -38,7 +38,7 @@ export function ForgotPasswordModal ({ open, close }: ModalProps) {
     (data: ForgotPasswordData) => {
       dispatch(AuthActions.forgotPassword({
         data,
-        onSuccess () {
+        onSuccess() {
           createToast({
             type: 'success',
             title: 'Tudo certo!',
@@ -46,7 +46,7 @@ export function ForgotPasswordModal ({ open, close }: ModalProps) {
           })
           close()
         },
-        onError (message) {
+        onError(message) {
           createToast({
             type: 'error',
             title: 'Não foi possível recuperar a sua conta',

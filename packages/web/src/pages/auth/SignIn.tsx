@@ -111,24 +111,24 @@ export default function SignIn() {
       <div className="flex items-center justify-center flex-col">
         <Form
           className="mt-6"
-          onSubmit={handleSubmit(handleLogin)}
+          onSubmit={ handleSubmit(handleLogin) }
         >
-          <TextInput.Root className="w-full" error={errors.email?.message}>
+          <TextInput.Root className="w-full" error={ errors.email?.message }>
             <TextInput.Input
               placeholder="Informe seu e-mail"
-              {...register('email')}
+              { ...register('email') }
             />
           </TextInput.Root>
 
-          <TextInput.Root className="w-full" error={errors.password?.message}>
+          <TextInput.Root className="w-full" error={ errors.password?.message }>
             <TextInput.InputPassword
               placeholder="Informe sua senha"
-              {...register('password')}
+              { ...register('password') }
             />
           </TextInput.Root>
 
           <Text size="sm" asChild className="hover:underline text-right">
-            <button type="button" onClick={handleForgotPassword}>
+            <button type="button" onClick={ handleForgotPassword }>
               Esqueci minha senha
             </button>
           </Text>
@@ -139,7 +139,7 @@ export default function SignIn() {
         </Form>
 
         <Text asChild className="mt-4 hover:underline">
-          <button onClick={handleCreateAccount}>
+          <button onClick={ handleCreateAccount }>
             Criar Conta
           </button>
         </Text>
@@ -149,9 +149,9 @@ export default function SignIn() {
         </Divider>
 
         <Button
-          startIcon={<GoogleLogo size={24} color="red" />}
+          startIcon={ <GoogleLogo size={ 24 } color="red" /> }
           className="mt-2 w-full bg-white hover:bg-gray-100 active:bg-gray-200"
-          onClick={async () => handleSignIn('google')}
+          onClick={ async() => handleSignIn('google') }
         >
           Acessar com Google
         </Button>
@@ -164,9 +164,9 @@ export default function SignIn() {
         </Button> */}
 
         <Button
-          startIcon={<GithubLogo size={24} color="white" />}
+          startIcon={ <GithubLogo size={ 24 } color="white" /> }
           className="mt-3 w-full bg-black hover:bg-black active:bg-black text-white"
-          onClick={async () => handleSignIn('github')}
+          onClick={ async() => handleSignIn('github') }
         >
           Acessar com GitHub
         </Button>

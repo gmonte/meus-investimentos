@@ -11,9 +11,9 @@ import {
 import { Loader } from '~/components/Loader'
 import { AuthenticatedLayout } from '~/layouts/AuthenticatedLayout'
 
-const Home = lazy(async () => await import('~/pages/home/Home'))
+const Home = lazy(async() => await import('~/pages/home/Home'))
 
-export function AuthenticatedRoutes () {
+export function AuthenticatedRoutes() {
   return (
     <Routes>
       <Route path="/" element={ <AuthenticatedLayout /> }>

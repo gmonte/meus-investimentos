@@ -6,7 +6,7 @@ import { selectAuthenticated } from '~/store/auth/selectors'
 import { AuthenticatedRoutes } from './AuthenticatedRoutes'
 import { GuestRoutes } from './GuestRoutes'
 
-export function Router () {
+export function Router() {
   const authenticated = useAppSelector(selectAuthenticated)
 
   return (

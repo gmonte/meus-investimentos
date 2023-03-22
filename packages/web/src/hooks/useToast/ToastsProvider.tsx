@@ -29,7 +29,7 @@ import {
 
 export type ToastsProviderProps = ToastPrimitive.ToastProviderProps
 
-export function ToastsProvider ({
+export function ToastsProvider({
   children,
   swipeDirection = 'right',
   ...props

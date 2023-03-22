@@ -13,7 +13,7 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string
 }
 
-export function Button ({
+export function Button({
   asChild,
   startIcon,
   endIcon,

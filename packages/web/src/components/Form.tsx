@@ -11,7 +11,7 @@ export type FormProps = PropsWithChildren<{
   className?: string
 }>
 
-export function Form ({
+export function Form({
   onSubmit,
   className,
   children

@@ -25,7 +25,7 @@ import {
   ResetModals
 } from './types'
 
-export function ModalsProvider ({ children }: PropsWithChildren) {
+export function ModalsProvider({ children }: PropsWithChildren) {
   const [modals, dispatch] = useReducer(modalsReducer, [])
 
   const createModal = useCallback<CreateModal>(

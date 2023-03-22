@@ -5,7 +5,7 @@ import { Router } from './routes'
 import { useAppSelector } from './store'
 import { selectLoading } from './store/loader/selectors'
 
-export function App () {
+export function App() {
   const loading = useAppSelector(selectLoading)
 
   useEffect(

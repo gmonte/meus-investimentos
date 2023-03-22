@@ -28,7 +28,7 @@ const schema = yup.object().shape<Record<keyof CreateAccountData, yup.AnySchema>
   confirmPassword: equalTo('password', 'Defina sua senha')(yup.string())
 })
 
-export function CreateAccountModal ({ open, close }: ModalProps) {
+export function CreateAccountModal({ open, close }: ModalProps) {
   const dispatch = useAppDispatch()
   const { createToast } = useToast()
 
@@ -42,7 +42,7 @@ export function CreateAccountModal ({ open, close }: ModalProps) {
     (data: CreateAccountData) => {
       dispatch(AuthActions.createAccount({
         data,
-        onSuccess () {
+        onSuccess() {
           createToast({
             type: 'success',
             title: 'Tudo certo!',
@@ -50,7 +50,7 @@ export function CreateAccountModal ({ open, close }: ModalProps) {
           })
           close()
         },
-        onError (message) {
+        onError(message) {
           createToast({
             type: 'error',
             title: 'Não foi possível criar a sua conta',

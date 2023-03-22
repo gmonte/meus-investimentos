@@ -16,7 +16,7 @@ export interface ModalRootProps extends PropsWithChildren {
   close?: () => void
 }
 
-function ModalRoot ({
+function ModalRoot({
   open = false,
   close,
   children
@@ -81,7 +81,7 @@ function ModalRoot ({
 
 ModalRoot.displayName = 'Modal.Root'
 
-function ModalTitle ({ children }: PropsWithChildren) {
+function ModalTitle({ children }: PropsWithChildren) {
   return (
     <DialogPrimitive.Title asChild>
       <Heading size="sm">
@@ -93,7 +93,7 @@ function ModalTitle ({ children }: PropsWithChildren) {
 
 ModalTitle.displayName = 'Modal.Title'
 
-function ModalDescription ({ children }: PropsWithChildren) {
+function ModalDescription({ children }: PropsWithChildren) {
   return (
     <DialogPrimitive.Description asChild>
       <Text className="text-slate-400">
@@ -105,7 +105,7 @@ function ModalDescription ({ children }: PropsWithChildren) {
 
 ModalDescription.displayName = 'Modal.Description'
 
-function ModalFooter ({ children }: PropsWithChildren) {
+function ModalFooter({ children }: PropsWithChildren) {
   return (
     <div className="mt-4 flex justify-end">
       {children}

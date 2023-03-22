@@ -27,7 +27,7 @@ import { app } from '~/services/firebase'
 import { AuthActions } from '.'
 import { LoaderActions } from '../loader'
 
-function* forgotPassword ({
+function* forgotPassword({
   payload: {
     data,
     onSuccess = () => { },
@@ -57,7 +57,7 @@ function* forgotPassword ({
   }
 }
 
-function* createAccount ({
+function* createAccount({
   payload: {
     data,
     onSuccess = () => {},
@@ -88,7 +88,7 @@ function* createAccount ({
   }
 }
 
-function* login ({ payload: { data, onError = () => {} } }: LoginPayload) {
+function* login({ payload: { data, onError = () => {} } }: LoginPayload) {
   try {
     yield put(LoaderActions.start())
 
@@ -118,7 +118,7 @@ function* login ({ payload: { data, onError = () => {} } }: LoginPayload) {
   }
 }
 
-function* loginPopup ({ payload: { providerId, onError = () => { } } }: LoginPopupPayload) {
+function* loginPopup({ payload: { providerId, onError = () => { } } }: LoginPopupPayload) {
   try {
     yield put(LoaderActions.start())
 
@@ -157,7 +157,7 @@ function* loginPopup ({ payload: { providerId, onError = () => { } } }: LoginPop
   }
 }
 
-function* logout () {
+function* logout() {
   const auth = getAuth(app)
   yield call(signOut, auth)
 }

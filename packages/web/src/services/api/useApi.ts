@@ -7,7 +7,7 @@ import { useFetch } from '~/hooks/useFetch'
 
 import { api } from '.'
 
-export function useApi<Data = unknown, Error = unknown> (
+export function useApi<Data = unknown, Error = unknown>(
   url: Key,
   swrConfiguration?: SWRConfiguration<Data, Error>
 ) {

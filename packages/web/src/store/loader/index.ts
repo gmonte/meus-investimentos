@@ -11,11 +11,11 @@ export const slice = createSlice({
   name: 'loader',
   initialState,
   reducers: {
-    start (state) {
+    start(state) {
       state.loadingCounter += 1
       state.loading = true
     },
-    stop (state) {
+    stop(state) {
       const newLoadingCounter = state.loadingCounter > 1 ? (state.loadingCounter - 1) : 0
       state.loadingCounter = newLoadingCounter
       state.loading = newLoadingCounter > 0

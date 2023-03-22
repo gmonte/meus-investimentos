@@ -10,7 +10,8 @@
     ],
     "packages": [
       "configs/*",
-      "packages/*"
+      "packages/*",
+      "packages/server/*"
     ]
   },
   "scripts": {

@@ -30,6 +30,7 @@ module.exports = {
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
+    '@typescript-eslint/space-before-function-paren': ['error', 'never'],
     'generator-star-spacing': ['error', {
       before: false,
       after: true
@@ -79,7 +80,7 @@ module.exports = {
     'react/jsx-curly-spacing': ['warn', { when: 'always' }],
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'react/function-component-definition': [2, { namedComponents: 'function-declaration' }],
-    'space-before-function-paren': ['error', 'always'],
+    'space-before-function-paren': ['error', 'never'],
     'template-curly-spacing': [2, 'always']
   },
   settings: {

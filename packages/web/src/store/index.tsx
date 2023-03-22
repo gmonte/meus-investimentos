@@ -20,7 +20,7 @@ const sagaMiddleware = createSagaMiddleware()
 export const store = configureStore({
   reducer: reducers,
   devTools: import.meta.env.MODE === 'development',
-  middleware (getDefaultMiddleware) {
+  middleware(getDefaultMiddleware) {
     const middlewares = getDefaultMiddleware({ serializableCheck: false })
 
     if (import.meta.env.MODE === 'development') {
@@ -37,7 +37,7 @@ sagaMiddleware.run(sagas)
 
 const persistor = persistStore(store)
 
-export function StoreProvider ({ children }: PropsWithChildren) {
+export function StoreProvider({ children }: PropsWithChildren) {
   return (
     <Provider store={ store }>
       <PersistGate loading={ null } persistor={ persistor }>

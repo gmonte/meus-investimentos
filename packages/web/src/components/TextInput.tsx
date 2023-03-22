@@ -17,7 +17,7 @@ export type TextInputRootProps = PropsWithChildren & {
   error?: string
 }
 
-function TextInputRoot ({
+function TextInputRoot({
   className,
   error,
   children
@@ -57,7 +57,7 @@ TextInputRoot.displayName = 'TextInput.Root'
 
 export type TextInputIconProps = PropsWithChildren
 
-function TextInputIcon ({ children }: TextInputInputProps) {
+function TextInputIcon({ children }: TextInputInputProps) {
   return (
     <Slot
       className={ clsx(

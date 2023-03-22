@@ -8,7 +8,7 @@ export type DividerProps = PropsWithChildren & {
   className?: string
 }
 
-export function Divider ({ children, className }: DividerProps) {
+export function Divider({ children, className }: DividerProps) {
   return (
     <div className={ clsx(
       'flex items-center justify-center w-full my-3',
