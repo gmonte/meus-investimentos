@@ -1,4 +1,5 @@
 import * as moment from 'moment'
+import { CDIInvestmentDocument } from '../types'
 
 const getPercentage = (daysFromStart: number): number => {
   const feeByDays = {
@@ -38,8 +39,8 @@ const getPercentage = (daysFromStart: number): number => {
   return feeByDays[daysFromStart.toString()] || 0
 }
 
-export const calculateIOF = (grossValueIncome: number, startDate: string | Date, investmentDate: string | Date) => {
-  const fee = getPercentage(moment(investmentDate).diff(startDate, 'days'))
+export const calculateIOF = (grossValueIncome: number, investment: CDIInvestmentDocument, investmentDate: string | Date) => {
+  const fee = getPercentage(moment(investmentDate).diff(investment.startDate, 'days'))
 
   return {
     fee,

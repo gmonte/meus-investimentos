@@ -1,4 +1,4 @@
-export const collections = {
-  cdiIndexes: 'CDI_INDEXES',
-  investments: 'INVESTMENTS'
+export const COLLECTIONS = {
+  CDI_INDEXES: 'CDI_INDEXES',
+  CDI_INVESTMENTS: 'CDI_INVESTMENTS'
 }

@@ -8,23 +8,14 @@ export interface CDIDocument {
   value: number
 }
 
-export interface InvestmentDocument {
-  id?: string
-  user?: string
-  startDate: Date | string
-  dueDate?: Date | string
-  rescueDate?: Date | string
-  investedValue: number
-  cdiFee: number
-}
-
 export interface InvestmentByDay {
   date: Date | string
   cdiFeeDaily: number
   grossValueIncome: number
   grossValueIncomeAccumulated: number
   grossValue: number
-  predicted: boolean
+  paid: boolean
+  isFeeProjected: boolean
   iofValue: number
   iofFee: number
   irValue: number
@@ -33,14 +24,25 @@ export interface InvestmentByDay {
   netValueIncomeAccumulated: number
 }
 
-export interface InvestmentFully extends InvestmentDocument {
+export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
+
+export interface CDIInvestmentDocument {
+  id?: string
+  user?: string
+  type: InvestmentType
+  startDate: Date | string
+  dueDate?: Date | string
+  rescueDate?: Date | string
+  investedValue: number
+  cdiFee: number
+  finished?: boolean
   history: InvestmentByDay[]
   grossValue: number
   grossValueIncome: number
   netValue: number
   netValueIncome: number
-  predictedGrossValue: number
-  predictedGrossValueIncome: number
-  predictedNetValue: number
-  predictedNetValueIncome: number
+  estimatedGrossValue: number
+  estimatedGrossValueIncome: number
+  estimatedNetValue: number
+  estimatedNetValueIncome: number
 }
