@@ -19,6 +19,11 @@ exports.cronJobFetchCdiByDayMorning = functions.pubsub.schedule('0 8 * * *')
   .onRun(() => cronJobFetchCdiByDay(db));
 
 // This will be run every day at (Minute Hour * * *)
+exports.cronJobFetchCdiByDayNoon = functions.pubsub.schedule('0 12 * * *')
+  .timeZone('America/Sao_Paulo')
+  .onRun(() => cronJobFetchCdiByDay(db));
+
+// This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayEvening = functions.pubsub.schedule('0 18 * * *')
   .timeZone('America/Sao_Paulo')
   .onRun(() => cronJobFetchCdiByDay(db));

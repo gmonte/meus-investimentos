@@ -10,6 +10,7 @@ import {
 } from '../types'
 import { calculateIOF } from '../utils/calculateIOF'
 import { calculateIR } from '../utils/calculateIR'
+import { calculateGrowth } from '../utils/calculateGrowth'
 
 export const calculateCdiInvestment = async (db: admin.firestore.Firestore, investment: CDIInvestmentDocument): Promise<CDIInvestmentDocument> => {
   const today = moment().startOf('day')
@@ -18,12 +19,16 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
     ...investment,
     grossValue: investment.investedValue,
     grossValueIncome: 0,
+    grossGrowth: 0,
     netValue: investment.investedValue,
     netValueIncome: 0,
+    netGrowth: 0,
     estimatedGrossValue: investment.investedValue,
     estimatedGrossValueIncome: 0,
+    estimatedGrossGrowth: 0,
     estimatedNetValue: investment.investedValue,
     estimatedNetValueIncome: 0,
+    estimatedNetGrowth: 0,
     finished: !!investment.dueDate && today.isAfter(investment.dueDate),
     history: []
   }
@@ -80,6 +85,7 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
       const grossValueIncome = lastGrossValueToCalculate * (cdiFeeDaily / 100)
       const grossValue = lastGrossValueToCalculate + grossValueIncome
       const grossValueIncomeAccumulated = (lastHistory?.grossValueIncomeAccumulated || 0) + grossValueIncome
+      const grossGrowth = calculateGrowth(investment.investedValue, grossValueIncomeAccumulated)
 
       const {
         fee: iofFee,
@@ -96,6 +102,7 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
       netValueIncomeAccumulated = netValueIncomeAccumulated - irValue
 
       const netValue = netValueIncomeAccumulated + investment.investedValue
+      const netGrowth = calculateGrowth(investment.investedValue, netValueIncomeAccumulated)
 
       const investmentByDay: InvestmentByDay = {
         date,
@@ -105,12 +112,14 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
         grossValueIncome,
         grossValueIncomeAccumulated,
         grossValue,
+        grossGrowth,
         iofFee,
         iofValue,
         irFee,
         irValue,
         netValueIncomeAccumulated,
-        netValue
+        netValue,
+        netGrowth
       }
 
       investmentFully.history.push(investmentByDay)
@@ -120,14 +129,18 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
     const lastHistoryPaid = findLast(investmentFully.history, { paid: true })
     investmentFully.grossValue = lastHistoryPaid?.grossValue ?? investmentFully.grossValue
     investmentFully.grossValueIncome = lastHistoryPaid?.grossValueIncomeAccumulated ?? investmentFully.grossValueIncome
+    investmentFully.grossGrowth = lastHistoryPaid?.grossGrowth ?? investmentFully.grossGrowth
     investmentFully.netValue = lastHistoryPaid?.netValue ?? investmentFully.netValue
     investmentFully.netValueIncome = lastHistoryPaid?.netValueIncomeAccumulated ?? investmentFully.netValueIncome
+    investmentFully.netGrowth = lastHistoryPaid?.netGrowth ?? investmentFully.netGrowth
 
     const lastHistory = last(investmentFully.history)
     investmentFully.estimatedGrossValue = lastHistory?.grossValue ?? investmentFully.grossValue
     investmentFully.estimatedGrossValueIncome = lastHistory?.grossValueIncomeAccumulated ?? investmentFully.grossValueIncome
+    investmentFully.estimatedGrossGrowth = lastHistory?.grossGrowth ?? investmentFully.grossGrowth
     investmentFully.estimatedNetValue = lastHistory?.netValue ?? investmentFully.netValue
     investmentFully.estimatedNetValueIncome = lastHistory?.netValueIncomeAccumulated ?? investmentFully.netValueIncome
+    investmentFully.estimatedNetGrowth = lastHistory?.netGrowth ?? investmentFully.netGrowth
   }
 
   return investmentFully

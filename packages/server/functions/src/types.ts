@@ -14,6 +14,7 @@ export interface InvestmentByDay {
   grossValueIncome: number
   grossValueIncomeAccumulated: number
   grossValue: number
+  grossGrowth: number
   paid: boolean
   isFeeProjected: boolean
   iofValue: number
@@ -22,6 +23,7 @@ export interface InvestmentByDay {
   irFee: number
   netValue: number
   netValueIncomeAccumulated: number
+  netGrowth: number
 }
 
 export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
@@ -39,10 +41,14 @@ export interface CDIInvestmentDocument {
   history: InvestmentByDay[]
   grossValue: number
   grossValueIncome: number
+  grossGrowth: number
   netValue: number
   netValueIncome: number
+  netGrowth: number
   estimatedGrossValue: number
   estimatedGrossValueIncome: number
+  estimatedGrossGrowth: number
   estimatedNetValue: number
   estimatedNetValueIncome: number
+  estimatedNetGrowth: number
 }
