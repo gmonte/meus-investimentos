@@ -30,7 +30,7 @@ export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
 
 export interface CDIInvestmentDocument {
   id?: string
-  user?: string
+  user: string
   type: InvestmentType
   startDate: Date | string
   dueDate?: Date | string
