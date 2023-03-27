@@ -60,7 +60,7 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
       } else if (investmentFully.finished) {
         paid = true
       } else {
-        paid = investDate.isSameOrBefore(lastCdiIndex.date)
+        paid = investDate.isBefore(today)
       }
 
       let cdiByDay
