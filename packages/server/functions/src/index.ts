@@ -29,11 +29,6 @@ exports.cronJobFetchCdiByDayEvening = functions.pubsub.schedule('0 18 * * *')
   .timeZone('America/Sao_Paulo')
   .onRun(() => cronJobFetchCdiByDay(db))
 
-exports.fetchCdiByDay = functions.https.onRequest(async (request, response) => {
-  await fetchCdiByDay(db)
-  response.json().send()
-})
-
 exports.createCdiInvestment = functions.https.onRequest(verifyUser(
   async (request, response, user) => {
     const body = request.body as CDIInvestmentDocument
