@@ -5,7 +5,6 @@ admin.initializeApp()
 
 import { CDIInvestmentDocument } from './types'
 import { InvestmentUserOwnerError, verifyUser } from './utils/verifyUser'
-import { fetchCdiByDay } from './cdiInvestment/fetchCdiByDay'
 import { createCdiInvestment } from './cdiInvestment/createCdiInvestment'
 import { readCdiInvestment } from './cdiInvestment/readCdiInvestment'
 import { updateCdiInvestment } from './cdiInvestment/updateCdiInvestment'
