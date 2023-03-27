@@ -4,15 +4,17 @@ import { CDIInvestmentDocument } from '../types'
 import { calculateCdiInvestment } from './calculateCdiInvestment'
 import { fetchCdiByDay } from './fetchCdiByDay'
 
-export const cronJobFetchCdiByDay = async (db: admin.firestore.Firestore) => {
+export const cronJobFetchCdiByDay = async (db: admin.firestore.Firestore, forceToCalculate = false) => {
   const missingDataLength = await fetchCdiByDay(db)
 
-  if (missingDataLength) {
+  if (missingDataLength || forceToCalculate) {
     const batch = db.batch()
 
     const investmentsSnapshot = await db.collection(COLLECTIONS.CDI_INVESTMENTS)
       .where('finished', '==', false)
       .get()
+
+    console.log(`Start calculating cdi investments (${ investmentsSnapshot.docs.length })`)
 
     await Promise.all(
       investmentsSnapshot.docs.map(async (doc) => {
@@ -21,6 +23,8 @@ export const cronJobFetchCdiByDay = async (db: admin.firestore.Firestore) => {
         batch.update(doc.ref, investmentFully)
       })
     )
+
+    console.log('All calculate was finished')
 
     await batch.commit()
   }
