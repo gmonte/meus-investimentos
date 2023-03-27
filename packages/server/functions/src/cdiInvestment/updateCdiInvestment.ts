@@ -14,7 +14,7 @@ export const updateCdiInvestment = async (db: admin.firestore.Firestore, investm
 
     verifyInvestmentUserOwner(docData, user)
 
-    const investmentData = { ...docData, ...investment }
+    const investmentData = { ...docData, ...investment, user: user.uid }
     const investmentFully = await calculateCdiInvestment(db, investmentData)
 
     await docRef.update(investmentFully)
