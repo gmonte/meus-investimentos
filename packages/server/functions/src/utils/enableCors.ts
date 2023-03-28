@@ -3,7 +3,7 @@ import * as cors from 'cors';
 
 import { HttpMethod } from '../types'
 
-const corsHandler = cors({ origin: true });
+const corsHandler = cors({ origin: true, credentials: true });
 
 type Next = (request: functions.https.Request, response: functions.Response) => void | Promise<void>
 

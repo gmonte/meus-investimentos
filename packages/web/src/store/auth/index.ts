@@ -16,7 +16,7 @@ const initialState: State = {
   provider: undefined
 }
 
-export const slice = createSlice({
+export const auth = createSlice({
   name: 'auth',
   initialState,
   reducers: {
@@ -40,6 +40,4 @@ export const slice = createSlice({
   }
 })
 
-export const AuthActions = slice.actions
-
-export default slice.reducer
+export const AuthActions = auth.actions

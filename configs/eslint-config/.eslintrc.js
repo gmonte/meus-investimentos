@@ -35,6 +35,7 @@ module.exports = {
       'named': 'never',
       'asyncArrow': 'always'
     }],
+    '@typescript-eslint/no-invalid-void-type': 'off',
     'generator-star-spacing': ['error', {
       before: false,
       after: true

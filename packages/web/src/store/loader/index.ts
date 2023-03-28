@@ -7,7 +7,7 @@ const initialState: State = {
   loading: false
 }
 
-export const slice = createSlice({
+export const loader = createSlice({
   name: 'loader',
   initialState,
   reducers: {
@@ -23,6 +23,4 @@ export const slice = createSlice({
   }
 })
 
-export const LoaderActions = slice.actions
-
-export default slice.reducer
+export const LoaderActions = loader.actions
