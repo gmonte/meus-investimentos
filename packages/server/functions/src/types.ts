@@ -16,7 +16,7 @@ export interface InvestmentByDay {
   grossValue: number
   grossGrowth: number
   paid: boolean
-  isFeeProjected: boolean
+  isFeeConsolidated: boolean
   iofValue: number
   iofFee: number
   irValue: number
@@ -52,6 +52,8 @@ export interface CDIInvestmentDocument {
   estimatedNetValue: number
   estimatedNetValueIncome: number
   estimatedNetGrowth: number
+  lastDatePaid?: Date | string
+  lastDateFeeConsolidated?: Date | string
 }
 
 export type ShortCDIInvestmentDocument = Omit<CDIInvestmentDocument, 'history'>

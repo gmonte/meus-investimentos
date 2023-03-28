@@ -34,7 +34,6 @@ export const verifyUser = (next: Next) => async (request: functions.https.Reques
 }
 
 export const verifyInvestmentUserOwner = (investment: CDIInvestmentDocument, user: UserRecord) => {
-  console.log(investment.user, user.uid, investment.user !== user.uid)
   if (investment.user !== user.uid) {
     throw new InvestmentUserOwnerError('User is not the investment owner')
   }

@@ -42,7 +42,7 @@ exports.createCdiInvestment = functions.https.onRequest(
       async (request, response, user) => {
         const body = request.body as CDIInvestmentDocument
         const investment = await createCdiInvestment(db, { ...body, user: user.uid })
-        response.json(investment).send()
+        response.json(investment)
       }
     )
   )
@@ -57,7 +57,7 @@ exports.readCdiInvestment = functions.https.onRequest(
         if (id) {
           try {
             const investment = await readCdiInvestment(db, { id } as CDIInvestmentDocument, user)
-            response.json(investment).send()
+            response.json(investment)
           } catch (err) {
             if (err instanceof InvestmentUserOwnerError) {
               response.status(403).send(err.message)
@@ -83,7 +83,7 @@ exports.updateCdiInvestment = functions.https.onRequest(
         if (id) {
           try {
             const investment = await updateCdiInvestment(db, request.body as CDIInvestmentDocument, user)
-            response.json(investment).send()
+            response.json(investment)
           } catch (err) {
             if (err instanceof InvestmentUserOwnerError) {
               response.status(403).send(err.message)
@@ -132,7 +132,7 @@ exports.readUserCdiInvestments = functions.https.onRequest(
     verifyUser(
       async (request, response, user) => {
         const investments = await readUserCdiInvestments(db, user)
-        response.json(investments).send()
+        response.json(investments)
       }
     )
   )

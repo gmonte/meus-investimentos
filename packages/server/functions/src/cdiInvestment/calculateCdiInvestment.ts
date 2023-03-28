@@ -64,12 +64,12 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
       }
 
       let cdiByDay
-      let isFeeProjected
+      let isFeeConsolidated
       if (investDate.isSameOrBefore(lastCdiIndex.date)) {
-        isFeeProjected = false
+        isFeeConsolidated = true
         cdiByDay = cdiIndexes.find(cdi => cdi.date === date) || { value: 0 }
       } else {
-        isFeeProjected = true
+        isFeeConsolidated = false
         if (investDate.isoWeekday() === 6 || investDate.isoWeekday() === 7) { // weekend
           cdiByDay = { value: 0 }
         } else {
@@ -108,7 +108,7 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
         date,
         cdiFeeDaily,
         paid,
-        isFeeProjected,
+        isFeeConsolidated,
         grossValueIncome,
         grossValueIncomeAccumulated,
         grossValue,
@@ -133,6 +133,9 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
     investmentFully.netValue = lastHistoryPaid?.netValue ?? investmentFully.netValue
     investmentFully.netValueIncome = lastHistoryPaid?.netValueIncomeAccumulated ?? investmentFully.netValueIncome
     investmentFully.netGrowth = lastHistoryPaid?.netGrowth ?? investmentFully.netGrowth
+    investmentFully.lastDatePaid = lastHistoryPaid?.date
+    
+    investmentFully.lastDateFeeConsolidated = findLast(investmentFully.history, { isFeeConsolidated: true })?.date
 
     const lastHistory = last(investmentFully.history)
     investmentFully.estimatedGrossValue = lastHistory?.grossValue ?? investmentFully.grossValue
