@@ -7,7 +7,7 @@ import {
   formatNumber
 } from '~/utils/formatters'
 
-function Home() {
+export default function InvestmentsList() {
   const {
     data,
     isLoading,
@@ -100,5 +100,3 @@ function Home() {
     </div>
   )
 }
-
-export default Home

@@ -46,17 +46,18 @@ export function ModalConfirm({
         {description}
       </Modal.Description>
 
-      <Modal.Footer className="justify-center">
+      <Modal.Footer>
+        <Button
+          onClick={ handleConfirm }
+        >
+          Confirmar
+        </Button>
+
         <Button
           onClick={ handleCancel }
           className="bg-gray-800 hover:bg-gray-900 active:bg-black text-white"
         >
           Cancelar
-        </Button>
-        <Button
-          onClick={ handleConfirm }
-        >
-          Confirmar
         </Button>
       </Modal.Footer>
 

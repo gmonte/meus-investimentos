@@ -45,3 +45,13 @@ export interface CDIInvestmentDocument {
   lastDatePaid?: Date | string
   lastDateFeeConsolidated?: Date | string
 }
+
+export interface InvestmentFormData {
+  name?: string
+  type: InvestmentType
+  startDate: Date | string
+  dueDate?: Date | string
+  rescueDate?: Date | string
+  investedValue: number
+  cdiFee: number
+}

@@ -110,7 +110,7 @@ ModalDescription.displayName = 'Modal.Description'
 
 function ModalFooter({ children, className }: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className={ clsx('mt-4 flex justify-end gap-2', className) }>
+    <div className={ clsx('mt-4 flex flex-row-reverse justify-start gap-2', className) }>
       {children}
     </div>
   )

@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import { Button } from '~/components/Button'
 import { ModalConfirm } from '~/components/ModalConfirm'
 import { useModal } from '~/hooks/useModal'
+import { CreateInvestmentModal } from '~/modules/investment/modals/CreateInvestmentModal'
 import { useAppDispatch } from '~/store'
 import { AuthActions } from '~/store/auth'
 
@@ -10,6 +11,14 @@ export function Navbar() {
   const dispatch = useAppDispatch()
 
   const { createModal } = useModal()
+
+  const handleCreateInvestment = useCallback(
+    () => createModal({
+      id: 'create-investment',
+      Component: CreateInvestmentModal
+    }),
+    [createModal]
+  )
 
   const handleLogout = useCallback(
     () => createModal({
@@ -39,6 +48,7 @@ export function Navbar() {
             <div className="text-sm flex-1">
               <Button
                 className="bg-white hover:bg-gray-100 active:bg-gray-200"
+                onClick={ handleCreateInvestment }
               >
                 Cadastrar Investimento
               </Button>

@@ -11,7 +11,7 @@ import {
 import { Loader } from '~/components/Loader'
 import { GuestLayout } from '~/layouts/GuestLayout'
 
-const SignIn = lazy(async() => await import('~/pages/auth/SignIn'))
+const SignIn = lazy(async () => await import('~/modules/auth/pages/SignIn'))
 
 export function GuestRoutes() {
   return (

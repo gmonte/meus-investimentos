@@ -23,8 +23,8 @@ import { AuthActions } from '~/store/auth'
 import { email } from '~/utils/validators/email.validator'
 import { required } from '~/utils/validators/required.validator'
 
-import { CreateAccountModal } from './components/CreateAccountModal'
-import { ForgotPasswordModal } from './components/ForgotPasswordModal'
+import { CreateAccountModal } from '../modals/CreateAccountModal'
+import { ForgotPasswordModal } from '../modals/ForgotPasswordModal'
 
 const schema = yup.object().shape<Record<keyof SignInData, yup.AnySchema>>({
   email: flow(

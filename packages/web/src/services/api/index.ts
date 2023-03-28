@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { REHYDRATE } from 'redux-persist'
 
-import { CDIInvestmentDocument } from '~/@types/Api'
+import { CDIInvestmentDocument } from '~/@types/Investment'
 
 import { baseQueryWithReauth } from './fetchBase'
 
