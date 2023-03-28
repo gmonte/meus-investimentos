@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 import { Text } from './Text'
 
-export type DividerProps = PropsWithChildren & {
+export interface DividerProps extends PropsWithChildren {
   className?: string
 }
 

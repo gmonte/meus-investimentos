@@ -39,60 +39,60 @@ function Home() {
   return (
     <div>
       {data?.map((investment) => (
-        <table key={ investment.id } style={ { marginBottom: 20 } }>
+        <table key={ investment.id } className="m-5 text-white">
           <tbody>
 
             <tr>
-              <td style={ { border: '1px solid black' } }>ID:</td>
-              <td style={ { border: '1px solid black' } }>{investment.id}</td>
+              <td className="border border-white">ID:</td>
+              <td className="border border-white">{investment.id}</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Name:</td>
-              <td style={ { border: '1px solid black' } }>{investment.name}</td>
+              <td className="border border-white">Name:</td>
+              <td className="border border-white">{investment.name}</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Type:</td>
-              <td style={ { border: '1px solid black' } }>{investment.type}</td>
+              <td className="border border-white">Type:</td>
+              <td className="border border-white">{investment.type}</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>CDI fee:</td>
-              <td style={ { border: '1px solid black' } }>{investment.cdiFee}%</td>
+              <td className="border border-white">CDI fee:</td>
+              <td className="border border-white">{investment.cdiFee}%</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Start date:</td>
-              <td style={ { border: '1px solid black' } }>{moment(investment.startDate).format('L')}</td>
+              <td className="border border-white">Start date:</td>
+              <td className="border border-white">{moment(investment.startDate).format('L')}</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Due date:</td>
-              <td style={ { border: '1px solid black' } }>{moment(investment.dueDate).format('L')}</td>
+              <td className="border border-white">Due date:</td>
+              <td className="border border-white">{moment(investment.dueDate).format('L')}</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Invested value:</td>
-              <td style={ { border: '1px solid black' } } title={ investment.investedValue.toString() }>{formatCurrency(investment.investedValue)}</td>
+              <td className="border border-white">Invested value:</td>
+              <td className="border border-white" title={ investment.investedValue.toString() }>{formatCurrency(investment.investedValue)}</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Gross value:</td>
-              <td style={ { border: '1px solid black' } } title={ `${ investment.grossValue } (${ investment.grossGrowth }%)` }>{formatCurrency(investment.grossValue)} ({formatNumber(investment.grossGrowth)}%)</td>
+              <td className="border border-white">Gross value:</td>
+              <td className="border border-white" title={ `${ investment.grossValue } (${ investment.grossGrowth }%)` }>{formatCurrency(investment.grossValue)} ({formatNumber(investment.grossGrowth)}%)</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Gross value income:</td>
-              <td style={ { border: '1px solid black' } } title={ investment.grossValueIncome.toString() }>{formatCurrency(investment.grossValueIncome)}</td>
+              <td className="border border-white">Gross value income:</td>
+              <td className="border border-white" title={ investment.grossValueIncome.toString() }>{formatCurrency(investment.grossValueIncome)}</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Net value:</td>
-              <td style={ { border: '1px solid black' } } title={ `${ investment.netValue } (${ investment.netGrowth }%)` }>{formatCurrency(investment.netValue)} ({formatNumber(investment.netGrowth)}%)</td>
+              <td className="border border-white">Net value:</td>
+              <td className="border border-white" title={ `${ investment.netValue } (${ investment.netGrowth }%)` }>{formatCurrency(investment.netValue)} ({formatNumber(investment.netGrowth)}%)</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Net value income:</td>
-              <td style={ { border: '1px solid black' } } title={ investment.netValueIncome.toString() }>{formatCurrency(investment.netValueIncome)}</td>
+              <td className="border border-white">Net value income:</td>
+              <td className="border border-white" title={ investment.netValueIncome.toString() }>{formatCurrency(investment.netValueIncome)}</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Last date paid:</td>
-              <td style={ { border: '1px solid black' } }>{moment(investment.lastDatePaid).format('L')}</td>
+              <td className="border border-white">Last date paid:</td>
+              <td className="border border-white">{moment(investment.lastDatePaid).format('L')}</td>
             </tr>
             <tr>
-              <td style={ { border: '1px solid black' } }>Last date fee consolidated:</td>
-              <td style={ { border: '1px solid black' } }>{moment(investment.lastDateFeeConsolidated).format('L')}</td>
+              <td className="border border-white">Last date fee consolidated:</td>
+              <td className="border border-white">{moment(investment.lastDateFeeConsolidated).format('L')}</td>
             </tr>
           </tbody>
         </table>

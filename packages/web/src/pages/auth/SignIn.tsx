@@ -23,8 +23,8 @@ import { AuthActions } from '~/store/auth'
 import { email } from '~/utils/validators/email.validator'
 import { required } from '~/utils/validators/required.validator'
 
-import { CreateAccountModal } from './CreateAccountModal'
-import { ForgotPasswordModal } from './ForgotPasswordModal'
+import { CreateAccountModal } from './components/CreateAccountModal'
+import { ForgotPasswordModal } from './components/ForgotPasswordModal'
 
 const schema = yup.object().shape<Record<keyof SignInData, yup.AnySchema>>({
   email: flow(
@@ -150,22 +150,15 @@ export default function SignIn() {
         <Button
           startIcon={ <GoogleLogo size={ 24 } color="red" /> }
           className="mt-2 w-full bg-white hover:bg-gray-100 active:bg-gray-200"
-          onClick={ async() => handleSignIn('google') }
+          onClick={ async () => handleSignIn('google') }
         >
           Acessar com Google
         </Button>
 
-        {/* <Button
-          startIcon={<AppleLogo size={24} color="white" />}
-          className="mt-3 w-full bg-black hover:bg-black active:bg-black text-white"
-        >
-          Acessar com Apple
-        </Button> */}
-
         <Button
           startIcon={ <GithubLogo size={ 24 } color="white" /> }
           className="mt-3 w-full bg-black hover:bg-black active:bg-black text-white"
-          onClick={ async() => handleSignIn('github') }
+          onClick={ async () => handleSignIn('github') }
         >
           Acessar com GitHub
         </Button>

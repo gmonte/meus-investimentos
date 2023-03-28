@@ -1,17 +1,11 @@
 import { Outlet } from 'react-router-dom'
 
-import { Button } from '~/components/Button'
-import { useAppDispatch } from '~/store'
-import { AuthActions } from '~/store/auth'
+import { Navbar } from './components/Navbar'
 
 export function AuthenticatedLayout() {
-  const dispatch = useAppDispatch()
-
   return (
-    <div>
-      <Button onClick={ () => dispatch(AuthActions.logout()) }>
-        sair
-      </Button>
+    <div className="w-screen h-screen bg-gray-900 flex flex-col">
+      <Navbar />
       <Outlet />
     </div>
   )

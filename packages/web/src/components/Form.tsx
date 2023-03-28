@@ -6,10 +6,10 @@ import {
 
 import clsx from 'clsx'
 
-export type FormProps = PropsWithChildren<{
+export interface FormProps extends PropsWithChildren {
   onSubmit: FormEventHandler<HTMLFormElement>
   className?: string
-}>
+}
 
 export function Form({
   onSubmit,

@@ -6,7 +6,7 @@ import {
 import { Slot } from '@radix-ui/react-slot'
 import clsx from 'clsx'
 
-export type HeadingProps = PropsWithChildren & {
+export interface HeadingProps extends PropsWithChildren {
   size?: 'sm' | 'md' | 'lg' | 'xl'
   asChild?: boolean
   className?: string

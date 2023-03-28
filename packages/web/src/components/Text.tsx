@@ -6,7 +6,7 @@ import {
 import { Slot } from '@radix-ui/react-slot'
 import clsx from 'clsx'
 
-export type TextProps = PropsWithChildren & {
+export interface TextProps extends PropsWithChildren {
   size?: 'sm' | 'md' | 'lg'
   asChild?: boolean
   className?: string

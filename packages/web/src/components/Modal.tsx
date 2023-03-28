@@ -14,12 +14,14 @@ import { Text } from './Text'
 export interface ModalRootProps extends PropsWithChildren {
   open?: boolean
   close?: () => void
+  className?: string
 }
 
 function ModalRoot({
   open = false,
   close,
-  children
+  children,
+  className
 }: ModalRootProps) {
   return (
     <DialogPrimitive.Root open={ open } onOpenChange={ close }>
@@ -55,7 +57,8 @@ function ModalRoot({
               'w-[95vw] max-w-md rounded-lg p-4 md:w-full',
               'top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]',
               'bg-white dark:bg-gray-700',
-              'focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75'
+              'focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75',
+              className
             ) }
           >
 
@@ -105,9 +108,9 @@ function ModalDescription({ children }: PropsWithChildren) {
 
 ModalDescription.displayName = 'Modal.Description'
 
-function ModalFooter({ children }: PropsWithChildren) {
+function ModalFooter({ children, className }: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className="mt-4 flex justify-end">
+    <div className={ clsx('mt-4 flex justify-end gap-2', className) }>
       {children}
     </div>
   )

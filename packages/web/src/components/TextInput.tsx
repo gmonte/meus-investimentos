@@ -12,7 +12,7 @@ import {
   EyeClosed
 } from 'phosphor-react'
 
-export type TextInputRootProps = PropsWithChildren & {
+export interface TextInputRootProps extends PropsWithChildren {
   className?: string
   error?: string
 }
@@ -55,7 +55,7 @@ function TextInputRoot({
 
 TextInputRoot.displayName = 'TextInput.Root'
 
-export type TextInputIconProps = PropsWithChildren
+export interface TextInputIconProps extends PropsWithChildren {}
 
 function TextInputIcon({ children }: TextInputInputProps) {
   return (
@@ -73,7 +73,7 @@ function TextInputIcon({ children }: TextInputInputProps) {
 
 TextInputIcon.displayName = 'TextInput.Icon'
 
-export type TextInputInputProps = InputHTMLAttributes<HTMLInputElement>
+export interface TextInputInputProps extends InputHTMLAttributes<HTMLInputElement> {}
 
 const TextInputInput = forwardRef<HTMLInputElement, TextInputInputProps>(
   ({
