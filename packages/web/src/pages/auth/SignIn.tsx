@@ -48,7 +48,6 @@ export default function SignIn() {
 
   const handleLogin = useCallback(
     (data: SignInData) => {
-      console.log('data', data)
       dispatch(AuthActions.login({
         data,
         onError(message) {
