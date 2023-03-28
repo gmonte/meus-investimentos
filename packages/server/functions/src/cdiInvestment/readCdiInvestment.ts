@@ -5,9 +5,9 @@ import { COLLECTIONS } from '../constants'
 import { CDIInvestmentDocument } from '../types'
 import { verifyInvestmentUserOwner } from '../utils/verifyUser'
 
-export const readCdiInvestment = async (db: admin.firestore.Firestore, investment: CDIInvestmentDocument, user: UserRecord): Promise<CDIInvestmentDocument> => {
-  if (investment.id) {
-    const docRef = await db.collection(COLLECTIONS.CDI_INVESTMENTS).doc(investment.id)
+export const readCdiInvestment = async (db: admin.firestore.Firestore, { id }: CDIInvestmentDocument, user: UserRecord): Promise<CDIInvestmentDocument> => {
+  if (id) {
+    const docRef = await db.collection(COLLECTIONS.CDI_INVESTMENTS).doc(id)
     const snapshot = await docRef.get()
     const investmentFully = await snapshot.data() as CDIInvestmentDocument
 

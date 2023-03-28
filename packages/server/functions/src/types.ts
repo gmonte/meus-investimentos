@@ -52,3 +52,10 @@ export interface CDIInvestmentDocument {
   estimatedNetValueIncome: number
   estimatedNetGrowth: number
 }
+
+export enum HttpMethod {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE'
+}
