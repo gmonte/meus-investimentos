@@ -14,6 +14,7 @@ import createSagaMiddleware from 'redux-saga'
 
 import reducers from './reducers'
 import sagas from './sagas'
+import { createAccessTokenSubscriber, createRefreshTokenInterceptor } from '~/services/api/interceptors'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -53,3 +54,6 @@ export type AppDispatch = typeof store.dispatch
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+
+createAccessTokenSubscriber(store)
+createRefreshTokenInterceptor(store)

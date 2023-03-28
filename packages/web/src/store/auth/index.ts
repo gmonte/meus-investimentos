@@ -6,7 +6,8 @@ import {
   LoginPayload,
   LoginPopupPayload,
   LoginSuccessPayload,
-  ForgotPasswordPayload
+  ForgotPasswordPayload,
+  RefreshTokenSuccessPayload
 } from '~/@types/Auth'
 
 const initialState: State = {
@@ -25,10 +26,16 @@ export const slice = createSlice({
     loginPopup(_state, _action: LoginPopupPayload) {},
     loginSuccess(state, action: LoginSuccessPayload) {
       state.authenticated = true
-      state.user = action.payload.user
+      state.user = { ...action.payload.user }
     },
     logout(state) {
       state.authenticated = false
+      state.user = undefined
+    },
+    refreshTokenSuccess(state, action: RefreshTokenSuccessPayload) {
+      if (state.user) {
+        state.user.accessToken = action.payload.accessToken
+      }
     }
   }
 })

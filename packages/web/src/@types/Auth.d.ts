@@ -1,5 +1,9 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { User } from 'firebase/auth'
+import { User as FirebaseUser } from 'firebase/auth'
+
+export interface User extends FirebaseUser {
+  accessToken?: string
+}
 
 export interface SignInData {
   email: string
@@ -46,4 +50,8 @@ export type LoginPopupPayload = PayloadAction<{
 
 export type LoginSuccessPayload = PayloadAction<{
   user: User
+}>
+
+export type RefreshTokenSuccessPayload = PayloadAction<{
+  accessToken: string
 }>

@@ -47,6 +47,7 @@ exports.readCdiInvestment = functions.https.onRequest(verifyUser(
         if (err instanceof InvestmentUserOwnerError) {
           response.status(403).send(err.message)
         } else {
+          console.error(err)
           response.status(500).send()
         }
       }
@@ -67,6 +68,7 @@ exports.updateCdiInvestment = functions.https.onRequest(verifyUser(
         if (err instanceof InvestmentUserOwnerError) {
           response.status(403).send(err.message)
         } else {
+          console.error(err)
           response.status(500).send()
         }
       }
@@ -87,6 +89,7 @@ exports.deleteCdiInvestment = functions.https.onRequest(verifyUser(
         if (err instanceof InvestmentUserOwnerError) {
           response.status(403).send(err.message)
         } else {
+          console.error(err)
           response.status(500).send()
         }
       }
