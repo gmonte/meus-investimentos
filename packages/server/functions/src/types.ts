@@ -30,6 +30,7 @@ export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
 
 export interface CDIInvestmentDocument {
   id?: string
+  name?: string
   user: string
   type: InvestmentType
   startDate: Date | string
@@ -52,6 +53,8 @@ export interface CDIInvestmentDocument {
   estimatedNetValueIncome: number
   estimatedNetGrowth: number
 }
+
+export type ShortCDIInvestmentDocument = Omit<CDIInvestmentDocument, 'history'>
 
 export enum HttpMethod {
   GET = 'GET',
