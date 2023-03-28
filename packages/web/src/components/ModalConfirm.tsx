@@ -1,4 +1,7 @@
-import { useCallback } from 'react'
+import {
+  useCallback,
+  useState
+} from 'react'
 
 import { ModalProps } from '~/hooks/useModal'
 
@@ -8,12 +11,11 @@ import { Modal } from './Modal'
 export interface ModalConfirmProps extends ModalProps {
   title: string
   description: string
-  onConfirm: () => void
-  onCancel?: () => void
+  onConfirm: () => unknown
+  onCancel?: () => unknown
 }
 
 export function ModalConfirm({
-  id,
   open,
   close,
   title,
@@ -21,10 +23,18 @@ export function ModalConfirm({
   onConfirm,
   onCancel
 }: ModalConfirmProps) {
+  const [loading, setLoading] = useState(false)
+
   const handleConfirm = useCallback(
-    () => {
-      onConfirm()
-      close()
+    async () => {
+      try {
+        setLoading(true)
+        await onConfirm()
+        close()
+      } catch (err) {
+        console.error(err)
+        setLoading(false)
+      }
     },
     [close, onConfirm]
   )
@@ -48,6 +58,7 @@ export function ModalConfirm({
 
       <Modal.Footer>
         <Button
+          loading={ loading }
           onClick={ handleConfirm }
         >
           Confirmar

@@ -1,7 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { REHYDRATE } from 'redux-persist'
 
-import { CDIInvestmentDocument } from '~/@types/Investment'
+import {
+  CDIInvestmentDocument,
+  InvestmentFormData
+} from '~/@types/Investment'
 
 import { baseQueryWithReauth } from './fetchBase'
 
@@ -25,8 +28,7 @@ export const api = createApi({
                 type: 'CDIInvestmentsList' as const,
                 id
               })
-            ),
-            'CDIInvestmentsList'
+            )
           ]
         : ['CDIInvestmentsList']
     }),
@@ -37,9 +39,44 @@ export const api = createApi({
         {
           type: 'CDIInvestment' as const,
           id: result?.id
-        },
-        'CDIInvestment'
+        }
       ]
+    }),
+
+    createCdiInvestment: builder.mutation<CDIInvestmentDocument, InvestmentFormData>({
+      query: (investment) => ({
+        url: '/createCdiInvestment',
+        method: 'POST',
+        body: investment
+      }),
+      invalidatesTags: ['CDIInvestmentsList']
+    }),
+
+    updateCdiInvestment: builder.mutation<CDIInvestmentDocument, InvestmentFormData>({
+      query: (investment) => ({
+        url: '/updateCdiInvestment',
+        method: 'PUT',
+        body: investment
+      }),
+      invalidatesTags: result => [
+        {
+          type: 'CDIInvestment' as const,
+          id: result?.id
+        },
+        {
+          type: 'CDIInvestmentsList' as const,
+          id: result?.id
+        }
+      ]
+    }),
+
+    deleteCdiInvestment: builder.mutation<void, { id: string }>({
+      query: ({ id }) => ({
+        url: '/deleteCdiInvestment',
+        method: 'DELETE',
+        body: { id }
+      }),
+      invalidatesTags: ['CDIInvestmentsList']
     })
 
   })

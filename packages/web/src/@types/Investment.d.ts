@@ -47,6 +47,7 @@ export interface CDIInvestmentDocument {
 }
 
 export interface InvestmentFormData {
+  id?: string
   name?: string
   type: InvestmentType
   startDate: Date | string

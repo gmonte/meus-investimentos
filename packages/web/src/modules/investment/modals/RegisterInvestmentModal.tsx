@@ -5,12 +5,17 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import flow from 'lodash/fp/flow'
 import * as yup from 'yup'
 
-import { InvestmentFormData } from '~/@types/Investment'
+import {
+  CDIInvestmentDocument,
+  InvestmentFormData
+} from '~/@types/Investment'
 import { Button } from '~/components/Button'
 import { Form } from '~/components/Form'
 import { Modal } from '~/components/Modal'
 import { TextInput } from '~/components/TextInput'
 import { ModalProps } from '~/hooks/useModal'
+import { useToast } from '~/hooks/useToast'
+import { api } from '~/services/api'
 import { date } from '~/utils/validators/date.validator'
 import { max } from '~/utils/validators/max.validator'
 import { min } from '~/utils/validators/min.validator'
@@ -18,6 +23,7 @@ import { number } from '~/utils/validators/number.validator'
 import { required } from '~/utils/validators/required.validator'
 
 const schema = yup.object().shape<Record<keyof InvestmentFormData, yup.AnySchema>>({
+  id: yup.string(),
   name: yup.string(),
   type: required()(yup.string()),
   startDate: flow(
@@ -38,21 +44,74 @@ const schema = yup.object().shape<Record<keyof InvestmentFormData, yup.AnySchema
   rescueDate: date()(yup.string())
 })
 
-export function CreateInvestmentModal({ open, close }: ModalProps) {
-  // const dispatch = useAppDispatch()
-  // const { createToast } = useToast()
+export interface RegisterInvestmentModalProps extends ModalProps {
+  investment?: Omit<CDIInvestmentDocument, 'history'>
+}
+
+export function RegisterInvestmentModal({
+  open,
+  close,
+  investment
+}: RegisterInvestmentModalProps) {
+  const { createToast } = useToast()
 
   const {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm<InvestmentFormData>({ resolver: yupResolver(schema) })
+  } = useForm<InvestmentFormData>({
+    resolver: yupResolver(schema),
+    defaultValues: !investment?.id
+      ? undefined
+      : {
+          cdiFee: investment.cdiFee,
+          dueDate: investment.dueDate,
+          investedValue: investment.investedValue,
+          name: investment.name,
+          rescueDate: investment.rescueDate,
+          startDate: investment.startDate,
+          type: investment.type
+        }
+  })
+
+  const [
+    createCdiInvestment,
+    createCdiInvestmentState
+  ] = api.useCreateCdiInvestmentMutation()
+
+  const [
+    updateCdiInvestment,
+    updateCdiInvestmentState
+  ] = api.useUpdateCdiInvestmentMutation()
+
+  const isLoading = createCdiInvestmentState.isLoading || updateCdiInvestmentState.isLoading
 
   const handleCreateUser = useCallback(
-    (data: InvestmentFormData) => {
-      console.log('data', data)
+    async (data: InvestmentFormData) => {
+      const dataFormatted: InvestmentFormData = {
+        ...data,
+        cdiFee: Number(data.cdiFee),
+        investedValue: Number(data.investedValue)
+      }
+
+      if (investment?.id) {
+        await updateCdiInvestment({
+          id: investment.id,
+          ...dataFormatted
+        })
+      } else {
+        await createCdiInvestment(dataFormatted)
+      }
+
+      createToast({
+        type: 'success',
+        title: 'Cadastro de investimento',
+        description: `Investimento ${ investment?.id ? 'editado' : 'criado' } com sucesso!`
+      })
+
+      close()
     },
-    []
+    [close, createCdiInvestment, createToast, investment?.id, updateCdiInvestment]
   )
 
   return (
@@ -108,9 +167,16 @@ export function CreateInvestmentModal({ open, close }: ModalProps) {
           />
         </TextInput.Root>
 
+        <TextInput.Root className="w-full" error={ errors.rescueDate?.message }>
+          <TextInput.Input
+            placeholder="Data de resgate"
+            { ...register('rescueDate') }
+          />
+        </TextInput.Root>
+
         <Modal.Footer>
-          <Button>
-            Cadastrar
+          <Button loading={ isLoading }>
+            {investment?.id ? 'Editar' : 'Cadastrar'}
           </Button>
         </Modal.Footer>
       </Form>

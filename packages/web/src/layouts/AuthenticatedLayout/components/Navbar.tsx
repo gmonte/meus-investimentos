@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { Button } from '~/components/Button'
 import { ModalConfirm } from '~/components/ModalConfirm'
 import { useModal } from '~/hooks/useModal'
-import { CreateInvestmentModal } from '~/modules/investment/modals/CreateInvestmentModal'
+import { RegisterInvestmentModal } from '~/modules/investment/modals/RegisterInvestmentModal'
 import { useAppDispatch } from '~/store'
 import { AuthActions } from '~/store/auth'
 
@@ -15,7 +15,7 @@ export function Navbar() {
   const handleCreateInvestment = useCallback(
     () => createModal({
       id: 'create-investment',
-      Component: CreateInvestmentModal
+      Component: RegisterInvestmentModal
     }),
     [createModal]
   )
@@ -34,7 +34,7 @@ export function Navbar() {
   )
 
   return (
-    <nav className="bg-cyan-500 p-6">
+    <nav className="bg-cyan-500 p-6 sticky top-0">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between flex-wrap">
 
