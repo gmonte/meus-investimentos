@@ -13,11 +13,34 @@ export const api = createApi({
       return action.payload?.[reducerPath]
     }
   },
+  tagTypes: ['CDIInvestmentsList', 'CDIInvestment'],
   endpoints: (builder) => ({
 
-    getUserCdiInvestments: builder.query<CDIInvestmentDocument[], void>({ query: () => '/readUserCdiInvestments' }),
+    getUserCdiInvestments: builder.query<CDIInvestmentDocument[], void>({
+      query: () => '/readUserCdiInvestments',
+      providesTags: (result) => result
+        ? [
+            ...result.map(
+              ({ id }) => ({
+                type: 'CDIInvestmentsList' as const,
+                id
+              })
+            ),
+            'CDIInvestmentsList'
+          ]
+        : ['CDIInvestmentsList']
+    }),
 
-    getCdiInvestment: builder.query<CDIInvestmentDocument, string>({ query: (id) => `/readCdiInvestment?id=${ id }` })
+    getCdiInvestment: builder.query<CDIInvestmentDocument, string>({
+      query: (id) => `/readCdiInvestment?id=${ id }`,
+      providesTags: (result) => [
+        {
+          type: 'CDIInvestment' as const,
+          id: result?.id
+        },
+        'CDIInvestment'
+      ]
+    })
 
   })
 })

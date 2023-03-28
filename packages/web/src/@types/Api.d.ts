@@ -6,7 +6,7 @@ export interface InvestmentByDay {
   grossValue: number
   grossGrowth: number
   paid: boolean
-  isFeeProjected: boolean
+  isFeeConsolidated: boolean
   iofValue: number
   iofFee: number
   irValue: number
@@ -19,7 +19,8 @@ export interface InvestmentByDay {
 export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
 
 export interface CDIInvestmentDocument {
-  id?: string
+  id: string
+  name?: string
   user: string
   type: InvestmentType
   startDate: Date | string
@@ -41,4 +42,6 @@ export interface CDIInvestmentDocument {
   estimatedNetValue: number
   estimatedNetValueIncome: number
   estimatedNetGrowth: number
+  lastDatePaid?: Date | string
+  lastDateFeeConsolidated?: Date | string
 }

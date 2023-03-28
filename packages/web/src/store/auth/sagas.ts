@@ -22,6 +22,7 @@ import {
   LoginPayload,
   LoginPopupPayload
 } from '~/@types/Auth'
+import { api } from '~/services/api'
 import { app } from '~/services/firebase'
 
 import { AuthActions } from '.'
@@ -158,6 +159,7 @@ function* loginPopup({ payload: { providerId, onError = () => { } } }: LoginPopu
 }
 
 function* logout() {
+  yield put(api.util.resetApiState())
   const auth = getAuth(app)
   yield call(signOut, auth)
 }

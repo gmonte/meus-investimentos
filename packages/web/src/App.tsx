@@ -2,11 +2,12 @@ import { useEffect } from 'react'
 
 import { Loader } from './components/Loader'
 import { Router } from './routes'
-import { useAppDispatch, useAppSelector } from './store'
+import { useAppSelector } from './store'
 import { selectLoading } from './store/loader/selectors'
 
+import 'moment/locale/pt-br'
+
 export function App() {
-  const dispatch = useAppDispatch()
   const loading = useAppSelector(selectLoading)
 
   useEffect(
