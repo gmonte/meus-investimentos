@@ -18,3 +18,5 @@ export const formatCurrency = (num: number | string) => {
     currency: 'BRL'
   }).format(precisionNumberWithoutRound(num, 2))
 }
+
+export const fixStrNumber = (number: string) => number.split(',').join('.')

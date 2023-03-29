@@ -1,5 +1,5 @@
 export interface InvestmentByDay {
-  date: Date | string
+  date: string
   cdiFeeDaily: number
   grossValueIncome: number
   grossValueIncomeAccumulated: number
@@ -23,9 +23,9 @@ export interface CDIInvestmentDocument {
   name?: string
   user: string
   type: InvestmentType
-  startDate: Date | string
-  dueDate?: Date | string
-  rescueDate?: Date | string
+  startDate: string
+  dueDate?: string
+  rescueDate?: string
   investedValue: number
   cdiFee: number
   finished?: boolean
@@ -42,17 +42,16 @@ export interface CDIInvestmentDocument {
   estimatedNetValue: number
   estimatedNetValueIncome: number
   estimatedNetGrowth: number
-  lastDatePaid?: Date | string
-  lastDateFeeConsolidated?: Date | string
+  lastDatePaid?: string
+  lastDateFeeConsolidated?: string
 }
 
 export interface InvestmentFormData {
   id?: string
   name?: string
   type: InvestmentType
-  startDate: Date | string
-  dueDate?: Date | string
-  rescueDate?: Date | string
+  startDate: string
+  dueDate?: string
   investedValue: number
   cdiFee: number
 }

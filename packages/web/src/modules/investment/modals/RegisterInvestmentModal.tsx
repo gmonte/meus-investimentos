@@ -1,8 +1,12 @@
 import { useCallback } from 'react'
-import { useForm } from 'react-hook-form'
+import {
+  useForm,
+  Controller
+} from 'react-hook-form'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import flow from 'lodash/fp/flow'
+import moment from 'moment/moment'
 import * as yup from 'yup'
 
 import {
@@ -12,10 +16,12 @@ import {
 import { Button } from '~/components/Button'
 import { Form } from '~/components/Form'
 import { Modal } from '~/components/Modal'
+import { Radio } from '~/components/Radio'
 import { TextInput } from '~/components/TextInput'
 import { ModalProps } from '~/hooks/useModal'
 import { useToast } from '~/hooks/useToast'
 import { api } from '~/services/api'
+import { fixStrNumber } from '~/utils/formatters'
 import { date } from '~/utils/validators/date.validator'
 import { max } from '~/utils/validators/max.validator'
 import { min } from '~/utils/validators/min.validator'
@@ -40,12 +46,11 @@ const schema = yup.object().shape<Record<keyof InvestmentFormData, yup.AnySchema
     number(),
     min(1),
     required()
-  )(yup.string()),
-  rescueDate: date()(yup.string())
+  )(yup.string())
 })
 
 export interface RegisterInvestmentModalProps extends ModalProps {
-  investment?: Omit<CDIInvestmentDocument, 'history'>
+  investment?: Omit<CDIInvestmentDocument, 'history' | 'rescueDate'>
 }
 
 export function RegisterInvestmentModal({
@@ -58,18 +63,18 @@ export function RegisterInvestmentModal({
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors }
   } = useForm<InvestmentFormData>({
     resolver: yupResolver(schema),
     defaultValues: !investment?.id
-      ? undefined
+      ? { type: 'CDB' }
       : {
           cdiFee: investment.cdiFee,
-          dueDate: investment.dueDate,
+          dueDate: !investment.dueDate ? undefined : moment(investment.dueDate).format('L'),
           investedValue: investment.investedValue,
           name: investment.name,
-          rescueDate: investment.rescueDate,
-          startDate: investment.startDate,
+          startDate: moment(investment.startDate).format('L'),
           type: investment.type
         }
   })
@@ -90,8 +95,10 @@ export function RegisterInvestmentModal({
     async (data: InvestmentFormData) => {
       const dataFormatted: InvestmentFormData = {
         ...data,
-        cdiFee: Number(data.cdiFee),
-        investedValue: Number(data.investedValue)
+        startDate: moment(data.startDate, 'L').format('YYYY-MM-DD'),
+        dueDate: !data.dueDate ? undefined : moment(data.dueDate, 'L').format('YYYY-MM-DD'),
+        cdiFee: Number(fixStrNumber(String(data.cdiFee))),
+        investedValue: Number(fixStrNumber(String(data.investedValue)))
       }
 
       if (investment?.id) {
@@ -105,7 +112,7 @@ export function RegisterInvestmentModal({
 
       createToast({
         type: 'success',
-        title: 'Cadastro de investimento',
+        title: `${ investment?.id ? 'Edição' : 'Cadastro' } de investimento`,
         description: `Investimento ${ investment?.id ? 'editado' : 'criado' } com sucesso!`
       })
 
@@ -117,7 +124,7 @@ export function RegisterInvestmentModal({
   return (
     <Modal.Root open={ open } close={ close }>
       <Modal.Title>
-        Cadastro de Investimento
+        {investment?.id ? 'Edição' : 'Cadastro'} de Investimento
       </Modal.Title>
 
       <Form
@@ -125,58 +132,100 @@ export function RegisterInvestmentModal({
         onSubmit={ handleSubmit(handleCreateUser) }
       >
 
-        <TextInput.Root className="w-full" error={ errors.name?.message }>
+        <TextInput.Root
+          label="Nome"
+          className="w-full"
+          error={ errors.name?.message }
+        >
           <TextInput.Input
             placeholder="Informe um apelido para o investimento"
             { ...register('name') }
           />
         </TextInput.Root>
 
-        <TextInput.Root className="w-full" error={ errors.type?.message }>
-          <TextInput.Input
-            placeholder="Tipo de investimento"
-            { ...register('type') }
+        <Controller
+          name="type"
+          control={ control }
+          render={ ({ field }) => (
+            <Radio.Group
+              label="Tipo de investimento"
+              { ...field }
+            >
+              <Radio.Item value="CDB" label="CDB" className="flex-1" />
+              <Radio.Item value="LCI" label="LCI" className="flex-1" />
+              <Radio.Item value="LCA" label="LCA" className="flex-1" />
+            </Radio.Group>
+          ) }
+        />
+
+        <div className="w-full flex gap-2 flex-wrap">
+          <TextInput.Root
+            label="Indexador"
+            className="w-full flex-1"
+          >
+            <TextInput.Input
+              value="CDI"
+              disabled
+            />
+          </TextInput.Root>
+
+          <TextInput.Root
+            label="Taxa *"
+            className="w-full flex-1"
+            error={ errors.cdiFee?.message }
+          >
+            <Controller
+              name="cdiFee"
+              control={ control }
+              render={ ({ field }) => <TextInput.InputPercentage { ...field }/> }
+            />
+          </TextInput.Root>
+        </div>
+
+        <TextInput.Root
+          label="Data inicial *"
+          className="w-full"
+          error={ errors.startDate?.message }
+        >
+          <Controller
+            name="startDate"
+            control={ control }
+            render={ ({ field }) => (
+              <TextInput.InputDate
+                placeholder="Data de aquisição do investimento"
+                { ...field }
+              />
+            ) }
           />
         </TextInput.Root>
 
-        <TextInput.Root className="w-full" error={ errors.startDate?.message }>
-          <TextInput.Input
-            placeholder="Data inicial"
-            { ...register('startDate') }
+        <TextInput.Root
+          label="Data de vencimento"
+          className="w-full"
+          error={ errors.dueDate?.message }
+        >
+          <Controller
+            name="dueDate"
+            control={ control }
+            render={ ({ field }) => <TextInput.InputDate { ...field } /> }
           />
         </TextInput.Root>
 
-        <TextInput.Root className="w-full" error={ errors.dueDate?.message }>
-          <TextInput.Input
-            placeholder="Data de vencimento"
-            { ...register('dueDate') }
-          />
-        </TextInput.Root>
-
-        <TextInput.Root className="w-full" error={ errors.cdiFee?.message }>
-          <TextInput.Input
-            placeholder="Rendimento em relação à taxa CDI"
-            { ...register('cdiFee') }
-          />
-        </TextInput.Root>
-
-        <TextInput.Root className="w-full" error={ errors.investedValue?.message }>
-          <TextInput.Input
-            placeholder="Valor investido"
-            { ...register('investedValue') }
-          />
-        </TextInput.Root>
-
-        <TextInput.Root className="w-full" error={ errors.rescueDate?.message }>
-          <TextInput.Input
-            placeholder="Data de resgate"
-            { ...register('rescueDate') }
+        <TextInput.Root
+          label="Valor investido *"
+          className="w-full"
+          error={ errors.investedValue?.message }
+        >
+          <Controller
+            name="investedValue"
+            control={ control }
+            render={ ({ field }) => <TextInput.InputCurrency { ...field }/> }
           />
         </TextInput.Root>
 
         <Modal.Footer>
           <Button loading={ isLoading }>
-            {investment?.id ? 'Editar' : 'Cadastrar'}
+            {investment?.id ? 'Salvar' : 'Cadastrar'}
           </Button>
         </Modal.Footer>
       </Form>

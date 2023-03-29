@@ -22,7 +22,7 @@ export default function InvestmentsList() {
 
   const {
     data,
-    isLoading,
+    isFetching,
     isError,
     error
   } = api.useGetUserCdiInvestmentsQuery()
@@ -44,23 +44,18 @@ export default function InvestmentsList() {
       Component: ModalConfirm,
       props: {
         title: 'Deletar investimento',
-        description: 'Você tem certeza que deseja deletar o investimento?',
+        description: 'Você tem certeza que deseja deletar o investimento? Essa ação é irreversível.',
         async onConfirm() {
           await deleteCdiInvestment({ id: investment.id })
           createToast({
             type: 'success',
-            title: 'Cadastro de investimento',
-            description: 'Investimento deletado com sucesso!'
+            title: 'Investimento deletado com sucesso!'
           })
         }
       }
     }),
     [createModal, createToast, deleteCdiInvestment]
   )
-
-  if (isLoading) {
-    return <Loader />
-  }
 
   if (isError) {
     if ('status' in error) {
@@ -81,6 +76,10 @@ export default function InvestmentsList() {
 
   return (
     <div>
+      {isFetching && (
+        <Loader />
+      )}
+
       {data?.map((investment) => (
         <table key={ investment.id } className="m-5 text-white">
           <tbody>
@@ -106,11 +105,11 @@ export default function InvestmentsList() {
             </tr>
             <tr>
               <td className="border border-white">Due date:</td>
-              <td className="border border-white">{moment(investment.dueDate).format('L')}</td>
+              <td className="border border-white">{investment.dueDate && moment(investment.dueDate).format('L')}</td>
             </tr>
             <tr>
               <td className="border border-white">Invested value:</td>
-              <td className="border border-white" title={ investment.investedValue.toString() }>{formatCurrency(investment.investedValue)}</td>
+              <td className="border border-white" title={ investment.investedValue?.toString?.() }>{formatCurrency(investment.investedValue)}</td>
             </tr>
             <tr>
               <td className="border border-white">Gross value:</td>
