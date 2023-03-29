@@ -16,9 +16,14 @@ import { enableCors } from './utils/enableCors'
 const db = admin.firestore()
 
 // This will be run every day at (Minute Hour * * *)
-exports.cronJobFetchCdiByDayMorning = functions.pubsub.schedule('0 8 * * *')
+exports.cronJobFetchCdiByDayNight = functions.pubsub.schedule('1 0 * * *')
   .timeZone('America/Sao_Paulo')
   .onRun(() => cronJobFetchCdiByDay(db, true))
+
+// This will be run every day at (Minute Hour * * *)
+exports.cronJobFetchCdiByDayMorning = functions.pubsub.schedule('0 8 * * *')
+  .timeZone('America/Sao_Paulo')
+  .onRun(() => cronJobFetchCdiByDay(db))
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayNoon = functions.pubsub.schedule('0 12 * * *')
@@ -27,11 +32,6 @@ exports.cronJobFetchCdiByDayNoon = functions.pubsub.schedule('0 12 * * *')
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayEvening = functions.pubsub.schedule('0 18 * * *')
-  .timeZone('America/Sao_Paulo')
-  .onRun(() => cronJobFetchCdiByDay(db))
-
-// This will be run every day at (Minute Hour * * *)
-exports.cronJobFetchCdiByDayNight = functions.pubsub.schedule('1 0 * * *')
   .timeZone('America/Sao_Paulo')
   .onRun(() => cronJobFetchCdiByDay(db))
 
