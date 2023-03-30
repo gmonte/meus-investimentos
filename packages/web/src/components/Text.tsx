@@ -7,7 +7,7 @@ import { Slot } from '@radix-ui/react-slot'
 import clsx from 'clsx'
 
 export interface TextProps extends PropsWithChildren {
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xl'
   asChild?: boolean
   className?: string
 }
@@ -29,7 +29,8 @@ export const Text = forwardRef<HTMLHeadingElement, TextProps>(
           {
             'text-xs': size === 'sm',
             'text-sm': size === 'md',
-            'text-md': size === 'lg'
+            'text-md': size === 'lg',
+            'text-lg': size === 'xl'
           },
           className
         ) }

@@ -18,6 +18,10 @@ export default defineConfig({
           {
             name: 'Inter',
             styles: 'wght@400;600;700'
+          },
+          {
+            name: 'Fira Code',
+            styles: 'wght@400;600;700'
           }
         ],
       },

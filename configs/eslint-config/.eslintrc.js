@@ -30,6 +30,7 @@ module.exports = {
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
     '@typescript-eslint/space-before-function-paren': ['error', {
       'anonymous': 'never',
       'named': 'never',

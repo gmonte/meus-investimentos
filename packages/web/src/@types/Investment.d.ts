@@ -46,6 +46,8 @@ export interface CDIInvestmentDocument {
   lastDateFeeConsolidated?: string
 }
 
+export interface ShortCDIInvestmentDocument extends Omit<CDIInvestmentDocument, 'history'> {}
+
 export interface InvestmentFormData {
   id?: string
   name?: string

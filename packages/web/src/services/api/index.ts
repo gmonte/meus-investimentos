@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { REHYDRATE } from 'redux-persist'
 
 import {
+  ShortCDIInvestmentDocument,
   CDIInvestmentDocument,
   InvestmentFormData
 } from '~/@types/Investment'
@@ -19,7 +20,7 @@ export const api = createApi({
   tagTypes: ['CDIInvestmentsList', 'CDIInvestment'],
   endpoints: (builder) => ({
 
-    getUserCdiInvestments: builder.query<CDIInvestmentDocument[], void>({
+    getUserCdiInvestments: builder.query<ShortCDIInvestmentDocument[], void>({
       query: () => '/readUserCdiInvestments',
       providesTags: (result) => result
         ? [

@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        ...fontFamily,
+        sans: ['Inter', ...fontFamily.sans],
+        mono: ['Fira Code', ...fontFamily.mono]
+      },
       boxShadow: {
         slider: "0 0 0 5px rgba(0, 0, 0, 0.3)",
       },
