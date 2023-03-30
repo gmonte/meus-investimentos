@@ -131,7 +131,7 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
 
           <div className="flex justify-between items-center mt-3 flex-wrap">
             <Text className="text-gray-600 font-bold" size="md">
-              Seu dinheiro está rendendo há {moment(lastDatePaid, 'YYYY-MM-DD').diff(investment.startDate, 'days')} dias
+              Seu dinheiro está rendendo há {moment(investment.lastDatePaid, 'YYYY-MM-DD').diff(investment.startDate, 'days')} dias
             </Text>
 
             <Text className="text-gray-600 font-bold" size="md">
