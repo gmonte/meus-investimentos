@@ -4,7 +4,8 @@ import { REHYDRATE } from 'redux-persist'
 import {
   ShortCDIInvestmentDocument,
   CDIInvestmentDocument,
-  InvestmentFormData
+  InvestmentFormData,
+  UserResume
 } from '~/@types/Investment'
 
 import { baseQueryWithReauth } from './fetchBase'
@@ -17,7 +18,7 @@ export const api = createApi({
       return action.payload?.[reducerPath]
     }
   },
-  tagTypes: ['CDIInvestmentsList', 'CDIInvestment'],
+  tagTypes: ['CDIInvestmentsList', 'CDIInvestment', 'UserResume'],
   endpoints: (builder) => ({
 
     getUserCdiInvestments: builder.query<ShortCDIInvestmentDocument[], void>({
@@ -44,13 +45,18 @@ export const api = createApi({
       ]
     }),
 
+    getUserResume: builder.query<UserResume, void>({
+      query: () => '/getUserResume',
+      providesTags: ['UserResume']
+    }),
+
     createCdiInvestment: builder.mutation<CDIInvestmentDocument, InvestmentFormData>({
       query: (investment) => ({
         url: '/createCdiInvestment',
         method: 'POST',
         body: investment
       }),
-      invalidatesTags: ['CDIInvestmentsList']
+      invalidatesTags: ['CDIInvestmentsList', 'UserResume']
     }),
 
     updateCdiInvestment: builder.mutation<CDIInvestmentDocument, InvestmentFormData>({
@@ -67,7 +73,8 @@ export const api = createApi({
         {
           type: 'CDIInvestmentsList' as const,
           id: result?.id
-        }
+        },
+        'UserResume'
       ]
     }),
 
@@ -77,7 +84,7 @@ export const api = createApi({
         method: 'DELETE',
         body: { id }
       }),
-      invalidatesTags: ['CDIInvestmentsList']
+      invalidatesTags: ['CDIInvestmentsList', 'UserResume']
     })
 
   })

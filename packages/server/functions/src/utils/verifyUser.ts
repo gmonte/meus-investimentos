@@ -17,8 +17,15 @@ export const verifyUser = (next: Next) => async (request: functions.https.Reques
     return
   }
 
+  let decodedIdToken: admin.auth.DecodedIdToken
   try {
-    const decodedIdToken: admin.auth.DecodedIdToken = await auth.verifyIdToken(idToken)
+    decodedIdToken = await auth.verifyIdToken(idToken)
+  } catch (err) {
+    response.status(401).send('You are not authorized to perform this action')
+    return
+  }
+
+  try {
     if (decodedIdToken && decodedIdToken.uid) {
       const user = await admin.auth().getUser(decodedIdToken.uid)
       if (user) {
@@ -29,7 +36,7 @@ export const verifyUser = (next: Next) => async (request: functions.https.Reques
 
     response.status(401).send('You are not authorized to perform this action')
   } catch (error) {
-    response.status(401).send('You are not authorized to perform this action')
+    response.status(500).send(error)
   }
 }
 

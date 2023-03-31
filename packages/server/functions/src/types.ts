@@ -52,8 +52,9 @@ export interface CDIInvestmentDocument {
   estimatedNetValue: number
   estimatedNetValueIncome: number
   estimatedNetGrowth: number
-  lastDatePaid?: Date | string
-  lastDateFeeConsolidated?: Date | string
+  lastDatePaid?: Date | string | null
+  lastDateFeeConsolidated?: Date | string | null
+  profitabilityAvailableDate?: Date | string | null
 }
 
 export type ShortCDIInvestmentDocument = Omit<CDIInvestmentDocument, 'history'>
@@ -63,4 +64,14 @@ export enum HttpMethod {
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE'
+}
+
+export type UserResume = {
+  investedValue: number
+  grossValue: number
+  grossValueIncome: number
+  grossGrowth: number
+  netValue: number
+  netValueIncome: number
+  netGrowth: number
 }

@@ -1,46 +1,65 @@
+import { useMemo } from 'react'
+
+import { FetchErrorMessage } from '~/components/FetchErrorMessage'
 import { Loader } from '~/components/Loader'
 import { api } from '~/services/api'
 
 import { InvestmentListItem } from '../components/InvestmentListItem'
+import { UserResume } from '../components/UserResume'
 
 export default function InvestmentsList() {
   const {
-    data,
-    isFetching,
-    isError,
-    error
+    data: userCdiInvestments,
+    isFetching: isFetchingUserCdiInvestments,
+    isError: isErrorUserCdiInvestments,
+    error: errorUserCdiInvestments
   } = api.useGetUserCdiInvestmentsQuery()
 
-  if (isError) {
-    if ('status' in error) {
-      // you can access all properties of `FetchBaseQueryError` here
-      const errMsg = 'error' in error ? error.error : JSON.stringify(error.data)
+  const {
+    data: userResume,
+    isFetching: isFetchingUserResume,
+    isError: isErrorUserResume,
+    error: errorUserResume
+  } = api.useGetUserResumeQuery()
 
-      return (
-        <div>
-          <div>An error has occurred:</div>
-          <div>{errMsg}</div>
-        </div>
-      )
-    } else {
-      // you can access all properties of `SerializedError` here
-      return <div>{error.message}</div>
-    }
-  }
+  const error = useMemo(
+    () => {
+      if (isErrorUserCdiInvestments) {
+        return <FetchErrorMessage error={ errorUserCdiInvestments } />
+      }
+      if (isErrorUserResume) {
+        return <FetchErrorMessage error={ errorUserResume } />
+      }
+      return null
+    },
+    [errorUserCdiInvestments, errorUserResume, isErrorUserCdiInvestments, isErrorUserResume]
+  )
+
+  const loading = useMemo(
+    () => isFetchingUserCdiInvestments || isFetchingUserResume,
+    [isFetchingUserCdiInvestments, isFetchingUserResume]
+  )
 
   return (
     <div className="flex flex-1 justify-center">
       <div className="max-w-xl flex-1 p-4 gap-5 flex flex-col">
-        {isFetching && (
+
+        {loading && (
           <Loader />
         )}
 
-        {data?.map((investment) => (
-          <InvestmentListItem
-            key={ investment.id }
-            investment={ investment }
-          />
-        ))}
+        {error ?? (
+          <>
+            <UserResume userResume={ userResume } />
+            {userCdiInvestments?.map((investment) => (
+              <InvestmentListItem
+                key={ investment.id }
+                investment={ investment }
+              />
+            ))}
+          </>
+        )}
+
       </div>
     </div>
   )

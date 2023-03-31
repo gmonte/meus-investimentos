@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin'
-import * as moment from 'moment'
+import * as moment from 'moment-timezone'
 import axios, { AxiosResponse } from 'axios'
 import { isArray } from 'lodash'
 

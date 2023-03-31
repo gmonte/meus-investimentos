@@ -1,10 +1,17 @@
-import { useCallback } from 'react'
+import {
+  useCallback,
+  useMemo
+} from 'react'
 
 import moment from 'moment/moment'
-import { ArrowUp } from 'phosphor-react'
+import {
+  PencilSimple,
+  Trash
+} from 'phosphor-react'
 
 import { ShortCDIInvestmentDocument } from '~/@types/Investment'
 import { Button } from '~/components/Button'
+import { Growth } from '~/components/Growth'
 import { ModalConfirm } from '~/components/ModalConfirm'
 import { Text } from '~/components/Text'
 import { useModal } from '~/hooks/useModal'
@@ -27,17 +34,28 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
 
   const [deleteCdiInvestment] = api.useDeleteCdiInvestmentMutation()
 
+  const profitabilityDaysCount = useMemo(
+    () => {
+      if (investment.profitabilityAvailableDate) {
+        return moment(investment.profitabilityAvailableDate, 'YYYY-MM-DD')
+          .diff(investment.startDate, 'days')
+      }
+      return 0
+    },
+    [investment.profitabilityAvailableDate, investment.startDate]
+  )
+
   const handleEdit = useCallback(
-    (investment: ShortCDIInvestmentDocument) => createModal({
+    () => createModal({
       id: 'edit-investment',
       Component: RegisterInvestmentModal,
       props: { investment }
     }),
-    [createModal]
+    [createModal, investment]
   )
 
   const handleDelete = useCallback(
-    (investment: ShortCDIInvestmentDocument) => createModal({
+    () => createModal({
       id: 'delete-investment',
       Component: ModalConfirm,
       props: {
@@ -52,16 +70,39 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
         }
       }
     }),
-    [createModal, createToast, deleteCdiInvestment]
+    [createModal, createToast, deleteCdiInvestment, investment.id]
   )
   return (
     <>
       <div className="text-white border-2 border-gray-700 bg-slate-800 rounded-lg px-4 pt-3 pb-1">
 
         <div className="flex justify-between items-center flex-wrap">
-          <Text className="italic text-gray-600 font-semibold" size="xl">
-            {investment.name}
-          </Text>
+
+          <div className="flex gap-3 items-center">
+            {investment.name && (
+              <Text className="italic text-gray-500 font-semibold" size="xl">
+                {investment.name}
+              </Text>
+            )}
+
+            <div>
+              <div className="flex gap-2 items-center">
+                <Button
+                  className="py-0 px-0 text-gray-500 hover:text-white bg-transparent hover:bg-transparent active:bg-transparent"
+                  onClick={ handleEdit }
+                >
+                  <PencilSimple size={ 20 } />
+                </Button>
+
+                <Button
+                  className="py-0 px-0 text-gray-500 hover:text-red-400 bg-transparent hover:bg-transparent active:bg-transparent"
+                  onClick={ handleDelete }
+                >
+                  <Trash size={ 20 } />
+                </Button>
+              </div>
+            </div>
+          </div>
 
           <Text className="text-gray-600 font-bold" size="md">
             {investment.type} {investment.cdiFee}% CDI
@@ -78,65 +119,71 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
           </Text>
         </div>
 
-        <div className="flex flex-col py-2">
-          <Text className="text-gray-400 line-through font-semibold font-mono tracking-tight" size="lg">
-            {formatCurrency(investment.investedValue)}
-          </Text>
+        <div className="flex flex-col py-2 max-[465px]:gap-2 max-[465px]:mt-2">
+          <div className="flex items-center max-[465px]:flex-col">
+            <Text className="text-gray-400 line-through font-semibold font-mono tracking-tight" size="lg">
+              {formatCurrency(investment.investedValue)}
+            </Text>
+          </div>
 
-          <div className="flex items-center flex-wrap">
+          <div className="flex items-center max-[465px]:flex-col">
             <Text className="text-gray-500 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
               B: {formatCurrency(investment.grossValue)}
             </Text>
 
             <div className="flex items-center">
-              <div className="border border-green-700 rounded-xl ml-3 px-1 flex items-center">
-                <ArrowUp className="text-green-700 font-mono" weight="bold" />
-                <Text className="text-green-700 font-bold font-mono" size="md">
-                  {formatNumber(investment.grossGrowth)}%
-                </Text>
-              </div>
+              <Growth className="ml-3">
+                {formatNumber(investment.grossGrowth)}%
+              </Growth>
 
-              <div className="border border-green-700 rounded-xl ml-3 px-1 flex items-center">
-                <ArrowUp className="text-green-700 font-mono" weight="bold" />
-                <Text className="text-green-700 font-bold font-mono tracking-tight" size="md">
-                  {formatCurrency(investment.grossValueIncome)}
-                </Text>
-              </div>
+              <Growth className="ml-3">
+                {formatCurrency(investment.grossValueIncome)}
+              </Growth>
             </div>
 
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center max-[465px]:flex-col">
             <Text className="text-gray-500 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
               L: {formatCurrency(investment.netValue)}
             </Text>
 
             <div className="flex items-center">
-              <div className="border border-green-700 rounded-xl ml-3 px-1 flex items-center">
-                <ArrowUp className="text-green-700" weight="bold" />
-                <Text className="text-green-700 font-bold font-mono" size="md">
-                  {formatNumber(investment.netGrowth)}%
-                </Text>
-              </div>
+              <Growth className="ml-3">
+                {formatNumber(investment.netGrowth)}%
+              </Growth>
 
-              <div className="border border-green-700 rounded-xl ml-3 px-1 flex items-center">
-                <ArrowUp className="text-green-700 font-mono" weight="bold" />
-                <Text className="text-green-700 font-bold font-mono tracking-tight" size="md">
-                  {formatCurrency(investment.netValueIncome)}
-                </Text>
-              </div>
+              <Growth className="ml-3">
+                {formatCurrency(investment.netValueIncome)}
+              </Growth>
             </div>
 
           </div>
 
-          <div className="flex justify-between items-center mt-3 flex-wrap">
-            <Text className="text-gray-600 font-bold" size="md">
-              Seu dinheiro está rendendo há {moment(investment.lastDatePaid, 'YYYY-MM-DD').diff(investment.startDate, 'days')} dias
-            </Text>
+          <div className="mt-3 flex justify-between min-[466px]:items-center max-[465px]:flex-col">
+            <div className="flex flex-col flex-wrap">
+              {profitabilityDaysCount
+                ? (
+                  <>
+                    <Text className="text-gray-600 font-bold" size="md">
+                      Seu dinheiro está rendendo há {profitabilityDaysCount} dia{profitabilityDaysCount > 1 && 's'}
+                    </Text>
 
-            <Text className="text-gray-600 font-bold" size="md">
-              Calculado em {moment(investment.lastDatePaid).format('L')}
-            </Text>
+                    <Text className="text-gray-600 font-bold" size="md">
+                      Rentabilidade disponível em {moment(investment.profitabilityAvailableDate).format('L')}
+                    </Text>
+                  </>
+                  )
+                : (
+                  <Text className="text-gray-600 font-bold" size="md">
+                    O seu dinheiro ainda não começou a render
+                  </Text>
+                  )}
+            </div>
+
+            <Button className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 max-[465px]:mt-3">
+              Detalhes
+            </Button>
           </div>
 
         </div>

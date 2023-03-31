@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin'
-import * as moment from 'moment'
+import * as moment from 'moment-timezone'
 import { last, findLast } from 'lodash'
 
 import { COLLECTIONS } from '../constants'
@@ -30,7 +30,10 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
     estimatedNetValueIncome: 0,
     estimatedNetGrowth: 0,
     finished: !!investment.dueDate && today.isAfter(investment.dueDate),
-    history: []
+    history: [],
+    lastDateFeeConsolidated: null,
+    lastDatePaid: null,
+    profitabilityAvailableDate: null
   }
 
   const investmentEnd = investment.dueDate || moment(today).add(3, 'months').format('YYYY-MM-DD')
@@ -133,9 +136,10 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
     investmentFully.netValue = lastHistoryPaid?.netValue ?? investmentFully.netValue
     investmentFully.netValueIncome = lastHistoryPaid?.netValueIncomeAccumulated ?? investmentFully.netValueIncome
     investmentFully.netGrowth = lastHistoryPaid?.netGrowth ?? investmentFully.netGrowth
-    investmentFully.lastDatePaid = lastHistoryPaid?.date
+    investmentFully.lastDatePaid = lastHistoryPaid?.date ?? investmentFully.lastDatePaid
+    investmentFully.profitabilityAvailableDate = investmentFully.lastDatePaid ? moment(investmentFully.lastDatePaid).add(1, 'day').format('YYYY-MM-DD') : investmentFully.profitabilityAvailableDate
     
-    investmentFully.lastDateFeeConsolidated = findLast(investmentFully.history, { isFeeConsolidated: true })?.date
+    investmentFully.lastDateFeeConsolidated = findLast(investmentFully.history, { isFeeConsolidated: true })?.date ?? investmentFully.lastDateFeeConsolidated
 
     const lastHistory = last(investmentFully.history)
     investmentFully.estimatedGrossValue = lastHistory?.grossValue ?? investmentFully.grossValue

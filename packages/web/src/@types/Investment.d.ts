@@ -42,8 +42,9 @@ export interface CDIInvestmentDocument {
   estimatedNetValue: number
   estimatedNetValueIncome: number
   estimatedNetGrowth: number
-  lastDatePaid?: string
-  lastDateFeeConsolidated?: string
+  lastDatePaid?: string | null
+  lastDateFeeConsolidated?: string | null
+  profitabilityAvailableDate?: string | null
 }
 
 export interface ShortCDIInvestmentDocument extends Omit<CDIInvestmentDocument, 'history'> {}
@@ -56,4 +57,14 @@ export interface InvestmentFormData {
   dueDate?: string
   investedValue: number
   cdiFee: number
+}
+
+export type UserResume = {
+  investedValue: number
+  grossValue: number
+  grossValueIncome: number
+  grossGrowth: number
+  netValue: number
+  netValueIncome: number
+  netGrowth: number
 }

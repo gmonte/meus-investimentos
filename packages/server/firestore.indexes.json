@@ -1,16 +1,48 @@
 {
   "indexes": [
     {
-      "collectionGroup": "CDI",
+      "collectionGroup": "CDI_INDEXES",
       "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "date",
-          "order": "ASCENDING"
+          "order": "DESCENDING"
         },
         {
           "fieldPath": "value",
           "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "CDI_INVESTMENTS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "startDate",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "CDI_INVESTMENTS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "finished",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "user",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "startDate",
+          "order": "DESCENDING"
         }
       ]
     }

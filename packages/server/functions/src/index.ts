@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import * as moment from 'moment-timezone'
 
 admin.initializeApp()
 
@@ -12,8 +13,11 @@ import { deleteCdiInvestment } from './cdiInvestment/deleteCdiInvestment'
 import { cronJobFetchCdiByDay } from './cdiInvestment/cronJobFetchCdiByDay'
 import { readUserCdiInvestments } from './cdiInvestment/readUserCdiInvestments'
 import { enableCors } from './utils/enableCors'
+import { getUserResume } from './cdiInvestment/getUserResume'
 
 const db = admin.firestore()
+
+moment.tz.setDefault('America/Sao_Paulo')
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayNight = functions.pubsub.schedule('1 0 * * *')
@@ -133,6 +137,18 @@ exports.readUserCdiInvestments = functions.https.onRequest(
       async (request, response, user) => {
         const investments = await readUserCdiInvestments(db, user)
         response.json(investments)
+      }
+    )
+  )
+)
+
+exports.getUserResume = functions.https.onRequest(
+  enableCors(
+    HttpMethod.GET,
+    verifyUser(
+      async (request, response, user) => {
+        const userResume = await getUserResume(db, user)
+        response.json(userResume)
       }
     )
   )
