@@ -126,7 +126,7 @@ export default function SignIn() {
             />
           </TextInput.Root>
 
-          <Text size="sm" asChild className="hover:underline text-right">
+          <Text size="sm" asChild className="hover:underline text-right text-white">
             <button type="button" onClick={ handleForgotPassword }>
               Esqueci minha senha
             </button>
@@ -137,7 +137,7 @@ export default function SignIn() {
           </Button>
         </Form>
 
-        <Text asChild className="mt-4 hover:underline">
+        <Text asChild className="mt-4 hover:underline text-white">
           <button onClick={ handleCreateAccount }>
             Criar Conta
           </button>

@@ -80,7 +80,7 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
 
           <div className="flex gap-3 items-center">
             {investment.name && (
-              <Text className="italic text-gray-500 font-semibold" size="xl">
+              <Text className="italic text-gray-300 font-semibold" size="xl">
                 {investment.name}
               </Text>
             )}
@@ -127,12 +127,12 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
           </div>
 
           <div className="flex items-center max-[465px]:flex-col">
-            <Text className="text-gray-500 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
+            <Text className="text-gray-200 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
               B: {formatCurrency(investment.grossValue)}
             </Text>
 
             <div className="flex items-center">
-              <Growth className="ml-3">
+              <Growth className="min-[466px]:ml-3">
                 {formatNumber(investment.grossGrowth)}%
               </Growth>
 
@@ -144,12 +144,12 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
           </div>
 
           <div className="flex items-center max-[465px]:flex-col">
-            <Text className="text-gray-500 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
+            <Text className="text-gray-200 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
               L: {formatCurrency(investment.netValue)}
             </Text>
 
             <div className="flex items-center">
-              <Growth className="ml-3">
+              <Growth className="min-[466px]:ml-3">
                 {formatNumber(investment.netGrowth)}%
               </Growth>
 

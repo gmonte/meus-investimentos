@@ -20,7 +20,7 @@ export function Root({
     <div className={ className }>
       {!!label && (
         <div className="mb-1">
-          <Text className="font-semibold">
+          <Text className="font-semibold text-gray-300">
             {label}
           </Text>
         </div>

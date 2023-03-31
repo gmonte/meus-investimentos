@@ -20,7 +20,7 @@ export const Group = forwardRef<HTMLDivElement, RadioGroupProps>(
   }, ref) => (
     <div className={ clsx('flex flex-col gap-3 flex-1', className) }>
       {label && (
-        <Text className="font-semibold">
+        <Text className="font-semibold text-gray-300">
           {label}
         </Text>
       )}

@@ -26,7 +26,7 @@ export function UserResume({ userResume }: UserResumeProps) {
   console.log('userResume', userResume)
 
   return (
-    <div className="flex flex-col text-white items-center max-sm:gap-1">
+    <div className="flex flex-col text-gray-300 items-center max-sm:gap-1">
       <Text size="xl">
         Olá, {user.displayName && <span className="italic">{ user.displayName }</span>}
       </Text>
