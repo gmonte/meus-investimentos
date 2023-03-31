@@ -23,8 +23,6 @@ export function UserResume({ userResume }: UserResumeProps) {
     return null
   }
 
-  console.log('userResume', userResume)
-
   return (
     <div className="flex flex-col text-gray-300 items-center max-sm:gap-1">
       <Text size="xl">
