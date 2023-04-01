@@ -55,6 +55,7 @@ export interface CDIInvestmentDocument {
   lastDatePaid?: Date | string | null
   lastDateFeeConsolidated?: Date | string | null
   profitabilityAvailableDate?: Date | string | null
+  parentId?: string
 }
 
 export type ShortCDIInvestmentDocument = Omit<CDIInvestmentDocument, 'history'>
@@ -74,4 +75,10 @@ export type UserResume = {
   netValue: number
   netValueIncome: number
   netGrowth: number
+}
+
+export type RescueCDIInvestment = {
+  investmentId: string
+  date: Date | string
+  value: number
 }

@@ -4,7 +4,7 @@ import * as moment from 'moment-timezone'
 
 admin.initializeApp()
 
-import { CDIInvestmentDocument, HttpMethod } from './types'
+import { CDIInvestmentDocument, HttpMethod, RescueCDIInvestment } from './types'
 import { InvestmentUserOwnerError, verifyUser } from './utils/verifyUser'
 import { createCdiInvestment } from './cdiInvestment/createCdiInvestment'
 import { readCdiInvestment } from './cdiInvestment/readCdiInvestment'
@@ -14,6 +14,7 @@ import { cronJobFetchCdiByDay } from './cdiInvestment/cronJobFetchCdiByDay'
 import { readUserCdiInvestments } from './cdiInvestment/readUserCdiInvestments'
 import { enableCors } from './utils/enableCors'
 import { getUserResume } from './cdiInvestment/getUserResume'
+import { rescueCdiInvestment } from './cdiInvestment/rescueCdiInvestment'
 
 const db = admin.firestore()
 
@@ -45,7 +46,7 @@ exports.createCdiInvestment = functions.https.onRequest(
     verifyUser(
       async (request, response, user) => {
         const body = request.body as CDIInvestmentDocument
-        const investment = await createCdiInvestment(db, { ...body, user: user.uid })
+        const investment = await createCdiInvestment(db, body, user)
         response.json(investment)
       }
     )
@@ -135,7 +136,8 @@ exports.readUserCdiInvestments = functions.https.onRequest(
     HttpMethod.GET,
     verifyUser(
       async (request, response, user) => {
-        const investments = await readUserCdiInvestments(db, user)
+        const { finished } = request.query
+        const investments = await readUserCdiInvestments(db, finished as string | undefined, user)
         response.json(investments)
       }
     )
@@ -147,8 +149,22 @@ exports.getUserResume = functions.https.onRequest(
     HttpMethod.GET,
     verifyUser(
       async (request, response, user) => {
-        const userResume = await getUserResume(db, user)
+        const { finished } = request.query
+        const userResume = await getUserResume(db, finished as string | undefined, user)
         response.json(userResume)
+      }
+    )
+  )
+)
+
+exports.rescueCdiInvestment = functions.https.onRequest(
+  enableCors(
+    HttpMethod.POST,
+    verifyUser(
+      async (request, response, user) => {
+        const body = request.body as RescueCDIInvestment
+        await rescueCdiInvestment(db, body, user)
+        response.send()
       }
     )
   )

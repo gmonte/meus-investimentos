@@ -31,7 +31,7 @@ export function UserResume({ userResume }: UserResumeProps) {
 
       <div className="flex items-center min-[640px]:gap-2 max-sm:flex-col max-sm:mb-1">
         <Text>
-          Você já investiu
+          Você investiu
         </Text>
         <Text className="font-mono font-bold" size="xl">
           {formatCurrency(userResume.investedValue)}

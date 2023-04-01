@@ -4,11 +4,16 @@ import { UserRecord } from 'firebase-functions/v1/auth'
 import { COLLECTIONS } from '../constants'
 import { CDIInvestmentDocument, ShortCDIInvestmentDocument } from '../types'
 
-export const readUserCdiInvestments = async (db: admin.firestore.Firestore, user: UserRecord): Promise<ShortCDIInvestmentDocument[]> => {
-  const snapshot = await db.collection(COLLECTIONS.CDI_INVESTMENTS)
+export const readUserCdiInvestments = async (db: admin.firestore.Firestore, finished: string | undefined, user: UserRecord): Promise<ShortCDIInvestmentDocument[]> => {
+  let query = db.collection(COLLECTIONS.CDI_INVESTMENTS)
     .where('user', '==', user.uid)
-    .orderBy('startDate', 'desc')
-    .get()
+
+  if (finished === 'true') {
+    query = query.where('finished', '==', true)
+  } else if (finished === 'false') {
+    query = query.where('finished', '==', false)
+  }
+  const snapshot = await query.orderBy('startDate', 'desc').get()
 
   return snapshot.docs.map<ShortCDIInvestmentDocument>((doc) => {
     const { history, ...data } = doc.data() as CDIInvestmentDocument

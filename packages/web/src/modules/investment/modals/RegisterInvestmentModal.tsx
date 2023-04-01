@@ -21,7 +21,10 @@ import { TextInput } from '~/components/TextInput'
 import { ModalProps } from '~/hooks/useModal'
 import { useToast } from '~/hooks/useToast'
 import { api } from '~/services/api'
-import { fixStrNumber } from '~/utils/formatters'
+import {
+  fixStrNumber,
+  precisionNumberWithoutRound
+} from '~/utils/formatters'
 import { date } from '~/utils/validators/date.validator'
 import { max } from '~/utils/validators/max.validator'
 import { min } from '~/utils/validators/min.validator'
@@ -72,7 +75,7 @@ export function RegisterInvestmentModal({
       : {
           cdiFee: investment.cdiFee,
           dueDate: !investment.dueDate ? undefined : moment(investment.dueDate).format('L'),
-          investedValue: investment.investedValue,
+          investedValue: Number(precisionNumberWithoutRound(investment.investedValue)),
           name: investment.name,
           startDate: moment(investment.startDate).format('L'),
           type: investment.type

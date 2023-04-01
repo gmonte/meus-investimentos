@@ -5,12 +5,16 @@ import { COLLECTIONS } from '../constants'
 import { CDIInvestmentDocument, UserResume } from '../types'
 import { calculateGrowth } from '../utils/calculateGrowth'
 
-export const getUserResume = async (db: admin.firestore.Firestore, user: UserRecord): Promise<UserResume> => {
-  const snapshot = await db.collection(COLLECTIONS.CDI_INVESTMENTS)
+export const getUserResume = async (db: admin.firestore.Firestore, finished: string | undefined, user: UserRecord): Promise<UserResume> => {
+  let query = db.collection(COLLECTIONS.CDI_INVESTMENTS)
     .where('user', '==', user.uid)
-    .where('finished', '==', false)
-    .orderBy('startDate', 'desc')
-    .get()
+
+  if (finished === 'true') {
+    query = query.where('finished', '==', true)
+  } else if (finished === 'false') {
+    query = query.where('finished', '==', false)
+  }
+  const snapshot = await query.orderBy('startDate', 'desc').get()
 
   const resume = snapshot.docs.reduce<Omit<UserResume, 'grossGrowth' | 'netGrowth'>>(
     (acc, doc) => {

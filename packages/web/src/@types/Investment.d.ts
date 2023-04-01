@@ -68,3 +68,11 @@ export type UserResume = {
   netValueIncome: number
   netGrowth: number
 }
+
+export type RescueCDIInvestment = {
+  investmentId: string
+  date: string
+  value: number
+}
+
+export interface RescueFormData extends RescueCDIInvestment {}

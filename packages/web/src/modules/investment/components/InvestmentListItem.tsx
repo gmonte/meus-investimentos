@@ -23,6 +23,7 @@ import {
 } from '~/utils/formatters'
 
 import { RegisterInvestmentModal } from '../modals/RegisterInvestmentModal'
+import { RescueInvestmentModal } from '../modals/RescueInvestmentModal'
 
 export interface InvestmentListItemProps {
   investment: ShortCDIInvestmentDocument
@@ -43,6 +44,15 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
       return 0
     },
     [investment.profitabilityAvailableDate, investment.startDate]
+  )
+
+  const handleRescue = useCallback(
+    () => createModal({
+      id: 'rescue-investment',
+      Component: RescueInvestmentModal,
+      props: { investment }
+    }),
+    [createModal, investment]
   )
 
   const handleEdit = useCallback(
@@ -166,11 +176,15 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
               ? (
                 <>
                   <Text className="text-gray-600 font-bold" size="md">
-                    Seu dinheiro está rendendo há {profitabilityDaysCount} dia{profitabilityDaysCount > 1 && 's'}
+                    Seu dinheiro {investment.finished ? 'rendeu por' : 'está rendendo há'}{' '}
+                    {profitabilityDaysCount} dia{profitabilityDaysCount > 1 && 's'}
                   </Text>
 
                   <Text className="text-gray-600 font-bold" size="md">
-                    Rentabilidade disponível em {moment(investment.profitabilityAvailableDate).format('L')}
+                    {investment.finished
+                      ? `Resgatado em ${ moment(investment.rescueDate ?? investment.dueDate).format('L') }`
+                      : `Rentabilidade disponível em ${ moment(investment.profitabilityAvailableDate).format('L') }`
+                    }
                   </Text>
                 </>
                 )
@@ -181,9 +195,25 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
                 )}
           </div>
 
-          <Button className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 max-[465px]:mt-3">
-            Detalhes
-          </Button>
+          {
+            !investment.finished
+              ? (
+                <Button
+                  className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 max-[465px]:mt-3"
+                  onClick={ handleRescue }
+                >
+                  Resgatar
+                </Button>
+                )
+              : (
+                <Button
+                  className="max-[465px]:mt-3"
+                  disabled
+                >
+                  Resgatado
+                </Button>
+                )
+          }
         </div>
 
       </div>

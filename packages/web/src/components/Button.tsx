@@ -24,6 +24,7 @@ export function Button({
   children,
   loading,
   loadingClassName,
+  disabled,
   ...rest
 }: ButtonProps) {
   const Comp = asChild ? Slot : 'div'
@@ -47,6 +48,13 @@ export function Button({
         'transition-colors',
         'flex',
         'items-center',
+        {
+          'bg-gray-500': disabled,
+          'hover:bg-gray-500': disabled,
+          'active:bg-gray-500': disabled,
+          'ring-transparent': disabled,
+          'cursor-default': disabled
+        },
         className
       ) }
     >

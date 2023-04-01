@@ -15,6 +15,8 @@ import { calculateGrowth } from '../utils/calculateGrowth'
 export const calculateCdiInvestment = async (db: admin.firestore.Firestore, investment: CDIInvestmentDocument): Promise<CDIInvestmentDocument> => {
   const today = moment().startOf('day')
 
+  const investmentEnd = (investment.rescueDate && moment(investment.rescueDate).add(-1, 'day').format('YYYY-MM-DD')) || investment.dueDate || moment(today).add(3, 'months').format('YYYY-MM-DD')
+
   const investmentFully: CDIInvestmentDocument = {
     ...investment,
     grossValue: investment.investedValue,
@@ -29,14 +31,14 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
     estimatedNetValue: investment.investedValue,
     estimatedNetValueIncome: 0,
     estimatedNetGrowth: 0,
-    finished: !!investment.dueDate && today.isAfter(investment.dueDate),
+    finished: today.isAfter(investmentEnd),
     history: [],
     lastDateFeeConsolidated: null,
     lastDatePaid: null,
     profitabilityAvailableDate: null
   }
 
-  const investmentEnd = investment.dueDate || moment(today).add(3, 'months').format('YYYY-MM-DD')
+  
   let investDate = moment(investment.startDate)
 
   const cdiIndexesSnapshot = await db.collection(COLLECTIONS.CDI_INDEXES)
