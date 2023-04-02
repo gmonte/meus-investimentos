@@ -25,9 +25,5 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Create SA key
-        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MEUS_INVESTIMENTOS_4d675 }}' > $HOME/gcloud.json
-
-      - name: Deploy to Firebase Functions
-        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && npx firebase-tools deploy --only functions --json          
-        working-directory: packages/server/functions
+      - name: Build and Deploy to Firebase Functions
+        run: cd packages/server/functions && npx firebase-tools deploy --only functions --token ${{ secrets.FIREBASE_TOKEN }}
