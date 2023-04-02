@@ -11,7 +11,7 @@ name: Deploy App to Firebase Hosting on merge
       - packages/web/**
 
 jobs:
-  app_build_and_deploy:
+  web_build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
