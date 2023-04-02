@@ -29,8 +29,8 @@ export const api = createApi({
   tagTypes: map(tagTypes, (tagType) => tagType),
   endpoints: (builder) => ({
 
-    getUserCdiInvestments: builder.query<ShortCDIInvestmentDocument[], string>({
-      query: (finished) => `/readUserCdiInvestments${ finished === 'null' ? '' : `?finished=${ finished }` }`,
+    getUserCdiInvestments: builder.query<ShortCDIInvestmentDocument[], boolean | null>({
+      query: (finished) => `/readUserCdiInvestments${ finished === null ? '' : `?finished=${ finished }` }`,
       providesTags: (result) => result
         ? [
             ...result.map(
@@ -55,8 +55,8 @@ export const api = createApi({
       ]
     }),
 
-    getUserResume: builder.query<UserResume, string>({
-      query: (finished) => `/getUserResume${ finished === 'null' ? '' : `?finished=${ finished }` }`,
+    getUserResume: builder.query<UserResume, boolean | null>({
+      query: (finished) => `/getUserResume${ finished === null ? '' : `?finished=${ finished }` }`,
       providesTags: ['UserResume']
     }),
 

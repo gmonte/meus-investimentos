@@ -12,7 +12,7 @@ const rootPersistConfig = {
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel1,
-  blacklist: ['loader']
+  blacklist: [loader.name, api.reducerPath]
 }
 
 const rootReducer = combineReducers({

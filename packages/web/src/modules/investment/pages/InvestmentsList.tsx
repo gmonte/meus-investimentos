@@ -1,30 +1,20 @@
 import {
-  useCallback,
   useMemo,
   useState
 } from 'react'
 
-import clsx from 'clsx'
 import { isEmpty } from 'lodash'
-import { ArrowClockwise } from 'phosphor-react'
 
-import { Button } from '~/components/Button'
 import { ButtonsGroup } from '~/components/ButtonsGroup'
 import { FetchErrorMessage } from '~/components/FetchErrorMessage'
 import { Loader } from '~/components/Loader'
 import { Text } from '~/components/Text'
-import {
-  api,
-  tagTypes
-} from '~/services/api'
-import { useAppDispatch } from '~/store'
+import { api } from '~/services/api'
 
 import { InvestmentListItem } from '../components/InvestmentListItem'
 import { UserResume } from '../components/UserResume'
 
 export default function InvestmentsList() {
-  const dispatch = useAppDispatch()
-
   const [finished, setFinished] = useState<boolean | null>(false)
 
   const {
@@ -32,14 +22,14 @@ export default function InvestmentsList() {
     isFetching: isFetchingUserCdiInvestments,
     isError: isErrorUserCdiInvestments,
     error: errorUserCdiInvestments
-  } = api.useGetUserCdiInvestmentsQuery(`${ finished }`)
+  } = api.useGetUserCdiInvestmentsQuery(finished)
 
   const {
     data: userResume,
     isFetching: isFetchingUserResume,
     isError: isErrorUserResume,
     error: errorUserResume
-  } = api.useGetUserResumeQuery(`${ finished }`)
+  } = api.useGetUserResumeQuery(finished)
 
   const emptyMsg = useMemo(
     () => {
@@ -71,17 +61,6 @@ export default function InvestmentsList() {
     [isFetchingUserCdiInvestments, isFetchingUserResume]
   )
 
-  const handleReload = useCallback(
-    () => {
-      dispatch(api.util.invalidateTags([
-        tagTypes.CDIInvestmentsList,
-        tagTypes.CDIInvestment,
-        tagTypes.UserResume
-      ]))
-    },
-    [dispatch]
-  )
-
   return (
     <div className="flex flex-1 justify-center">
       <div className="max-w-xl flex-1 p-4 gap-5 flex flex-col">
@@ -90,20 +69,6 @@ export default function InvestmentsList() {
 
         {error ?? (
           <>
-            <div className="flex items-center justify-center">
-              <Button
-                className={ clsx(
-                  'rounded-full py-2 px-2',
-                  'bg-cyan-700 hover:bg-cyan-600',
-                  'text-gray-200 hover:text-white'
-                ) }
-                onClick={ handleReload }
-                disabled={ isFetching }
-              >
-                <ArrowClockwise size={ 24 } />
-              </Button>
-            </div>
-
             <ButtonsGroup.Root>
               <ButtonsGroup.Item
                 active={ finished === false }
