@@ -137,9 +137,14 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
         </div>
 
         <div className="flex items-center max-[465px]:flex-col">
-          <Text className="text-gray-200 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
-            B: {formatCurrency(investment.grossValue)}
-          </Text>
+          <div>
+            <Text className="text-gray-400 font-bold" size="xl">
+              Bruto:{' '}
+            </Text>
+            <Text className="text-gray-200 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
+              {formatCurrency(investment.grossValue)}
+            </Text>
+          </div>
 
           <div className="flex items-center">
             <Growth className="min-[466px]:ml-3">
@@ -154,9 +159,14 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
         </div>
 
         <div className="flex items-center max-[465px]:flex-col">
-          <Text className="text-gray-200 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
-            L: {formatCurrency(investment.netValue)}
-          </Text>
+          <div>
+            <Text className="text-gray-400 font-bold" size="xl">
+              Líquido:{' '}
+            </Text>
+            <Text className="text-gray-200 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
+              {formatCurrency(investment.netValue)}
+            </Text>
+          </div>
 
           <div className="flex items-center">
             <Growth className="min-[466px]:ml-3">

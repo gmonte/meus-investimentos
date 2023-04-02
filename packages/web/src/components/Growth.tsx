@@ -3,13 +3,21 @@ import { PropsWithChildren } from 'react'
 import clsx from 'clsx'
 import { ArrowUp } from 'phosphor-react'
 
-import { Text } from './Text'
+import {
+  Text,
+  TextProps
+} from './Text'
 
 export interface GrowthProps extends PropsWithChildren {
   className?: string
+  size?: TextProps['size']
 }
 
-export function Growth({ children, className }: GrowthProps) {
+export function Growth({
+  children,
+  className,
+  size = 'md'
+}: GrowthProps) {
   return (
     <div
       className={ clsx(
@@ -18,7 +26,7 @@ export function Growth({ children, className }: GrowthProps) {
       ) }
       >
       <ArrowUp className="text-green-700 font-mono" weight="bold" />
-      <Text className="text-green-700 font-bold font-mono" size="md">
+      <Text className="text-green-700 font-bold font-mono" size={ size }>
         {children}
       </Text>
     </div>
