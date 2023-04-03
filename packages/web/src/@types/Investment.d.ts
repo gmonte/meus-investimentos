@@ -1,5 +1,5 @@
-export interface InvestmentByDay {
-  date: string
+export interface CDIInvestmentHistoryItem {
+  date: Date | string
   cdiFeeDaily: number
   grossValueIncome: number
   grossValueIncomeAccumulated: number
@@ -16,6 +16,13 @@ export interface InvestmentByDay {
   netGrowth: number
 }
 
+export interface CDIInvestmentHistoryDocument {
+  id: string
+  investmentId: string
+  user: string
+  history: CDIInvestmentHistoryItem[]
+}
+
 export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
 
 export interface CDIInvestmentDocument {
@@ -29,7 +36,6 @@ export interface CDIInvestmentDocument {
   investedValue: number
   cdiFee: number
   finished?: boolean
-  history: InvestmentByDay[]
   grossValue: number
   grossValueIncome: number
   grossGrowth: number
@@ -45,6 +51,8 @@ export interface CDIInvestmentDocument {
   lastDatePaid?: string | null
   lastDateFeeConsolidated?: string | null
   profitabilityAvailableDate?: string | null
+  parentId?: string
+  historyId: string
 }
 
 export interface ShortCDIInvestmentDocument extends Omit<CDIInvestmentDocument, 'history'> {}

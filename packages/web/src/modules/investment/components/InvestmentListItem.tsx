@@ -5,6 +5,7 @@ import {
 
 import moment from 'moment/moment'
 import {
+  ChartLineUp,
   PencilSimple,
   Trash
 } from 'phosphor-react'
@@ -22,6 +23,7 @@ import {
   formatNumber
 } from '~/utils/formatters'
 
+import { InvestmentHistoryModal } from '../modals/InvestmentHistoryModal'
 import { RegisterInvestmentModal } from '../modals/RegisterInvestmentModal'
 import { RescueInvestmentModal } from '../modals/RescueInvestmentModal'
 
@@ -44,6 +46,15 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
       return 0
     },
     [investment.profitabilityAvailableDate, investment.startDate]
+  )
+
+  const handleHistory = useCallback(
+    () => createModal({
+      id: 'rescue-investment',
+      Component: InvestmentHistoryModal,
+      props: { investmentId: investment.id }
+    }),
+    [createModal, investment.id]
   )
 
   const handleRescue = useCallback(
@@ -95,28 +106,36 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
             </Text>
           )}
 
-          <div>
-            <div className="flex gap-2 items-center">
-              <Button
-                className="py-0 px-0 text-gray-500 hover:text-white bg-transparent hover:bg-transparent active:bg-transparent"
-                onClick={ handleEdit }
-              >
-                <PencilSimple size={ 20 } />
-              </Button>
+          <Text className="text-gray-600 font-bold" size="md">
+            {investment.type} {investment.cdiFee}% CDI
+          </Text>
+        </div>
 
-              <Button
-                className="py-0 px-0 text-gray-500 hover:text-red-400 bg-transparent hover:bg-transparent active:bg-transparent"
-                onClick={ handleDelete }
-              >
-                <Trash size={ 20 } />
-              </Button>
-            </div>
+        <div>
+          <div className="flex gap-2 items-center">
+            <Button
+              className="py-0 px-0 text-gray-500 hover:text-white bg-transparent hover:bg-transparent active:bg-transparent"
+              onClick={ handleHistory }
+            >
+              <ChartLineUp size={ 20 } weight="bold" />
+            </Button>
+
+            <Button
+              className="py-0 px-0 text-gray-500 hover:text-white bg-transparent hover:bg-transparent active:bg-transparent"
+              onClick={ handleEdit }
+            >
+              <PencilSimple size={ 20 } />
+            </Button>
+
+            <Button
+              className="py-0 px-0 text-gray-500 hover:text-red-400 bg-transparent hover:bg-transparent active:bg-transparent"
+              onClick={ handleDelete }
+            >
+              <Trash size={ 20 } />
+            </Button>
           </div>
         </div>
 
-        <Text className="text-gray-600 font-bold" size="md">
-          {investment.type} {investment.cdiFee}% CDI
-        </Text>
       </div>
 
       <div className="flex justify-between items-center flex-wrap">

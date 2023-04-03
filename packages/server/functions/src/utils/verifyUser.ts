@@ -2,8 +2,6 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { UserRecord } from 'firebase-functions/v1/auth'
 
-import { CDIInvestmentDocument } from '../types'
-
 const auth = admin.auth()
 
 type Next = (request: functions.https.Request, response: functions.Response, user: UserRecord) => void | Promise<void>
@@ -40,8 +38,8 @@ export const verifyUser = (next: Next) => async (request: functions.https.Reques
   }
 }
 
-export const verifyInvestmentUserOwner = (investment: CDIInvestmentDocument, user: UserRecord) => {
-  if (investment.user !== user.uid) {
-    throw new InvestmentUserOwnerError('User is not the investment owner')
+export const verifyUserOwner = (obj: { user: string }, user: UserRecord) => {
+  if (obj.user !== user.uid) {
+    throw new InvestmentUserOwnerError('User is not the owner')
   }
 }
