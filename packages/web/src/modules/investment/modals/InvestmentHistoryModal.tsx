@@ -181,22 +181,18 @@ export function InvestmentHistoryModal({
       {
         name: 'Valor bruto',
         data: map(data?.history, item => item.paid ? item.grossValue : null)
-        // color: 'blue'
       },
       {
         name: 'Valor líquido',
         data: map(data?.history, item => item.paid ? item.netValue : null)
-        // color: 'green'
       },
       {
         name: 'Valor bruto estimado',
         data: map(data?.history, item => item.paid ? null : item.grossValue)
-        // color: 'red'
       },
       {
         name: 'Valor líquido estimado',
         data: map(data?.history, item => item.paid ? null : item.netValue)
-        // color: 'yellow'
       }
     ],
     [data?.history]
