@@ -3,7 +3,7 @@ import ApexChart from 'react-apexcharts'
 import { renderToString } from 'react-dom/server'
 
 import map from 'lodash/map'
-import moment from 'moment'
+import moment from 'moment/moment'
 import { CircleNotch } from 'phosphor-react'
 
 import { FetchErrorMessage } from '~/components/FetchErrorMessage'
