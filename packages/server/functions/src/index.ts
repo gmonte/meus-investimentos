@@ -22,7 +22,7 @@ moment.tz.setDefault('America/Sao_Paulo')
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayNight = functions
-  .runWith({ timeoutSeconds: 60 * 60 })
+  .runWith({ timeoutSeconds: 540 })
   .pubsub
     .schedule('1 0 * * *')
     .timeZone('America/Sao_Paulo')
@@ -30,7 +30,7 @@ exports.cronJobFetchCdiByDayNight = functions
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayMorning = functions
-  .runWith({ timeoutSeconds: 60 * 60 })
+  .runWith({ timeoutSeconds: 540 })
   .pubsub
     .schedule('0 8 * * *')
     .timeZone('America/Sao_Paulo')
@@ -38,7 +38,7 @@ exports.cronJobFetchCdiByDayMorning = functions
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayNoon = functions
-  .runWith({ timeoutSeconds: 60 * 60 })
+  .runWith({ timeoutSeconds: 540 })
   .pubsub
     .schedule('0 12 * * *')
     .timeZone('America/Sao_Paulo')
@@ -46,7 +46,7 @@ exports.cronJobFetchCdiByDayNoon = functions
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayEvening = functions
-  .runWith({ timeoutSeconds: 60 * 60 })
+  .runWith({ timeoutSeconds: 540 })
   .pubsub
     .schedule('0 18 * * *')
     .timeZone('America/Sao_Paulo')
