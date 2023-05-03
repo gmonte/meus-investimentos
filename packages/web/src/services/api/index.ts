@@ -1,5 +1,4 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
-import { map } from 'lodash'
 import { REHYDRATE } from 'redux-persist'
 
 import {
@@ -7,16 +6,11 @@ import {
   CDIInvestmentDocument,
   InvestmentFormData,
   UserResume,
-  RescueCDIInvestment
+  RescueCDIInvestment,
+  CDIInvestmentHistoryDocument
 } from '~/@types/Investment'
 
 import { baseQueryWithReauth } from './fetchBase'
-
-export const tagTypes = {
-  CDIInvestmentsList: 'CDIInvestmentsList',
-  CDIInvestment: 'CDIInvestment',
-  UserResume: 'UserResume'
-}
 
 export const api = createApi({
   reducerPath: 'api',
@@ -26,7 +20,7 @@ export const api = createApi({
       return action.payload?.[reducerPath]
     }
   },
-  tagTypes: map(tagTypes, (tagType) => tagType),
+  tagTypes: ['CDIInvestmentsList', 'CDIInvestmentHistory', 'UserResume'],
   endpoints: (builder) => ({
 
     getUserCdiInvestments: builder.query<ShortCDIInvestmentDocument[], boolean | null>({
@@ -44,14 +38,14 @@ export const api = createApi({
         : ['CDIInvestmentsList']
     }),
 
-    getCdiInvestment: builder.query<CDIInvestmentDocument, string>({
-      query: (id) => `/readCdiInvestment?id=${ id }`,
+    getCdiInvestmentHistory: builder.query<CDIInvestmentHistoryDocument, string>({
+      query: (id) => `/readCdiInvestmentHistory?id=${ id }`,
       providesTags: (result) => [
         {
-          type: 'CDIInvestment' as const,
+          type: 'CDIInvestmentHistory' as const,
           id: result?.id
         },
-        'CDIInvestment'
+        'CDIInvestmentHistory'
       ]
     }),
 
@@ -77,7 +71,7 @@ export const api = createApi({
       }),
       invalidatesTags: result => [
         {
-          type: 'CDIInvestment' as const,
+          type: 'CDIInvestmentHistory' as const,
           id: result?.id
         },
         {
@@ -94,7 +88,14 @@ export const api = createApi({
         method: 'DELETE',
         body: { id }
       }),
-      invalidatesTags: ['CDIInvestmentsList', 'UserResume']
+      invalidatesTags: (result, error, arg) => [
+        {
+          type: 'CDIInvestmentHistory' as const,
+          id: arg.id
+        },
+        'CDIInvestmentsList',
+        'UserResume'
+      ]
     }),
 
     rescueCdiInvestment: builder.mutation<void, RescueCDIInvestment>({
@@ -105,7 +106,7 @@ export const api = createApi({
       }),
       invalidatesTags: (result, error, arg) => [
         {
-          type: 'CDIInvestment' as const,
+          type: 'CDIInvestmentHistory' as const,
           id: arg.investmentId
         },
         {

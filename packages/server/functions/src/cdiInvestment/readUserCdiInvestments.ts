@@ -16,7 +16,7 @@ export const readUserCdiInvestments = async (db: admin.firestore.Firestore, fini
   const snapshot = await query.orderBy('startDate', 'desc').get()
 
   return snapshot.docs.map<ShortCDIInvestmentDocument>((doc) => {
-    const { history, ...data } = doc.data() as CDIInvestmentDocument
-    return data
+    const cdiInvestment = doc.data() as CDIInvestmentDocument
+    return cdiInvestment
   })
 }

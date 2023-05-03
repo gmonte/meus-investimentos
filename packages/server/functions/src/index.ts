@@ -4,10 +4,10 @@ import * as moment from 'moment-timezone'
 
 admin.initializeApp()
 
-import { CDIInvestmentDocument, HttpMethod, RescueCDIInvestment } from './types'
+import { CDIInvestmentDocument, CDIInvestmentHistoryDocument, HttpMethod, RescueCDIInvestment } from './types'
 import { InvestmentUserOwnerError, verifyUser } from './utils/verifyUser'
 import { createCdiInvestment } from './cdiInvestment/createCdiInvestment'
-import { readCdiInvestment } from './cdiInvestment/readCdiInvestment'
+import { readCdiInvestmentHistory } from './cdiInvestment/readCdiInvestmentHistory'
 import { updateCdiInvestment } from './cdiInvestment/updateCdiInvestment'
 import { deleteCdiInvestment } from './cdiInvestment/deleteCdiInvestment'
 import { cronJobFetchCdiByDay } from './cdiInvestment/cronJobFetchCdiByDay'
@@ -58,14 +58,14 @@ exports.createCdiInvestment = functions.https.onRequest(
     verifyUser(
       async (request, response, user) => {
         const body = request.body as CDIInvestmentDocument
-        const investment = await createCdiInvestment(db, body, user)
-        response.json(investment)
+        await createCdiInvestment(db, body, user)
+        response.send()
       }
     )
   )
 )
 
-exports.readCdiInvestment = functions.https.onRequest(
+exports.readCdiInvestmentHistory = functions.https.onRequest(
   enableCors(
     HttpMethod.GET,
     verifyUser(
@@ -73,8 +73,8 @@ exports.readCdiInvestment = functions.https.onRequest(
         const { id } = request.query
         if (id) {
           try {
-            const investment = await readCdiInvestment(db, { id } as CDIInvestmentDocument, user)
-            response.json(investment)
+            const cdiHistory = await readCdiInvestmentHistory(db, { id } as CDIInvestmentHistoryDocument, user)
+            response.json(cdiHistory)
           } catch (err) {
             if (err instanceof InvestmentUserOwnerError) {
               response.status(403).send(err.message)
@@ -99,8 +99,8 @@ exports.updateCdiInvestment = functions.https.onRequest(
         const { id } = request.body as CDIInvestmentDocument
         if (id) {
           try {
-            const investment = await updateCdiInvestment(db, request.body as CDIInvestmentDocument, user)
-            response.json(investment)
+            await updateCdiInvestment(db, request.body as CDIInvestmentDocument, user)
+            response.send()
           } catch (err) {
             if (err instanceof InvestmentUserOwnerError) {
               response.status(403).send(err.message)

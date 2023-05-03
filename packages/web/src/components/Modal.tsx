@@ -53,7 +53,7 @@ function ModalRoot({
           <DialogPrimitive.Content
             forceMount
             className={ clsx(
-              'fixed z-50 max-h-[100vh] overflow-y-auto',
+              'fixed z-50 max-h-[100vh] overflow-y-auto overflow-x-hidden',
               'w-[100vw] max-w-md rounded-lg p-4 md:w-full',
               'top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]',
               'bg-white dark:bg-gray-700',
