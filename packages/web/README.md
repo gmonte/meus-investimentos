@@ -7,22 +7,22 @@ Project created with [Vite](https://vitejs.dev/)
 ```sh
 $ git clone https://gitlab.meta.com.br/meta/smart/react/react-web/react-web-basic.git
 $ cd react-web-basic
-$ yarn
+$ pnpm install
 ```
 
 ## Scripts:
 
 ```sh
-$ yarn dev # run development server
+$ pnpm dev # run development server
 
-$ yarn build # create dist directory with bundle
+$ pnpm build # create dist directory with bundle
 
-$ yarn test # run all tests in watch mode
-$ yarn test run # run all tests one time
+$ pnpm test # run all tests in watch mode
+$ pnpm test run # run all tests one time
 
-$ yarn lint # run eslint to check code
+$ pnpm lint # run eslint to check code
 
-$ yarn release # upgrade project version and create changelog file
+$ pnpm release # upgrade project version and create changelog file
 
 $ cd scripts && ./deploy.development # build development mode and provide it with nginx http://localhost:3000
 $ cd scripts && ./deploy.staging # build staging mode and provide it with nginx http://localhost:3030

@@ -190,28 +190,28 @@ exports.rescueCdiInvestment = functions.https.onRequest(
   )
 )
 
-// exports.changeDatabase = functions.https.onRequest(
-//   enableCors(
-//     HttpMethod.POST,
-//     async (request, response) => {
-//       const query = await db.collection(COLLECTIONS.CDI_INVESTMENTS).get()
+/* exports.changeDatabase = functions.https.onRequest(
+  enableCors(
+    HttpMethod.POST,
+    async (request, response) => {
+      const query = await db.collection(COLLECTIONS.CDI_INVESTMENTS).get()
 
-//       const collection = query.docs.map((doc) => {
-//         return {
-//           ref:doc.ref,
-//           data: doc.data() as CDIInvestmentDocument
-//         }
-//       })
+      const collection = query.docs.map((doc) => {
+        return {
+          ref:doc.ref,
+          data: doc.data() as CDIInvestmentDocument
+        }
+      })
 
-//       const batch = db.batch()
+      const batch = db.batch()
 
-//       collection.forEach(item => {
-//         batch.update(item.ref, { name: admin.firestore.FieldValue.delete() })
-//       })
+      collection.forEach(item => {
+        batch.update(item.ref, { name: admin.firestore.FieldValue.delete() })
+      })
 
-//       await batch.commit()
+      await batch.commit()
 
-//       response.send()
-//     }
-//   )
-// )
+      response.send()
+    }
+  )
+) */
