@@ -1,20 +1,28 @@
-import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import * as functions from 'firebase-functions'
 import * as moment from 'moment-timezone'
 
-admin.initializeApp()
-
-import { CDIInvestmentDocument, CDIInvestmentHistoryDocument, HttpMethod, RescueCDIInvestment } from './types'
-import { InvestmentUserOwnerError, verifyUser } from './utils/verifyUser'
 import { createCdiInvestment } from './cdiInvestment/createCdiInvestment'
-import { readCdiInvestmentHistory } from './cdiInvestment/readCdiInvestmentHistory'
-import { updateCdiInvestment } from './cdiInvestment/updateCdiInvestment'
-import { deleteCdiInvestment } from './cdiInvestment/deleteCdiInvestment'
 import { cronJobFetchCdiByDay } from './cdiInvestment/cronJobFetchCdiByDay'
-import { readUserCdiInvestments } from './cdiInvestment/readUserCdiInvestments'
-import { enableCors } from './utils/enableCors'
+import { deleteCdiInvestment } from './cdiInvestment/deleteCdiInvestment'
 import { getUserResume } from './cdiInvestment/getUserResume'
+import { readCdiInvestmentHistory } from './cdiInvestment/readCdiInvestmentHistory'
+import { readUserCdiInvestments } from './cdiInvestment/readUserCdiInvestments'
 import { rescueCdiInvestment } from './cdiInvestment/rescueCdiInvestment'
+import { updateCdiInvestment } from './cdiInvestment/updateCdiInvestment'
+import {
+  CDIInvestmentDocument,
+  CDIInvestmentHistoryDocument,
+  HttpMethod,
+  RescueCDIInvestment
+} from './types'
+import { enableCors } from './utils/enableCors'
+import {
+  InvestmentUserOwnerError,
+  verifyUser
+} from './utils/verifyUser'
+
+admin.initializeApp()
 
 const db = admin.firestore()
 
@@ -24,33 +32,33 @@ moment.tz.setDefault('America/Sao_Paulo')
 exports.cronJobFetchCdiByDayNight = functions
   .runWith({ timeoutSeconds: 540 })
   .pubsub
-    .schedule('1 0 * * *')
-    .timeZone('America/Sao_Paulo')
-    .onRun(() => cronJobFetchCdiByDay(db, true))
+  .schedule('1 0 * * *')
+  .timeZone('America/Sao_Paulo')
+  .onRun(async () => await cronJobFetchCdiByDay(db, true))
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayMorning = functions
   .runWith({ timeoutSeconds: 540 })
   .pubsub
-    .schedule('0 8 * * *')
-    .timeZone('America/Sao_Paulo')
-    .onRun(() => cronJobFetchCdiByDay(db))
+  .schedule('0 8 * * *')
+  .timeZone('America/Sao_Paulo')
+  .onRun(async () => await cronJobFetchCdiByDay(db))
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayNoon = functions
   .runWith({ timeoutSeconds: 540 })
   .pubsub
-    .schedule('0 12 * * *')
-    .timeZone('America/Sao_Paulo')
-    .onRun(() => cronJobFetchCdiByDay(db))
+  .schedule('0 12 * * *')
+  .timeZone('America/Sao_Paulo')
+  .onRun(async () => await cronJobFetchCdiByDay(db))
 
 // This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayEvening = functions
   .runWith({ timeoutSeconds: 540 })
   .pubsub
-    .schedule('0 18 * * *')
-    .timeZone('America/Sao_Paulo')
-    .onRun(() => cronJobFetchCdiByDay(db))
+  .schedule('0 18 * * *')
+  .timeZone('America/Sao_Paulo')
+  .onRun(async () => await cronJobFetchCdiByDay(db))
 
 exports.createCdiInvestment = functions.https.onRequest(
   enableCors(
@@ -181,3 +189,29 @@ exports.rescueCdiInvestment = functions.https.onRequest(
     )
   )
 )
+
+// exports.changeDatabase = functions.https.onRequest(
+//   enableCors(
+//     HttpMethod.POST,
+//     async (request, response) => {
+//       const query = await db.collection(COLLECTIONS.CDI_INVESTMENTS).get()
+
+//       const collection = query.docs.map((doc) => {
+//         return {
+//           ref:doc.ref,
+//           data: doc.data() as CDIInvestmentDocument
+//         }
+//       })
+
+//       const batch = db.batch()
+
+//       collection.forEach(item => {
+//         batch.update(item.ref, { name: admin.firestore.FieldValue.delete() })
+//       })
+
+//       await batch.commit()
+
+//       response.send()
+//     }
+//   )
+// )

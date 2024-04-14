@@ -36,7 +36,7 @@ export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
 
 export interface CDIInvestmentDocument {
   id?: string
-  name?: string
+  bank?: string
   user: string
   type: InvestmentType
   startDate: Date | string
@@ -72,7 +72,7 @@ export enum HttpMethod {
   DELETE = 'DELETE'
 }
 
-export type UserResume = {
+export interface UserResume {
   investedValue: number
   grossValue: number
   grossValueIncome: number
@@ -82,7 +82,7 @@ export type UserResume = {
   netGrowth: number
 }
 
-export type RescueCDIInvestment = {
+export interface RescueCDIInvestment {
   investmentId: string
   date: Date | string
   value: number

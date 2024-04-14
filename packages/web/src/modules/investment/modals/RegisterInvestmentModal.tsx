@@ -33,7 +33,8 @@ import { required } from '~/utils/validators/required.validator'
 
 const schema = yup.object().shape<Record<keyof InvestmentFormData, yup.AnySchema>>({
   id: yup.string(),
-  name: yup.string(),
+  bank: yup.string(),
+  target: yup.string(),
   type: required()(yup.string()),
   startDate: flow(
     date(),
@@ -76,7 +77,8 @@ export function RegisterInvestmentModal({
           cdiFee: investment.cdiFee,
           dueDate: !investment.dueDate ? undefined : moment(investment.dueDate).format('L'),
           investedValue: Number(precisionNumberWithoutRound(investment.investedValue)),
-          name: investment.name,
+          bank: investment.bank,
+          target: investment.target,
           startDate: moment(investment.startDate).format('L'),
           type: investment.type
         }
@@ -134,15 +136,25 @@ export function RegisterInvestmentModal({
         className="mt-5"
         onSubmit={ handleSubmit(handleCreateUser) }
       >
-
         <TextInput.Root
-          label="Nome"
+          label="Banco/Instituição"
           className="w-full"
-          error={ errors.name?.message }
+          error={ errors.bank?.message }
         >
           <TextInput.Input
-            placeholder="Informe um apelido para o investimento"
-            { ...register('name') }
+            placeholder="Informe o banco/instituição do investimento"
+            { ...register('bank') }
+          />
+        </TextInput.Root>
+
+        <TextInput.Root
+          label="Objetivo"
+          className="w-full"
+          error={ errors.target?.message }
+        >
+          <TextInput.Input
+            placeholder="Informe um objetivo para o investimento"
+            { ...register('target') }
           />
         </TextInput.Root>
 

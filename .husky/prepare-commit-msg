@@ -2,5 +2,9 @@
 . "$(dirname "$0")/_/husky.sh"
 
 if [ "$2" != "message" ];then 
+  if sh -c ": >/dev/tty" >/dev/null 2>/dev/null; then
     exec < /dev/tty && node_modules/.bin/cz --hook "$1" "$2" "$3" || true
+  else
+    exec < /dev/console && node_modules/.bin/cz --hook "$1" "$2" "$3" || true
+  fi
 fi

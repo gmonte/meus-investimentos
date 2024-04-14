@@ -1,33 +1,34 @@
 {
   "name": "meus-investimentos",
   "private": true,
-  "workspaces": {
-    "nohoist": [
-      "**/tailwindcss",
-      "**/tailwindcss/**",
-      "**/tailwindcss-*",
-      "**/tailwindcss-*/**"
-    ],
-    "packages": [
-      "configs/*",
-      "packages/*",
-      "packages/server/*"
-    ]
+  "packageManager": "pnpm@8.6.1",
+  "engines": {
+    "node": ">=18.19.0"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "reinstall": "pnpm lerna clean -y && rm -rf node_modules pnpm-store && pnpm install"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "commitizen": "^4.2.5",
+    "@lerna/project": "^6.4.1",
+    "@meus-investimentos/eslint-config": "workspace:*",
+    "commitizen": "^4.2.4",
     "cz-lerna-changelog": "^2.0.3",
-    "husky": "^8.0.2",
-    "lerna": "^6.1.0"
+    "husky": "^7.0.0",
+    "lerna": "^7.1.1",
+    "lint-staged": "^15.2.0",
+    "typescript": "^4.1.9"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-lerna-changelog"
     }
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }

@@ -20,10 +20,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18.19.0
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Build and Deploy to Firebase Functions
-        run: cd packages/server/functions && npx firebase-tools deploy --only functions --token ${{ secrets.FIREBASE_TOKEN }}
+        run: cd packages/server/functions && pnpx firebase-tools deploy --only functions --token ${{ secrets.FIREBASE_TOKEN }}

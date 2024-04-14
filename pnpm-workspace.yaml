@@ -1,0 +1,5 @@
+packages:
+  - 'configs/*'
+  - 'packages/core'
+  - 'packages/server/functions'
+  - 'packages/web'

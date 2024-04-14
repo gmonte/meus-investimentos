@@ -2,7 +2,7 @@
   "license": "ISC",
   "scripts": {
     "deploy": "firebase deploy",
-    "deploy:firestore": "yarn deploy --only firestore",
-    "deploy:functions": "yarn deploy --only functions"
+    "deploy:firestore": "pnpm run deploy --only firestore",
+    "deploy:functions": "pnpm run deploy --only functions"
   }
 }

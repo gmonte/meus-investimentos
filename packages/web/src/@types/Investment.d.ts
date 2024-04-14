@@ -27,7 +27,8 @@ export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
 
 export interface CDIInvestmentDocument {
   id: string
-  name?: string
+  bank?: string
+  target?: string
   user: string
   type: InvestmentType
   startDate: string
@@ -59,7 +60,8 @@ export interface ShortCDIInvestmentDocument extends Omit<CDIInvestmentDocument, 
 
 export interface InvestmentFormData {
   id?: string
-  name?: string
+  bank?: string
+  target?: string
   type: InvestmentType
   startDate: string
   dueDate?: string

@@ -23,7 +23,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: pnpm install
 
       - name: Make .env file
         uses: SpicyPizza/create-envfile@v1.3
@@ -40,7 +40,7 @@ jobs:
           fail_on_empty: false
 
       - name: Build App
-        run: cd packages/web && yarn build
+        run: cd packages/web && pnpm build
       
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0

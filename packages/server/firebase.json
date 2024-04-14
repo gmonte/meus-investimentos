@@ -5,12 +5,13 @@
       "codebase": "default",
       "ignore": [
         "node_modules",
+        "pnpm-store",
         ".git",
         "firebase-debug.log",
         "firebase-debug.*.log"
       ],
       "predeploy": [
-        "yarn --cwd \"$RESOURCE_DIR\" build"
+        "pnpm --dir \"$RESOURCE_DIR\" build"
       ]
     }
   ],
