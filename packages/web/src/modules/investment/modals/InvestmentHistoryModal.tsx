@@ -37,7 +37,7 @@ export function InvestmentHistoryModal({
 
   const error = useMemo(
     () => {
-      if (isErrorGetCdiInvestmentHistory) {
+      if (isErrorGetCdiInvestmentHistory && errorGetCdiInvestmentHistory) {
         return <FetchErrorMessage error={ errorGetCdiInvestmentHistory } />
       }
       return null

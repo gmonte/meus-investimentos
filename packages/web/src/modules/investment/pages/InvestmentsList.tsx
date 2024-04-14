@@ -45,10 +45,10 @@ export default function InvestmentsList() {
 
   const error = useMemo(
     () => {
-      if (isErrorUserCdiInvestments) {
+      if (isErrorUserCdiInvestments && errorUserCdiInvestments) {
         return <FetchErrorMessage error={ errorUserCdiInvestments } />
       }
-      if (isErrorUserResume) {
+      if (isErrorUserResume && errorUserResume) {
         return <FetchErrorMessage error={ errorUserResume } />
       }
       return null

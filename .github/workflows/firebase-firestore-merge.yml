@@ -22,16 +22,13 @@ jobs:
         with:
            node-version-file: '.nvmrc'
 
-      - name: Setup pnpm
+      - name: Install dependencies
         uses: pnpm/action-setup@v3
         with:
           version: 8.6.1
           run_install: |
             - recursive: true
               args: [--frozen-lockfile]
-
-      - name: Install dependencies
-        run: pnpm install
 
       - name: Build and Deploy to Firebase Functions
         run: cd packages/server && pnpx firebase-tools deploy --only firestore --token ${{ secrets.FIREBASE_TOKEN }}
