@@ -1,3 +1,5 @@
+import './bootstrap'
+
 import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 import * as moment from 'moment-timezone'
@@ -23,10 +25,7 @@ import {
   verifyUser
 } from './utils/verifyUser'
 
-admin.initializeApp()
-
 const db = admin.firestore()
-
 moment.tz.setDefault('America/Sao_Paulo')
 
 // This will be run every day at (Minute Hour * * *)
