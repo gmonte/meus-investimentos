@@ -95,40 +95,40 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
   )
 
   return (
-    <div className="text-white border-2 border-gray-700 bg-slate-800 rounded-lg px-4 pt-3 pb-1">
+    <div className="rounded-lg border-2 border-gray-700 bg-slate-800 px-4 pb-1 pt-3 text-white">
 
-      <div className="flex justify-between items-center flex-wrap">
+      <div className="flex flex-wrap items-center justify-between">
 
-        <div className="flex gap-3 items-center">
-          {investment.bank && (
-            <Text className="italic text-gray-300 font-semibold" size="xl">
-              {investment.bank}
+        <div className="flex items-center gap-3">
+          {investment.target && (
+            <Text className="font-semibold italic text-gray-300" size="xl">
+              {investment.target.name}
             </Text>
           )}
 
-          <Text className="text-gray-600 font-bold" size="md">
+          <Text className="font-bold text-gray-600" size="md">
             {investment.type} {investment.cdiFee}% CDI
           </Text>
         </div>
 
         <div>
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-3">
             <Button
-              className="py-0 px-0 text-gray-500 hover:text-white bg-transparent hover:bg-transparent active:bg-transparent"
+              className="bg-transparent !p-0 text-gray-500 hover:bg-transparent hover:text-white active:bg-transparent"
               onClick={ handleHistory }
             >
               <ChartLineUp size={ 20 } weight="bold" />
             </Button>
 
             <Button
-              className="py-0 px-0 text-gray-500 hover:text-white bg-transparent hover:bg-transparent active:bg-transparent"
+              className="bg-transparent !p-0 text-gray-500 hover:bg-transparent hover:text-white active:bg-transparent"
               onClick={ handleEdit }
             >
               <PencilSimple size={ 20 } />
             </Button>
 
             <Button
-              className="py-0 px-0 text-gray-500 hover:text-red-400 bg-transparent hover:bg-transparent active:bg-transparent"
+              className="bg-transparent !p-0 text-gray-500 hover:bg-transparent hover:text-red-400 active:bg-transparent"
               onClick={ handleDelete }
             >
               <Trash size={ 20 } />
@@ -138,29 +138,29 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
 
       </div>
 
-      <div className="flex justify-between items-center flex-wrap">
-        <Text className="text-gray-600 font-bold" size="md">
+      <div className="flex flex-wrap items-center justify-between">
+        <Text className="font-bold text-gray-600" size="md">
           Início: {moment(investment.startDate).format('L')}
         </Text>
 
-        <Text className="text-gray-600 font-bold" size="md">
+        <Text className="font-bold text-gray-600" size="md">
           Vencimento: {!investment.dueDate ? '-' : moment(investment.dueDate).format('L')}
         </Text>
       </div>
 
-      <div className="flex flex-col py-2 max-[465px]:gap-2 max-[465px]:mt-2">
+      <div className="flex flex-col py-2 max-[465px]:mt-2 max-[465px]:gap-2">
         <div className="flex items-center max-[465px]:flex-col">
-          <Text className="text-gray-400 line-through font-semibold font-mono tracking-tight" size="lg">
+          <Text className="font-mono font-semibold tracking-tight text-gray-400 line-through" size="lg">
             {formatCurrency(investment.investedValue)}
           </Text>
         </div>
 
         <div className="flex items-center max-[465px]:flex-col">
           <div>
-            <Text className="text-gray-400 font-bold" size="xl">
+            <Text className="font-bold text-gray-400" size="xl">
               Bruto:{' '}
             </Text>
-            <Text className="text-gray-200 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
+            <Text className="whitespace-nowrap font-mono font-bold tracking-tight text-gray-200" size="xl">
               {formatCurrency(investment.grossValue)}
             </Text>
           </div>
@@ -179,10 +179,10 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
 
         <div className="flex items-center max-[465px]:flex-col">
           <div>
-            <Text className="text-gray-400 font-bold" size="xl">
+            <Text className="font-bold text-gray-400" size="xl">
               Líquido:{' '}
             </Text>
-            <Text className="text-gray-200 font-bold font-mono tracking-tight whitespace-nowrap" size="xl">
+            <Text className="whitespace-nowrap font-mono font-bold tracking-tight text-gray-200" size="xl">
               {formatCurrency(investment.netValue)}
             </Text>
           </div>
@@ -199,17 +199,17 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
 
         </div>
 
-        <div className="mt-3 flex justify-between min-[466px]:items-center max-[465px]:flex-col">
+        <div className="mt-3 flex justify-between max-[465px]:flex-col min-[466px]:items-center">
           <div className="flex flex-col flex-wrap">
             {profitabilityDaysCount
               ? (
                 <>
-                  <Text className="text-gray-600 font-bold" size="md">
+                  <Text className="font-bold text-gray-600" size="md">
                     Seu dinheiro {investment.finished ? 'rendeu por' : 'está rendendo há'}{' '}
                     {profitabilityDaysCount} dia{profitabilityDaysCount > 1 && 's'}
                   </Text>
 
-                  <Text className="text-gray-600 font-bold" size="md">
+                  <Text className="font-bold text-gray-600" size="md">
                     {investment.finished
                       ? `Resgatado em ${ moment(investment.rescueDate ?? investment.dueDate).format('L') }`
                       : `Rentabilidade disponível em ${ moment(investment.profitabilityAvailableDate).format('L') }`
@@ -218,7 +218,7 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
                 </>
                 )
               : (
-                <Text className="text-gray-600 font-bold" size="md">
+                <Text className="font-bold text-gray-600" size="md">
                   O seu dinheiro ainda não começou a render
                 </Text>
                 )}

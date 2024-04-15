@@ -27,7 +27,7 @@ export const Group = forwardRef<HTMLDivElement, RadioGroupProps>(
 
       <RadioGroupPrimitive.Root
         ref={ ref }
-        className="flex gap-2 flex-1 flex-wrap"
+        className="flex flex-1 flex-wrap gap-2"
         onValueChange={ onChange }
         { ...props }
       />

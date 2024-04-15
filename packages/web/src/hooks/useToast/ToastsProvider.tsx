@@ -136,8 +136,8 @@ export function ToastsProvider({
             open={ open }
             onOpenChange={ (newOpen) => !newOpen && removeToast({ id }) }
           >
-            <div className="w-full radix px-5 py-4">
-              <ToastPrimitive.Title className="text-md font-medium text-gray-100">
+            <div className="w-full px-5 py-4">
+              <ToastPrimitive.Title className="font-medium text-gray-100">
                 {title}
               </ToastPrimitive.Title>
               <ToastPrimitive.Description
@@ -169,7 +169,7 @@ export function ToastsProvider({
         <>
           {renderedToasts}
           <ToastPrimitive.Viewport
-            className="fixed bottom-0 right-0 flex flex-col p-6 gap-5 w-[370px] max-w-full m-0 list-none z-[2147483647] outline-none"
+            className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[370px] max-w-full list-none flex-col gap-5 p-6 outline-none"
           />
         </>
       </ToastPrimitive.ToastProvider>

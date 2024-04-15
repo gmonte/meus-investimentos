@@ -63,7 +63,7 @@ export default function InvestmentsList() {
 
   return (
     <div className="flex flex-1 justify-center">
-      <div className="max-w-xl flex-1 p-4 gap-5 flex flex-col">
+      <div className="flex max-w-xl flex-1 flex-col gap-5 p-4">
 
         {isFetching && <Loader />}
 
@@ -93,7 +93,7 @@ export default function InvestmentsList() {
             <UserResume userResume={ userResume } />
 
             {emptyMsg && (
-              <Text className="text-center text-gray-500 mt-10">
+              <Text className="mt-10 text-center text-gray-500">
                 {emptyMsg}
               </Text>
             )}

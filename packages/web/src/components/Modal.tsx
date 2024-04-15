@@ -70,7 +70,7 @@ function ModalRoot({
                 'focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75'
               ) }
             >
-              <X className="h-4 w-4 text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-400" />
+              <X className="size-4 text-gray-500 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-400" />
             </DialogPrimitive.Close>
 
           </DialogPrimitive.Content>

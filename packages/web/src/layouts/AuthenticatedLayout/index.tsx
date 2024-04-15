@@ -4,7 +4,7 @@ import { Navbar } from './components/Navbar'
 
 export function AuthenticatedLayout() {
   return (
-    <div className="w-screen min-h-screen bg-gray-900 flex flex-col">
+    <div className="flex min-h-screen w-screen flex-col bg-gray-900">
       <Navbar />
       <Outlet />
     </div>

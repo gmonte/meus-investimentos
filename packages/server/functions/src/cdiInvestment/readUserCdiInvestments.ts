@@ -2,9 +2,13 @@ import * as admin from 'firebase-admin'
 import { UserRecord } from 'firebase-functions/v1/auth'
 
 import { COLLECTIONS } from '../constants'
-import { CDIInvestmentDocument, ShortCDIInvestmentDocument } from '../types'
+import { getUserTargets } from '../target/getUserTargets'
+import {
+  CDIInvestmentDocument,
+  FilledShortCDIInvestmentDocument
+} from '../types'
 
-export const readUserCdiInvestments = async (db: admin.firestore.Firestore, finished: string | undefined, user: UserRecord): Promise<ShortCDIInvestmentDocument[]> => {
+export const readUserCdiInvestments = async (db: admin.firestore.Firestore, finished: string | undefined, user: UserRecord): Promise<FilledShortCDIInvestmentDocument[]> => {
   let query = db.collection(COLLECTIONS.CDI_INVESTMENTS)
     .where('user', '==', user.uid)
 
@@ -15,8 +19,18 @@ export const readUserCdiInvestments = async (db: admin.firestore.Firestore, fini
   }
   const snapshot = await query.orderBy('startDate', 'desc').get()
 
-  return snapshot.docs.map<ShortCDIInvestmentDocument>((doc) => {
-    const cdiInvestment = doc.data() as CDIInvestmentDocument
-    return cdiInvestment
-  })
+  const userTargets = await getUserTargets(db, user)
+
+  return snapshot.docs.map<FilledShortCDIInvestmentDocument>(
+    (doc) => {
+      const {
+        target,
+        ...cdiInvestment
+      } = doc.data() as CDIInvestmentDocument
+      return {
+        ...cdiInvestment,
+        target: userTargets.find(userTarget => userTarget.id === target)
+      }
+    }
+  )
 }

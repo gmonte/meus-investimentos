@@ -9,6 +9,7 @@ import {
   RescueCDIInvestment,
   CDIInvestmentHistoryDocument
 } from '~/@types/Investment'
+import { TargetDocument } from '~/@types/Target'
 
 import { baseQueryWithReauth } from './fetchBase'
 
@@ -20,7 +21,7 @@ export const api = createApi({
       return action.payload?.[reducerPath]
     }
   },
-  tagTypes: ['CDIInvestmentsList', 'CDIInvestmentHistory', 'UserResume'],
+  tagTypes: ['CDIInvestmentsList', 'CDIInvestmentHistory', 'UserResume', 'Targets'],
   endpoints: (builder) => ({
 
     getUserCdiInvestments: builder.query<ShortCDIInvestmentDocument[], boolean | null>({
@@ -115,6 +116,21 @@ export const api = createApi({
         },
         'UserResume'
       ]
+    }),
+
+    getUserTargets: builder.query<TargetDocument[], void>({
+      query: () => '/getUserTargets',
+      providesTags: (result) => result
+        ? [
+            ...result.map(
+              ({ id }) => ({
+                type: 'Targets' as const,
+                id
+              })
+            ),
+            'Targets'
+          ]
+        : ['Targets']
     })
 
   })

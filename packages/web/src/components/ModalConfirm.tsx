@@ -66,7 +66,7 @@ export function ModalConfirm({
 
         <Button
           onClick={ handleCancel }
-          className="bg-gray-800 hover:bg-gray-900 active:bg-black text-white"
+          className="bg-gray-800 text-white hover:bg-gray-900 active:bg-black"
         >
           Cancelar
         </Button>

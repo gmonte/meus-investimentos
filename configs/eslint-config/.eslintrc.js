@@ -86,8 +86,10 @@ module.exports = {
     'react/jsx-curly-spacing': ['warn', { when: 'always' }],
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'react/function-component-definition': [2, { namedComponents: 'function-declaration' }],
+    'react/prop-types': 'off',
     'space-before-function-paren': 'off',
-    'template-curly-spacing': [2, 'always']
+    'template-curly-spacing': [2, 'always'],
+    'typescript-eslint/no-var-requires': 'off'
   },
   settings: {
     'import/parsers': {

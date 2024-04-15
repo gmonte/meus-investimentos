@@ -19,3 +19,4 @@ tsconfig.node.json
 vite.config.ts
 commitlint.config.js
 .test/
+vite-env.d.ts

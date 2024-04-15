@@ -32,13 +32,13 @@ export function Item({
             ) }
             { ...props }
           >
-            <RadioGroupPrimitive.Indicator className="absolute inset-0 flex items-center justify-center leading-0">
-              <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
+            <RadioGroupPrimitive.Indicator className="absolute inset-0 flex items-center justify-center leading-none">
+              <div className="size-1.5 rounded-full bg-white"></div>
             </RadioGroupPrimitive.Indicator>
           </RadioGroupPrimitive.Item>
 
           <Text
-            className="font-medium text-gray-700 dark:text-gray-400 cursor-pointer"
+            className="cursor-pointer font-medium text-gray-700 dark:text-gray-400"
           >
             {label}
           </Text>

@@ -25,12 +25,12 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
     <div className={ clsx('flex items-center gap-3', className) }>
       <CheckboxPrimitive.Root
         ref={ ref }
-        className="h-6 w-6 p-[2px] bg-gray-800  border-cyan-500 border-solid border rounded flex"
+        className="flex size-6 rounded border  border-solid border-cyan-500 bg-gray-800 p-[2px]"
         onCheckedChange={ onChange }
         checked={ checked }
       >
         <CheckboxPrimitive.Indicator asChild>
-          <Check weight="bold" className="h-5 w-5 text-cyan-500" />
+          <Check weight="bold" className="size-5 text-cyan-500" />
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>
 

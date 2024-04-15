@@ -135,7 +135,7 @@ export function RescueInvestmentModal({
             render={ ({ field }) => <TextInput.InputCurrency { ...field }/> }
           />
         </TextInput.Root>
-        <Text className="text-gray-500 font-bold">
+        <Text className="font-bold text-gray-500">
           Valor máximo: {formatCurrency(investment.netValue)}
         </Text>
 

@@ -21,7 +21,7 @@ export function FetchErrorMessage({ error }: FetchErrorMessageProps) {
 
   // you can access all properties of `SerializedError` here
   return (
-    <div className="text-white font-mono w-max-full break-words">
+    <div className="w-full break-words font-mono text-white">
       <div>An error has occurred:</div>
       <div>{errMsg}</div>
     </div>

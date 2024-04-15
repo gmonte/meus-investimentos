@@ -1,3 +1,9 @@
+export interface TargetDocument {
+  id?: string
+  user: string
+  name: string
+}
+
 export interface CDIResponse {
   data: string
   valor: string
@@ -37,6 +43,7 @@ export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
 export interface CDIInvestmentDocument {
   id?: string
   bank?: string
+  target?: string
   user: string
   type: InvestmentType
   startDate: Date | string
@@ -64,6 +71,10 @@ export interface CDIInvestmentDocument {
 }
 
 export type ShortCDIInvestmentDocument = Omit<CDIInvestmentDocument, 'history'>
+
+export type FilledShortCDIInvestmentDocument = Omit<ShortCDIInvestmentDocument, 'target'> & {
+  target?: TargetDocument
+}
 
 export enum HttpMethod {
   GET = 'GET',

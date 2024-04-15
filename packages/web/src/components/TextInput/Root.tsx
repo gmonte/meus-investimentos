@@ -47,7 +47,7 @@ export function Root({
         {children}
       </div>
       {!!error && (
-        <span className="text-red-300 text-xs">
+        <span className="text-xs text-red-300">
           {error}
         </span>
       )}

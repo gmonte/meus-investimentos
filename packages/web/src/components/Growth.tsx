@@ -25,8 +25,8 @@ export function Growth({
         className
       ) }
       >
-      <ArrowUp className="text-green-700 font-mono" weight="bold" />
-      <Text className="text-green-700 font-bold font-mono" size={ size }>
+      <ArrowUp className="font-mono text-green-700" weight="bold" />
+      <Text className="font-mono font-bold text-green-700" size={ size }>
         {children}
       </Text>
     </div>

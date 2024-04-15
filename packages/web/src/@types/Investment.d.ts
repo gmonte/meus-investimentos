@@ -1,3 +1,5 @@
+import { TargetDocument } from './Target'
+
 export interface CDIInvestmentHistoryItem {
   date: Date | string
   cdiFeeDaily: number
@@ -28,7 +30,7 @@ export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
 export interface CDIInvestmentDocument {
   id: string
   bank?: string
-  target?: string
+  target?: TargetDocument
   user: string
   type: InvestmentType
   startDate: string
@@ -69,7 +71,7 @@ export interface InvestmentFormData {
   cdiFee: number
 }
 
-export type UserResume = {
+export interface UserResume {
   investedValue: number
   grossValue: number
   grossValueIncome: number
@@ -79,7 +81,7 @@ export type UserResume = {
   netGrowth: number
 }
 
-export type RescueCDIInvestment = {
+export interface RescueCDIInvestment {
   investmentId: string
   date: string
   value: number

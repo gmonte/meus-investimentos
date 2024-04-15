@@ -24,12 +24,12 @@ export function UserResume({ userResume }: UserResumeProps) {
   }
 
   return (
-    <div className="flex flex-col text-gray-300 items-center max-sm:gap-1">
+    <div className="flex flex-col items-center text-gray-300 max-sm:gap-1">
       <Text size="xl">
         Olá, {user.displayName && <span className="italic">{ user.displayName }</span>}
       </Text>
 
-      <div className="flex items-center min-[640px]:gap-2 max-sm:flex-col max-sm:mb-1">
+      <div className="flex items-center max-sm:mb-1 max-sm:flex-col min-[640px]:gap-2">
         <Text>
           Você investiu
         </Text>
@@ -38,7 +38,7 @@ export function UserResume({ userResume }: UserResumeProps) {
         </Text>
       </div>
 
-      <div className="flex items-center min-[640px]:gap-2 max-sm:flex-col max-sm:mb-2">
+      <div className="flex items-center max-sm:mb-2 max-sm:flex-col min-[640px]:gap-2">
         <Text>
           Seu retorno bruto é de
         </Text>
@@ -55,7 +55,7 @@ export function UserResume({ userResume }: UserResumeProps) {
         </div>
       </div>
 
-      <div className="flex items-center min-[640px]:gap-2 max-sm:flex-col">
+      <div className="flex items-center max-sm:flex-col min-[640px]:gap-2">
         <Text>
           Seu retorno líquido é de
         </Text>

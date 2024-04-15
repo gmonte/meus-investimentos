@@ -64,6 +64,10 @@ export function RegisterInvestmentModal({
 }: RegisterInvestmentModalProps) {
   const { createToast } = useToast()
 
+  const { data: targets, isLoading: isLoadingTargets } = api.useGetUserTargetsQuery()
+
+  console.log(targets, targets)
+
   const {
     handleSubmit,
     register,
@@ -78,7 +82,7 @@ export function RegisterInvestmentModal({
           dueDate: !investment.dueDate ? undefined : moment(investment.dueDate).format('L'),
           investedValue: Number(precisionNumberWithoutRound(investment.investedValue)),
           bank: investment.bank,
-          target: investment.target,
+          target: investment.target?.id,
           startDate: moment(investment.startDate).format('L'),
           type: investment.type
         }
@@ -147,16 +151,27 @@ export function RegisterInvestmentModal({
           />
         </TextInput.Root>
 
-        <TextInput.Root
-          label="Objetivo"
-          className="w-full"
-          error={ errors.target?.message }
-        >
-          <TextInput.Input
-            placeholder="Informe um objetivo para o investimento"
-            { ...register('target') }
-          />
-        </TextInput.Root>
+        <Controller
+          control={ control }
+          name="target"
+          render={ ({ field: { onChange, value } }) => (
+            <TextInput.Root
+              label="Objetivo"
+              className="w-full"
+              error={ errors.target?.message }
+            >
+              <TextInput.Select
+                placeholder="Selecione um objetivo"
+                searchPlaceholder="Pesquise pelo objetivo"
+                value={ value }
+                onChange={ onChange }
+                options={ targets }
+                loading={ isLoadingTargets }
+                clearable
+              />
+            </TextInput.Root>
+          ) }
+        />
 
         <Controller
           name="type"
@@ -173,7 +188,7 @@ export function RegisterInvestmentModal({
           ) }
         />
 
-        <div className="w-full flex gap-2 flex-wrap">
+        <div className="flex w-full flex-wrap gap-2">
           <TextInput.Root
             label="Indexador"
             className="w-full flex-1"

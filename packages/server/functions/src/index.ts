@@ -10,6 +10,7 @@ import { readCdiInvestmentHistory } from './cdiInvestment/readCdiInvestmentHisto
 import { readUserCdiInvestments } from './cdiInvestment/readUserCdiInvestments'
 import { rescueCdiInvestment } from './cdiInvestment/rescueCdiInvestment'
 import { updateCdiInvestment } from './cdiInvestment/updateCdiInvestment'
+import { getUserTargets } from './target/getUserTargets'
 import {
   CDIInvestmentDocument,
   CDIInvestmentHistoryDocument,
@@ -190,28 +191,14 @@ exports.rescueCdiInvestment = functions.https.onRequest(
   )
 )
 
-/* exports.changeDatabase = functions.https.onRequest(
+exports.getUserTargets = functions.https.onRequest(
   enableCors(
-    HttpMethod.POST,
-    async (request, response) => {
-      const query = await db.collection(COLLECTIONS.CDI_INVESTMENTS).get()
-
-      const collection = query.docs.map((doc) => {
-        return {
-          ref:doc.ref,
-          data: doc.data() as CDIInvestmentDocument
-        }
-      })
-
-      const batch = db.batch()
-
-      collection.forEach(item => {
-        batch.update(item.ref, { name: admin.firestore.FieldValue.delete() })
-      })
-
-      await batch.commit()
-
-      response.send()
-    }
+    HttpMethod.GET,
+    verifyUser(
+      async (request, response, user) => {
+        const userTargests = await getUserTargets(db, user)
+        response.json(userTargests)
+      }
+    )
   )
-) */
+)

@@ -95,19 +95,19 @@ export default function SignIn() {
   )
 
   return (
-    <div className="flex items-center justify-center flex-1 flex-col">
+    <div className="flex flex-1 flex-col items-center justify-center">
 
       <header className="flex flex-col items-center">
         <Heading size="lg" className="mt-4">
           Meus Investimentos
         </Heading>
 
-        <Text size="lg" className="text-gray-400 mt-1">
+        <Text size="lg" className="mt-1 text-gray-400">
           Faça seu login e comece a usar!
         </Text>
       </header>
 
-      <div className="flex items-center justify-center flex-col">
+      <div className="flex flex-col items-center justify-center">
         <Form
           className="mt-6"
           onSubmit={ handleSubmit(handleLogin) }
@@ -126,7 +126,7 @@ export default function SignIn() {
             />
           </TextInput.Root>
 
-          <Text size="sm" asChild className="hover:underline text-right text-white">
+          <Text size="sm" asChild className="text-right text-white hover:underline">
             <button type="button" onClick={ handleForgotPassword }>
               Esqueci minha senha
             </button>
@@ -137,7 +137,7 @@ export default function SignIn() {
           </Button>
         </Form>
 
-        <Text asChild className="mt-4 hover:underline text-white">
+        <Text asChild className="mt-4 text-white hover:underline">
           <button onClick={ handleCreateAccount }>
             Criar Conta
           </button>
@@ -157,7 +157,7 @@ export default function SignIn() {
 
         <Button
           startIcon={ <GithubLogo size={ 24 } color="white" /> }
-          className="mt-3 w-full bg-black hover:bg-black active:bg-black text-white"
+          className="mt-3 w-full bg-black text-white hover:bg-black active:bg-black"
           onClick={ async () => handleSignIn('github') }
         >
           Acessar com GitHub

@@ -34,18 +34,18 @@ export function Navbar() {
   )
 
   return (
-    <nav className="bg-cyan-500 p-6 sticky top-0">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between flex-wrap">
+    <nav className="sticky top-0 bg-cyan-500 p-6">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-wrap items-center justify-between">
 
-          <div className="flex items-center flex-shrink-0 mr-6">
-            <span className="font-semibold text-xl tracking-tight text-white">
+          <div className="mr-6 flex shrink-0 items-center">
+            <span className="text-xl font-semibold tracking-tight text-white">
               Meus Investimentos
             </span>
           </div>
 
-          <div className="flex-grow flex items-center w-auto">
-            <div className="text-sm flex-1">
+          <div className="flex w-auto grow items-center">
+            <div className="flex-1 text-sm">
               <Button
                 className="bg-white hover:bg-gray-100 active:bg-gray-200"
                 onClick={ handleCreateInvestment }
