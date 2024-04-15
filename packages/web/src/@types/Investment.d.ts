@@ -1,3 +1,4 @@
+import { BankDocument } from './Bank'
 import { TargetDocument } from './Target'
 
 export interface CDIInvestmentHistoryItem {
@@ -29,7 +30,7 @@ export type InvestmentType = 'CDB' | 'LCI' | 'LCA'
 
 export interface CDIInvestmentDocument {
   id: string
-  bank?: string
+  bank?: BankDocument
   target?: TargetDocument
   user: string
   type: InvestmentType

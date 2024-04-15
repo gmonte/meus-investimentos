@@ -100,9 +100,9 @@ export function InvestmentListItem({ investment }: InvestmentListItemProps) {
       <div className="flex flex-wrap items-center justify-between">
 
         <div className="flex items-center gap-3">
-          {investment.target && (
+          {investment.bank && (
             <Text className="font-semibold italic text-gray-300" size="xl">
-              {investment.target.name}
+              {investment.bank.name}
             </Text>
           )}
 

@@ -65,12 +65,10 @@ export function RegisterInvestmentModal({
   const { createToast } = useToast()
 
   const { data: targets, isLoading: isLoadingTargets } = api.useGetUserTargetsQuery()
-
-  console.log(targets, targets)
+  const { data: banks, isLoading: isLoadingBanks } = api.useGetBanksQuery()
 
   const {
     handleSubmit,
-    register,
     control,
     formState: { errors }
   } = useForm<InvestmentFormData>({
@@ -81,7 +79,7 @@ export function RegisterInvestmentModal({
           cdiFee: investment.cdiFee,
           dueDate: !investment.dueDate ? undefined : moment(investment.dueDate).format('L'),
           investedValue: Number(precisionNumberWithoutRound(investment.investedValue)),
-          bank: investment.bank,
+          bank: investment.bank?.id,
           target: investment.target?.id,
           startDate: moment(investment.startDate).format('L'),
           type: investment.type
@@ -140,16 +138,28 @@ export function RegisterInvestmentModal({
         className="mt-5"
         onSubmit={ handleSubmit(handleCreateUser) }
       >
-        <TextInput.Root
-          label="Banco/Instituição"
-          className="w-full"
-          error={ errors.bank?.message }
-        >
-          <TextInput.Input
-            placeholder="Informe o banco/instituição do investimento"
-            { ...register('bank') }
-          />
-        </TextInput.Root>
+
+        <Controller
+          control={ control }
+          name="bank"
+          render={ ({ field: { onChange, value } }) => (
+            <TextInput.Root
+              label="Banco/Instituição"
+              className="w-full"
+              error={ errors.bank?.message }
+            >
+              <TextInput.Select
+                placeholder="Informe a instituição financeira do investimento"
+                searchPlaceholder="Pesquise pelo nome do banco"
+                value={ value }
+                onChange={ onChange }
+                options={ banks }
+                loading={ isLoadingBanks }
+                clearable
+              />
+            </TextInput.Root>
+          ) }
+        />
 
         <Controller
           control={ control }

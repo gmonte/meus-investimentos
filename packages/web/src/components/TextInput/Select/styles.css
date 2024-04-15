@@ -5,14 +5,12 @@
 .select-item {
   position: relative;
   display: flex;
-  height: 2.5rem;
   cursor: default;
   scroll-margin-top: 0.25rem;
   scroll-margin-bottom: 0.25rem;
   align-items: center;
   border-radius: 0.25rem;
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
+  padding: 0.5rem 1.75rem;
   color: hsl(204 10% 10%);
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -24,7 +22,6 @@
 
 @media (min-width: 640px) {
   .select-item {
-    height: 2.25rem;
     font-size: 15px;
   }
 }

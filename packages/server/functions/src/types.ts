@@ -4,6 +4,11 @@ export interface TargetDocument {
   name: string
 }
 
+export interface BankDocument {
+  id: string
+  name: string
+}
+
 export interface CDIResponse {
   data: string
   valor: string
@@ -72,8 +77,9 @@ export interface CDIInvestmentDocument {
 
 export type ShortCDIInvestmentDocument = Omit<CDIInvestmentDocument, 'history'>
 
-export type FilledShortCDIInvestmentDocument = Omit<ShortCDIInvestmentDocument, 'target'> & {
+export type FilledShortCDIInvestmentDocument = Omit<ShortCDIInvestmentDocument, 'target' | 'bank'> & {
   target?: TargetDocument
+  bank?: BankDocument
 }
 
 export enum HttpMethod {
@@ -97,4 +103,11 @@ export interface RescueCDIInvestment {
   investmentId: string
   date: Date | string
   value: number
+}
+
+export interface FetchBankListResponse {
+  value: Array<{
+    CodInst: string
+    NomeInstituicao: string
+  }>
 }

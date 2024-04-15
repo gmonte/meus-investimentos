@@ -4,6 +4,8 @@ import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 import * as moment from 'moment-timezone'
 
+import { fetchBankList } from './bank/fetchBankList'
+import { getBankList } from './bank/getBankList'
 import { createCdiInvestment } from './cdiInvestment/createCdiInvestment'
 import { cronJobFetchCdiByDay } from './cdiInvestment/cronJobFetchCdiByDay'
 import { deleteCdiInvestment } from './cdiInvestment/deleteCdiInvestment'
@@ -197,6 +199,28 @@ exports.getUserTargets = functions.https.onRequest(
       async (request, response, user) => {
         const userTargests = await getUserTargets(db, user)
         response.json(userTargests)
+      }
+    )
+  )
+)
+
+exports.fetchBankList = functions.https.onRequest(
+  enableCors(
+    HttpMethod.POST,
+    async (request, response) => {
+      await fetchBankList(db)
+      response.send()
+    }
+  )
+)
+
+exports.getBankList = functions.https.onRequest(
+  enableCors(
+    HttpMethod.GET,
+    verifyUser(
+      async (request, response) => {
+        const bankList = await getBankList(db)
+        response.json(bankList)
       }
     )
   )

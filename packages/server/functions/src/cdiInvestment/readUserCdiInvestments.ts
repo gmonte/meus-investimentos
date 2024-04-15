@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin'
 import { UserRecord } from 'firebase-functions/v1/auth'
 
+import { getBankList } from '../bank/getBankList'
 import { COLLECTIONS } from '../constants'
 import { getUserTargets } from '../target/getUserTargets'
 import {
@@ -20,16 +21,19 @@ export const readUserCdiInvestments = async (db: admin.firestore.Firestore, fini
   const snapshot = await query.orderBy('startDate', 'desc').get()
 
   const userTargets = await getUserTargets(db, user)
+  const banks = await getBankList(db)
 
   return snapshot.docs.map<FilledShortCDIInvestmentDocument>(
     (doc) => {
       const {
         target,
+        bank,
         ...cdiInvestment
       } = doc.data() as CDIInvestmentDocument
       return {
         ...cdiInvestment,
-        target: userTargets.find(userTarget => userTarget.id === target)
+        target: userTargets.find(userTarget => userTarget.id === target),
+        bank: banks.find(b => b.id === bank)
       }
     }
   )

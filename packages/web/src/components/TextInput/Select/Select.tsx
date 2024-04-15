@@ -43,6 +43,7 @@ export interface TextInputSelectProps {
   clearable?: boolean
   loading?: boolean
   disabled?: boolean
+  maxOptionsToRender?: number
 }
 
 export function Select({
@@ -55,6 +56,7 @@ export function Select({
   clearable = false,
   searchable = true,
   loading = false,
+  maxOptionsToRender = 10,
   disabled
 }: TextInputSelectProps) {
   const [open, setOpen] = useState(false)
@@ -62,21 +64,25 @@ export function Select({
 
   const matches = useMemo(
     () => {
-      if (!searchValue) return options
-      const keys = ['id', 'name']
-      const matches = matchSorter(options, searchValue, { keys })
-      // Radix Select does not work if we don't render the selected item, so we
-      // make sure to include it in the list of matches.
       const selectedOption = options.find((lang) => lang.id === value)
+
+      if (!searchValue) {
+        const firstOptions = options.slice(0, maxOptionsToRender)
+        if (selectedOption && !firstOptions.includes(selectedOption)) {
+          firstOptions.push(selectedOption)
+        }
+        return firstOptions
+      }
+
+      const keys = ['id', 'name']
+      const matches = matchSorter(options, searchValue, { keys }).slice(0, maxOptionsToRender)
       if (selectedOption && !matches.includes(selectedOption)) {
         matches.push(selectedOption)
       }
       return matches
     },
-    [options, searchValue, value]
+    [options, searchValue, value, maxOptionsToRender]
   )
-
-  console.log({ value })
 
   return (
     <RadixSelect.Root
@@ -137,7 +143,7 @@ export function Select({
         <RadixSelect.Content
           role="dialog"
           position="popper"
-          className="select-popover z-50 w-full rounded-lg border-2 border-gray-900 bg-gray-200 shadow-lg"
+          className="select-popover z-50 w-full max-w-96 rounded-lg border-2 border-gray-900 bg-gray-200 shadow-lg"
           sideOffset={ 4 }
           alignOffset={ -16 }
         >
@@ -180,7 +186,7 @@ export function Select({
                 key={ id }
                 value={ id }
                 asChild
-                className="select-item"
+                className="select-item truncate"
               >
                 <ComboboxItem>
                   <RadixSelect.ItemText>{name}</RadixSelect.ItemText>

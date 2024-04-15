@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { REHYDRATE } from 'redux-persist'
 
+import { BankDocument } from '~/@types/Bank'
 import {
   ShortCDIInvestmentDocument,
   CDIInvestmentDocument,
@@ -21,7 +22,7 @@ export const api = createApi({
       return action.payload?.[reducerPath]
     }
   },
-  tagTypes: ['CDIInvestmentsList', 'CDIInvestmentHistory', 'UserResume', 'Targets'],
+  tagTypes: ['CDIInvestmentsList', 'CDIInvestmentHistory', 'UserResume', 'Targets', 'Banks'],
   endpoints: (builder) => ({
 
     getUserCdiInvestments: builder.query<ShortCDIInvestmentDocument[], boolean | null>({
@@ -131,6 +132,21 @@ export const api = createApi({
             'Targets'
           ]
         : ['Targets']
+    }),
+
+    getBanks: builder.query<BankDocument[], void>({
+      query: () => '/getBankList',
+      providesTags: (result) => result
+        ? [
+            ...result.map(
+              ({ id }) => ({
+                type: 'Banks' as const,
+                id
+              })
+            ),
+            'Banks'
+          ]
+        : ['Banks']
     })
 
   })
