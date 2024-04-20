@@ -2,7 +2,10 @@ import * as admin from 'firebase-admin'
 import { UserRecord } from 'firebase-functions/v1/auth'
 
 import { COLLECTIONS } from '../constants'
-import { CDIInvestmentDocument, CDIInvestmentHistoryDocument } from '../types'
+import {
+  CDIInvestmentDocument,
+  CDIInvestmentHistoryDocument
+} from '../types'
 import { verifyUserOwner } from '../utils/verifyUser'
 
 export const deleteCdiInvestment = async (db: admin.firestore.Firestore, investment: CDIInvestmentDocument, user: UserRecord): Promise<void> => {

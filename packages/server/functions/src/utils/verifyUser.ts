@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import * as functions from 'firebase-functions'
 import { UserRecord } from 'firebase-functions/v1/auth'
 
 const auth = admin.auth()
@@ -24,7 +24,7 @@ export const verifyUser = (next: Next) => async (request: functions.https.Reques
   }
 
   try {
-    if (decodedIdToken && decodedIdToken.uid) {
+    if (decodedIdToken?.uid) {
       const user = await admin.auth().getUser(decodedIdToken.uid)
       if (user) {
         await next(request, response, user)

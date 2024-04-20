@@ -2,7 +2,10 @@ import * as admin from 'firebase-admin'
 import { UserRecord } from 'firebase-functions/v1/auth'
 
 import { COLLECTIONS } from '../constants'
-import { CDIInvestmentDocument, CDIInvestmentHistoryDocument } from '../types'
+import {
+  CDIInvestmentDocument,
+  CDIInvestmentHistoryDocument
+} from '../types'
 import { verifyUserOwner } from '../utils/verifyUser'
 import { calculateCdiInvestment } from './calculateCdiInvestment'
 
@@ -13,7 +16,11 @@ export const updateCdiInvestment = async (db: admin.firestore.Firestore, investm
 
     verifyUserOwner(investmentDocData, user)
 
-    const investmentData = { ...investmentDocData, ...investment, user: user.uid }
+    const investmentData = {
+      ...investmentDocData,
+      ...investment,
+      user: user.uid
+    }
     const { cdiInvestment, cdiHistory } = await calculateCdiInvestment(db, investmentData)
 
     const historyDoc = await db.collection(COLLECTIONS.CDI_INVESTMENT_HISTORY).doc(investment.id).get()
@@ -23,7 +30,10 @@ export const updateCdiInvestment = async (db: admin.firestore.Firestore, investm
 
     const batch = db.batch()
     batch.update(investmentDoc.ref, cdiInvestment)
-    batch.update(historyDoc.ref, { ...historyDocData, history: cdiHistory })
+    batch.update(historyDoc.ref, {
+      ...historyDocData,
+      history: cdiHistory
+    })
 
     await batch.commit()
   }

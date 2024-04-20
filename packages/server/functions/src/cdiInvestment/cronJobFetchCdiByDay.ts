@@ -1,6 +1,10 @@
 import * as admin from 'firebase-admin'
+
 import { COLLECTIONS } from '../constants'
-import { CDIInvestmentDocument, CDIInvestmentHistoryDocument } from '../types'
+import {
+  CDIInvestmentDocument,
+  CDIInvestmentHistoryDocument
+} from '../types'
 import { calculateCdiInvestment } from './calculateCdiInvestment'
 import { fetchCdiByDay } from './fetchCdiByDay'
 
@@ -24,7 +28,10 @@ export const cronJobFetchCdiByDay = async (db: admin.firestore.Firestore, forceT
 
         const historyDoc = await db.collection(COLLECTIONS.CDI_INVESTMENT_HISTORY).doc(investmentDoc.id).get()
         const historyDocData = await historyDoc.data() as CDIInvestmentHistoryDocument
-        batch.update(historyDoc.ref, { ...historyDocData, history: cdiHistory })
+        batch.update(historyDoc.ref, {
+          ...historyDocData,
+          history: cdiHistory
+        })
       })
     )
 

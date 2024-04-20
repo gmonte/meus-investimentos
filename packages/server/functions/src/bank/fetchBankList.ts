@@ -30,9 +30,9 @@ const tryFetch = async (count = 1): Promise<AxiosResponse<FetchBankListResponse>
   }
   console.error(response.data)
   throw new Error(`Was not possible fetch data from ${ axios.getUri({
- url: response.config.url,
-params: response.config.params
-}) }`)
+    url: response.config.url,
+    params: response.config.params
+  }) }`)
 }
 
 export const fetchBankList = async (db: admin.firestore.Firestore) => {

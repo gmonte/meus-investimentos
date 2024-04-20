@@ -1,6 +1,9 @@
 import * as admin from 'firebase-admin'
+import {
+  last,
+  findLast
+} from 'lodash'
 import * as moment from 'moment-timezone'
-import { last, findLast } from 'lodash'
 
 import { COLLECTIONS } from '../constants'
 import {
@@ -8,17 +11,17 @@ import {
   CDIDocument,
   CDIInvestmentHistoryItem
 } from '../types'
+import { calculateGrowth } from '../utils/calculateGrowth'
 import { calculateIOF } from '../utils/calculateIOF'
 import { calculateIR } from '../utils/calculateIR'
-import { calculateGrowth } from '../utils/calculateGrowth'
 
 export const calculateCdiInvestment = async (db: admin.firestore.Firestore, investment: CDIInvestmentDocument): Promise<{
-  cdiInvestment: CDIInvestmentDocument,
+  cdiInvestment: CDIInvestmentDocument
   cdiHistory: CDIInvestmentHistoryItem[]
 }> => {
   const today = moment().startOf('day')
 
-  const investmentEnd = (investment.rescueDate && moment(investment.rescueDate).add(-1, 'day').format('YYYY-MM-DD')) || investment.dueDate || moment(today).add(3, 'months').format('YYYY-MM-DD')
+  const investmentEnd = (investment.rescueDate && moment(investment.rescueDate).add(-1, 'day').format('YYYY-MM-DD')) ?? investment.dueDate ?? moment(today).add(3, 'months').format('YYYY-MM-DD')
 
   const cdiInvestment: CDIInvestmentDocument = {
     ...investment,
@@ -40,9 +43,9 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
     profitabilityAvailableDate: null
   }
 
-  const cdiHistory: CDIInvestmentHistoryItem[] = [] 
+  const cdiHistory: CDIInvestmentHistoryItem[] = []
 
-  let investDate = moment(investment.startDate)
+  const investDate = moment(investment.startDate)
 
   const cdiIndexesSnapshot = await db.collection(COLLECTIONS.CDI_INDEXES)
     .where('date', '>=', investment.startDate)
@@ -75,7 +78,7 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
       let isFeeConsolidated
       if (investDate.isSameOrBefore(lastCdiIndex.date)) {
         isFeeConsolidated = true
-        cdiByDay = cdiIndexes.find(cdi => cdi.date === date) || { value: 0 }
+        cdiByDay = cdiIndexes.find(cdi => cdi.date === date) ?? { value: 0 }
       } else {
         isFeeConsolidated = false
         if (investDate.isoWeekday() === 6 || investDate.isoWeekday() === 7) { // weekend
@@ -92,20 +95,14 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
 
       const grossValueIncome = lastGrossValueToCalculate * (cdiFeeDaily / 100)
       const grossValue = lastGrossValueToCalculate + grossValueIncome
-      const grossValueIncomeAccumulated = (lastHistory?.grossValueIncomeAccumulated || 0) + grossValueIncome
+      const grossValueIncomeAccumulated = (lastHistory?.grossValueIncomeAccumulated ?? 0) + grossValueIncome
       const grossGrowth = calculateGrowth(investment.investedValue, grossValueIncomeAccumulated)
 
-      const {
-        fee: iofFee,
-        value: iofValue,
-      } = calculateIOF(grossValueIncomeAccumulated, investment, date)
+      const { fee: iofFee, value: iofValue } = calculateIOF(grossValueIncomeAccumulated, investment, date)
 
       let netValueIncomeAccumulated = grossValueIncomeAccumulated - iofValue
 
-      const {
-        percentage: irFee,
-        value: irValue,
-      } = calculateIR(netValueIncomeAccumulated, investment, date)
+      const { percentage: irFee, value: irValue } = calculateIR(netValueIncomeAccumulated, investment, date)
 
       netValueIncomeAccumulated = netValueIncomeAccumulated - irValue
 
@@ -143,7 +140,7 @@ export const calculateCdiInvestment = async (db: admin.firestore.Firestore, inve
     cdiInvestment.netGrowth = lastHistoryPaid?.netGrowth ?? cdiInvestment.netGrowth
     cdiInvestment.lastDatePaid = lastHistoryPaid?.date ?? cdiInvestment.lastDatePaid
     cdiInvestment.profitabilityAvailableDate = cdiInvestment.lastDatePaid ? moment(cdiInvestment.lastDatePaid).add(1, 'day').format('YYYY-MM-DD') : cdiInvestment.profitabilityAvailableDate
-    
+
     cdiInvestment.lastDateFeeConsolidated = findLast(cdiHistory, { isFeeConsolidated: true })?.date ?? cdiInvestment.lastDateFeeConsolidated
 
     const lastHistory = last(cdiHistory)

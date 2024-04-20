@@ -2,7 +2,10 @@ import * as admin from 'firebase-admin'
 import { UserRecord } from 'firebase-functions/v1/auth'
 
 import { COLLECTIONS } from '../constants'
-import { CDIInvestmentDocument, CDIInvestmentHistoryDocument } from '../types'
+import {
+  CDIInvestmentDocument,
+  CDIInvestmentHistoryDocument
+} from '../types'
 import { calculateCdiInvestment } from './calculateCdiInvestment'
 
 export const createCdiInvestment = async (db: admin.firestore.Firestore, investment: CDIInvestmentDocument, user: UserRecord): Promise<void> => {
@@ -25,7 +28,7 @@ export const createCdiInvestment = async (db: admin.firestore.Firestore, investm
       history: cdiHistory
     }
 
-    batch.create(investmentDocRef, investmentToSave),
+    batch.create(investmentDocRef, investmentToSave)
     batch.create(historyDocRef, historyToSave)
 
     await batch.commit()

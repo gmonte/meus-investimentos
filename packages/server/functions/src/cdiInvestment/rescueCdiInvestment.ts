@@ -4,7 +4,11 @@ import { find } from 'lodash'
 import * as moment from 'moment-timezone'
 
 import { COLLECTIONS } from '../constants'
-import { CDIInvestmentDocument, CDIInvestmentHistoryDocument, RescueCDIInvestment } from '../types'
+import {
+  CDIInvestmentDocument,
+  CDIInvestmentHistoryDocument,
+  RescueCDIInvestment
+} from '../types'
 import { verifyUserOwner } from '../utils/verifyUser'
 import { createCdiInvestment } from './createCdiInvestment'
 import { updateCdiInvestment } from './updateCdiInvestment'
@@ -19,7 +23,10 @@ export const rescueCdiInvestment = async (db: admin.firestore.Firestore, data: R
   const isTotalRescue = (cdiInvestment.netValue - data.value) < 0.01
 
   if (isTotalRescue) {
-    await updateCdiInvestment(db, { ...cdiInvestment, rescueDate: data.date }, user)
+    await updateCdiInvestment(db, {
+      ...cdiInvestment,
+      rescueDate: data.date
+    }, user)
   } else {
     // is partial rescue
     const historySnapshot = await db.collection(COLLECTIONS.CDI_INVESTMENT_HISTORY).doc(data.investmentId).get()

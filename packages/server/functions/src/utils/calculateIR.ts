@@ -1,5 +1,9 @@
 import * as moment from 'moment'
-import { CDIInvestmentDocument, InvestmentType } from '../types'
+
+import {
+  CDIInvestmentDocument,
+  InvestmentType
+} from '../types'
 
 const getPercentage = (type: InvestmentType, days: number): number => {
   if (type === 'LCI' || type === 'LCA') {

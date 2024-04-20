@@ -1,41 +1,42 @@
 import * as moment from 'moment'
+
 import { CDIInvestmentDocument } from '../types'
 
 const getPercentage = (days: number): number => {
   const feeByDays = {
-    '1': 96,
-    '2': 93,
-    '3': 90,
-    '4': 86,
-    '5': 83,
-    '6': 80,
-    '7': 76,
-    '8': 73,
-    '9': 70,
-    '10': 66,
-    '11': 63,
-    '12': 60,
-    '13': 56,
-    '14': 53,
-    '15': 50,
-    '16': 46,
-    '17': 43,
-    '18': 40,
-    '19': 36,
-    '20': 33,
-    '21': 30,
-    '22': 26,
-    '23': 23,
-    '24': 20,
-    '25': 16,
-    '26': 13,
-    '27': 10,
-    '28': 6,
-    '29': 3
+    day_1: 96,
+    day_2: 93,
+    day_3: 90,
+    day_4: 86,
+    day_5: 83,
+    day_6: 80,
+    day_7: 76,
+    day_8: 73,
+    day_9: 70,
+    day_10: 66,
+    day_11: 63,
+    day_12: 60,
+    day_13: 56,
+    day_14: 53,
+    day_15: 50,
+    day_16: 46,
+    day_17: 43,
+    day_18: 40,
+    day_19: 36,
+    day_20: 33,
+    day_21: 30,
+    day_22: 26,
+    day_23: 23,
+    day_24: 20,
+    day_25: 16,
+    day_26: 13,
+    day_27: 10,
+    day_28: 6,
+    day_29: 3
   }
 
-  //@ts-ignore
-  return feeByDays[days.toString()] || 0
+  // @ts-expect-error
+  return feeByDays[`day_${ days }`] || 0
 }
 
 export const calculateIOF = (grossValueIncome: number, investment: CDIInvestmentDocument, investmentDate: string | Date) => {

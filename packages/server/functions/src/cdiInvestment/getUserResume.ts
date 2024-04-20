@@ -2,7 +2,10 @@ import * as admin from 'firebase-admin'
 import { UserRecord } from 'firebase-functions/v1/auth'
 
 import { COLLECTIONS } from '../constants'
-import { CDIInvestmentDocument, UserResume } from '../types'
+import {
+  CDIInvestmentDocument,
+  UserResume
+} from '../types'
 import { calculateGrowth } from '../utils/calculateGrowth'
 
 export const getUserResume = async (db: admin.firestore.Firestore, finished: string | undefined, user: UserRecord): Promise<UserResume> => {
