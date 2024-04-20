@@ -141,28 +141,6 @@ export function RegisterInvestmentModal({
 
         <Controller
           control={ control }
-          name="bank"
-          render={ ({ field: { onChange, value } }) => (
-            <TextInput.Root
-              label="Banco/Instituição"
-              className="w-full"
-              error={ errors.bank?.message }
-            >
-              <TextInput.Select
-                placeholder="Informe a instituição financeira do investimento"
-                searchPlaceholder="Pesquise pelo nome do banco"
-                value={ value }
-                onChange={ onChange }
-                options={ banks }
-                loading={ isLoadingBanks }
-                clearable
-              />
-            </TextInput.Root>
-          ) }
-        />
-
-        <Controller
-          control={ control }
           name="target"
           render={ ({ field: { onChange, value } }) => (
             <TextInput.Root
@@ -177,6 +155,28 @@ export function RegisterInvestmentModal({
                 onChange={ onChange }
                 options={ targets }
                 loading={ isLoadingTargets }
+                clearable
+              />
+            </TextInput.Root>
+          ) }
+        />
+
+        <Controller
+          control={ control }
+          name="bank"
+          render={ ({ field: { onChange, value } }) => (
+            <TextInput.Root
+              label="Banco/Instituição"
+              className="w-full"
+              error={ errors.bank?.message }
+            >
+              <TextInput.Select
+                placeholder="Informe a instituição financeira do investimento"
+                searchPlaceholder="Pesquise pelo nome do banco"
+                value={ value }
+                onChange={ onChange }
+                options={ banks }
+                loading={ isLoadingBanks }
                 clearable
               />
             </TextInput.Root>
