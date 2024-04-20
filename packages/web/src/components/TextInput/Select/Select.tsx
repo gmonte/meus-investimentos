@@ -21,11 +21,10 @@ import {
   CircleNotch
 } from 'phosphor-react'
 
-import './styles.css'
-
+import { ActionButton } from '~/components/ActionButton'
 import { cn } from '~/utils/cn'
 
-import { ActionButton } from '../../ActionButton'
+import './styles.css'
 
 export interface SelectOption {
   id: string
@@ -176,7 +175,7 @@ export function Select({
 
           <ComboboxList className="overflow-y-auto p-1">
             {isEmpty(matches) && (
-              <span className="select-item text-white">
+              <span className="select-item text-gray-600">
                 Nenhuma opção disponível
               </span>
             )}
