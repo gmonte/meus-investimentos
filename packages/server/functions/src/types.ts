@@ -17,6 +17,7 @@ export interface CDIResponse {
 export interface CDIDocument {
   date: Date | string
   value: number
+  createdAt?: Date | string
 }
 
 export interface CDIInvestmentHistoryItem {

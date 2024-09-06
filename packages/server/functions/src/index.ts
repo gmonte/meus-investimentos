@@ -54,11 +54,11 @@ exports.cronJobFetchCdiByDayEvening = functions
   .timeZone('America/Sao_Paulo')
   .onRun(async () => await cronJobFetchCdiByDay(db))
 
-exports.fetchCdi = functions.https.onRequest(
+exports.refresh = functions.https.onRequest(
   enableCors(
     HttpMethod.POST,
     async (request, response) => {
-      await cronJobFetchCdiByDay(db)
+      await cronJobFetchCdiByDay(db, true)
       response.status(200).send()
     }
   )

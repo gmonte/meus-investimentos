@@ -43,25 +43,33 @@ export const fetchCdiByDay = async (db: admin.firestore.Firestore) => {
 
     const initialDate = !!lastRegister?.date && moment(lastRegister.date).add(1, 'day')
 
-    const { data } = await tryFetch(initialDate)
+    try {
+      const { data } = await tryFetch(initialDate)
 
-    const allMissingData = !initialDate ? data : data.filter(item => moment(item.data, 'DD/MM/YYYY').isSameOrAfter(initialDate))
+      const allMissingData = !initialDate ? data : data.filter(item => moment(item.data, 'DD/MM/YYYY').isSameOrAfter(initialDate))
 
-    const batch = db.batch()
+      const batch = db.batch()
 
-    allMissingData.forEach((missingData) => {
-      const docRef = db.collection(COLLECTIONS.CDI_INDEXES).doc()
-      batch.set(docRef, {
-        date: moment(missingData.data, 'DD/MM/YYYY').format('YYYY-MM-DD'),
-        value: Number(missingData.valor)
+      allMissingData.forEach((missingData) => {
+        const docRef = db.collection(COLLECTIONS.CDI_INDEXES).doc()
+        batch.set(docRef, {
+          date: moment(missingData.data, 'DD/MM/YYYY').format('YYYY-MM-DD'),
+          value: Number(missingData.valor),
+          createdAt: moment().format()
+        })
       })
-    })
 
-    await batch.commit()
+      await batch.commit()
 
-    console.log('Created CDI items:', allMissingData)
+      console.log('Created CDI items:', allMissingData)
 
-    return allMissingData.length
+      return allMissingData.length
+    } catch (err) {
+      if (initialDate) {
+        console.error(`Cannot get CDI Index for ${ initialDate.format('YYYY-MM-DD') }`)
+      }
+      throw (err)
+    }
   } catch (err) {
     if (err instanceof Error) {
       console.error(err.message)
