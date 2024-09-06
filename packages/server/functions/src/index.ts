@@ -31,18 +31,10 @@ const db = admin.firestore()
 moment.tz.setDefault('America/Sao_Paulo')
 
 // This will be run every day at (Minute Hour * * *)
-exports.cronJobFetchCdiByDayNight = functions
-  .runWith({ timeoutSeconds: 540 })
-  .pubsub
-  .schedule('1 0 * * *')
-  .timeZone('America/Sao_Paulo')
-  .onRun(async () => await cronJobFetchCdiByDay(db, true))
-
-// This will be run every day at (Minute Hour * * *)
 exports.cronJobFetchCdiByDayMorning = functions
   .runWith({ timeoutSeconds: 540 })
   .pubsub
-  .schedule('0 8 * * *')
+  .schedule('0 9 * * *')
   .timeZone('America/Sao_Paulo')
   .onRun(async () => await cronJobFetchCdiByDay(db))
 
@@ -50,7 +42,7 @@ exports.cronJobFetchCdiByDayMorning = functions
 exports.cronJobFetchCdiByDayNoon = functions
   .runWith({ timeoutSeconds: 540 })
   .pubsub
-  .schedule('0 12 * * *')
+  .schedule('40 14 * * *')
   .timeZone('America/Sao_Paulo')
   .onRun(async () => await cronJobFetchCdiByDay(db))
 
@@ -58,9 +50,19 @@ exports.cronJobFetchCdiByDayNoon = functions
 exports.cronJobFetchCdiByDayEvening = functions
   .runWith({ timeoutSeconds: 540 })
   .pubsub
-  .schedule('0 18 * * *')
+  .schedule('0 20 * * *')
   .timeZone('America/Sao_Paulo')
   .onRun(async () => await cronJobFetchCdiByDay(db))
+
+exports.fetchCdi = functions.https.onRequest(
+  enableCors(
+    HttpMethod.POST,
+    async (request, response) => {
+      await cronJobFetchCdiByDay(db)
+      response.status(200).send()
+    }
+  )
+)
 
 exports.createCdiInvestment = functions.https.onRequest(
   enableCors(
