@@ -25,9 +25,5 @@ export const cronJobFetchCdiByDay = async (db: admin.firestore.Firestore, forceT
       })
     )
     console.timeLog('All calculate was finished')
-
-    console.log('Commiting database changes...')
-    console.time('Database changes has been commited')
-    console.timeLog('Database changes has been commited')
   }
 }
